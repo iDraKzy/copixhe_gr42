@@ -129,8 +129,11 @@ def interpréter_commande(order):
     -------
     Specification : Letot Liam (v.1 18/02/21)
     """
-    def spawn(number_of_turn)
-''' Will spawn ant
+   
+
+
+def spawn(number_of_turn)
+""" Will spawn ant
 
 Parameters
 -----------
@@ -140,9 +143,9 @@ Version
 --------
 specification: Maxime Dufrasne (v.1 18/02/21)
 
-def raise
+def lift
 
-def throw
+def place
 
 
 def dispay()
