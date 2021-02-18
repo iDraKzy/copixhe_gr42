@@ -131,7 +131,8 @@ def interpret_order(order):
     """
 
     
-    def spawn(number_of_turn)
+
+    def spawn(number_of_turn):
 """ Spawn ant 
 
 Parameter
@@ -144,7 +145,7 @@ specification: Maxime Dufrasne (v.1 18/02/21)
 """
 
 
-def lift()
+def lift():
 """
 
 Parameter
@@ -156,7 +157,7 @@ specification: Maxime Dufrasne (v.1 18/02/21)
 """
 
 
-def place()
+def place():
 """
 
 Parameter
@@ -168,7 +169,7 @@ specification: Maxime Dufrasne (v.1 18/02/21)
 """
 
 
-def dispay()
+def dispay():
 """
 
 Parameter
