@@ -52,3 +52,48 @@ def check_victory(main_structure, anthill_structure):
     specification: Youlan Collard (v.1 18/02/2021)
     
     """
+    
+def deplacement(origin, destination,):
+    """if move valid return the new position of the ant
+    Parameters
+    ----------
+    origin: depart position (list)
+    destination: destination position (list)
+
+    Return
+    ------
+    new_position: destination (list)
+
+    Version
+    -------
+    specification: Martin Buchet (v.1 18/02/2021)
+    """
+
+def attack(target_pos, target_strengh, ant_pos, ant_strengh):
+    """compute damage done 
+    Paramater
+    ---------
+    targetstrengh: strengh of the attacker (int)
+    ant_strengh: strengh of the ant (int)
+    target_pos: pos of target (list)
+    ant_pos: pos of attacker (list)
+
+    Return:
+    ------
+    target_lifepoints: number of health remaining on the target (int)
+
+    Version
+    -------
+    specification: Martin Buchet (v.1 18/02/2021)
+    """
+
+def mourance(ant_pos):
+    """if function called remove the dead ant
+    Parameter
+    ---------
+    ant_pos: pos of the dead ant (list)
+
+    Version
+    -------
+    specification: Martin Buchet (v.1 18/02/2021)
+    """
