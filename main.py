@@ -69,11 +69,11 @@ def deplacement(origin, destination,):
     specification: Martin Buchet (v.1 18/02/2021)
     """
 
-def attack(target_pos, target_strengh, ant_pos, ant_strengh):
+def attack(target_pos, target_health, ant_pos, ant_strengh):
     """compute damage done 
     Paramater
     ---------
-    targetstrengh: strengh of the attacker (int)
+    target_health: health of the target (int)
     ant_strengh: strengh of the ant (int)
     target_pos: pos of target (list)
     ant_pos: pos of attacker (list)
