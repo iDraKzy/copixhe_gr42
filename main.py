@@ -11,8 +11,8 @@ def create_map(path):
     ant_structure: List of existing ants (list)
     anthill_structure: List of 2 elements containing the anthills information (list)
 
-    Versions
-    --------
+    Version
+    -------
     specification: Youlan Collard (v.1 18/02/2021 )
     
     """
@@ -29,8 +29,8 @@ def check_level(main_structure, anthill):
     -------
     level: The level of the anthill (int)
 
-    Versions
-    --------
+    Version
+    -------
     specification: Youlan Collard (v.1 18/02/2021)
         
     """
@@ -47,8 +47,8 @@ def check_victory():
     -------
     won: Number of the team who has won, None if nobody has (int)
 
-    Versions
-    --------
+    Version
+    -------
     specification: Youlan Collard (v.1 18/02/2021)
     
     """
