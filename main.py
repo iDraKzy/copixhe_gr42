@@ -112,8 +112,8 @@ def main_fonction():
     """
 
 
-def interpréter_commande(order):
-    """take an input, check if it's a true fonction and if it is, call the right fonction, if it's not, send an error
+def interpret_order(order):
+    """take an input, check if it's a true fonction and if it is, return True , if it's not, return False and send an error to the player
 
     parameters
     ----------
@@ -129,11 +129,8 @@ def interpréter_commande(order):
     -------
     Specification : Letot Liam (v.1 18/02/21)
     """
-   
-
-
-def spawn(number_of_turn)
-""" Will spawn ant
+    def spawn(number_of_turn)
+''' Will spawn ant
 
 Parameters
 -----------
@@ -143,9 +140,9 @@ Version
 --------
 specification: Maxime Dufrasne (v.1 18/02/21)
 
-def lift
+def raise
 
-def place
+def throw
 
 
 def dispay()
