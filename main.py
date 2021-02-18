@@ -129,20 +129,52 @@ def interpret_order(order):
     -------
     Specification : Letot Liam (v.1 18/02/21)
     """
-    def spawn(number_of_turn)
-''' Will spawn ant
 
-Parameters
------------
+    
+    def spawn(number_of_turn)
+""" Spawn ant 
+
+Parameter
+---------
 number_of_turn: 
 
 Version
---------
+-------
 specification: Maxime Dufrasne (v.1 18/02/21)
+"""
 
-def raise
 
-def throw
+def lift()
+"""
+
+Parameter
+---------
+
+Version
+-------
+specification: Maxime Dufrasne (v.1 18/02/21)
+"""
+
+
+def place()
+"""
+
+Parameter
+---------
+
+Version
+-------
+specification: Maxime Dufrasne (v.1 18/02/21)
+"""
 
 
 def dispay()
+"""
+
+Parameter
+---------
+
+Version
+-------
+specification: Maxime Dufrasne (v.1 18/02/21)
+"""
