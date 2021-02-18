@@ -1,12 +1,12 @@
 def create_map(path):
     """Create the data structure for the map and returns it.
 
-    Parameters
-    ----------
+    Parameter
+    ---------
     path: Path to the file containing the map information (str)
 
-    Returns
-    -------
+    Return
+    ------
     main_structure: Main structure for the map (list)
     ant_structure: List of existing ants (list)
     anthill_structure: List of 2 elements containing the anthills information (list)
@@ -20,8 +20,8 @@ def create_map(path):
 def check_level(main_structure, anthill):
     """Check the level of an anthill and returns it.
 
-    Parameters
-    ----------
+    Parameter
+    ---------
     main_structure: Main structure of the game, containing the map (list)
     anthill: The anthill to be checked, from the anthill structure (dict)
 
@@ -38,13 +38,13 @@ def check_level(main_structure, anthill):
 def check_victory(main_structure, anthill_structure):
     """Check if one of the player has win the game and returns the number of the team who has won.
 
-    Parameters
-    ----------
+    Parameter
+    ---------
     main_structure: Main structure of the game, containing the map (list)
     anthill_structure: list containing the anthills information (list)
 
-    Returns
-    -------
+    Return
+    ------
     won: Number of the team who has won, None if nobody has (int)
 
     Version
@@ -55,8 +55,8 @@ def check_victory(main_structure, anthill_structure):
     
 def deplacement(origin, destination,):
     """if move valid return the new position of the ant
-    Parameters
-    ----------
+    Parameter
+    ---------
     origin: depart position (list)
     destination: destination position (list)
 
@@ -71,7 +71,7 @@ def deplacement(origin, destination,):
 
 def attack(target_pos, target_health, ant_pos, ant_strengh):
     """compute damage done 
-    Paramater
+    Parameter
     ---------
     target_health: health of the target (int)
     ant_strengh: strengh of the ant (int)
