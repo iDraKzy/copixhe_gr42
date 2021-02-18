@@ -128,3 +128,21 @@ def interpréter_commande(order):
     Version
     -------
     Specification : Letot Liam (v.1 18/02/21)
+    
+    def spawn(number_of_turn)
+''' Will spawn ant
+
+Parameters
+-----------
+number_of_turn: 
+
+Version
+--------
+specification: Maxime Dufrasne (v.1 18/02/21)
+
+def raise
+
+def throw
+
+
+def dispay()
