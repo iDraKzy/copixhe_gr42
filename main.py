@@ -35,7 +35,7 @@ def check_level(main_structure, anthill):
         
     """
 
-def check_victory():
+def check_victory(main_structure, anthill_structure):
     """Check if one of the player has win the game and returns the number of the team who has won.
 
     Parameters
