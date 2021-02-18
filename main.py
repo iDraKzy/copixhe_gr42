@@ -97,3 +97,34 @@ def mourance(ant_pos):
     -------
     specification: Martin Buchet (v.1 18/02/2021)
     """
+    
+def main_fonction():
+    """
+    call the others fonctions and count the turns
+    
+    parameters
+    ----------
+    path : the path to the file used to start the game (str)
+    
+    Version
+    --------
+    Specification : Letot Liam (v.1 18/02/21)
+    """
+
+
+def interpréter_commande(order):
+    """take an input, check if it's a true fonction and if it is, call the right fonction, if it's not, send an error
+
+    parameters
+    ----------
+    order : the input of the user (str)
+
+    return
+    ------
+    order_ok : True if order is a True order, False if it isn't (Bool)
+    order_list: return the orders in a list (list)
+    
+    
+    Version
+    -------
+    Specification : Letot Liam (v.1 18/02/21)
