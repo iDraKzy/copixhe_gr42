@@ -132,41 +132,41 @@ def interpret_order(order):
 
     
 
-    def spawn(number_of_turn):
-""" Spawn ant 
+def spawn(number_of_turn):
+    """ Spawn ant 
 
-Parameter
----------
-number_of_turn: 
+    Parameter
+    ---------
+    number_of_turn: 
 
-Version
--------
-specification: Maxime Dufrasne (v.1 18/02/21)
-"""
+    Version
+    -------
+    specification: Maxime Dufrasne (v.1 18/02/21)
+    """
 
 
 def lift():
-"""
+    """
 
-Parameter
----------
+    Parameter
+    ---------
 
-Version
--------
-specification: Maxime Dufrasne (v.1 18/02/21)
-"""
+    Version
+    -------
+    specification: Maxime Dufrasne (v.1 18/02/21)
+    """
 
 
 def place():
-"""
+    """
 
-Parameter
----------
+    Parameter
+    ---------
 
-Version
--------
-specification: Maxime Dufrasne (v.1 18/02/21)
-"""
+    Version
+    -------
+    specification: Maxime Dufrasne (v.1 18/02/21)
+    """
 
 
 def dispay(main_structure, ant_structure, anthills_structure):
