@@ -53,7 +53,7 @@ def check_victory(main_structure, anthill_structure):
     
     """
     
-def deplacement(origin, destination,):
+def deplacement(main_structure, origin, destination):
     """if move valid return the new position of the ant
     Parameter
     ---------
