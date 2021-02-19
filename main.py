@@ -57,12 +57,13 @@ def deplacement(origin, destination,):
     """if move valid return the new position of the ant
     Parameter
     ---------
+    main_structure: main structure containing the game board (list)
     origin: depart position (list)
     destination: destination position (list)
 
     Return
     ------
-    new_position: destination (list)
+    main_structure: modified main structure (list)
 
     Version
     -------
@@ -76,11 +77,11 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
     target_health: health of the target (int)
     ant_strengh: strengh of the ant (int)
     target_pos: pos of target (list)
-    ant_pos: pos of attacker (list)
+    ant_structure: Structure containing the ants (list)
 
-    Return:
+    Return
     ------
-    target_lifepoints: number of health remaining on the target (int)
+    ant_structure: Modified ant structure (list)
 
     Version
     -------
@@ -89,9 +90,17 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
 
 def mourance(ant_pos):
     """if function called remove the dead ant
-    Parameter
-    ---------
-    ant_pos: pos of the dead ant (list)
+
+    Parameters
+    ----------
+    ant_pos: pos of the dead ant (tupple)
+    main_structure: main structure of the board (list)
+    ant_structure: structure containing the ants (list)
+
+    Returns
+    -------
+    main_structure: the modified main structure (list)
+    ant_structure: the modified ant structure (list)
 
     Version
     -------
