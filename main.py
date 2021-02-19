@@ -170,12 +170,15 @@ specification: Maxime Dufrasne (v.1 18/02/21)
 
 
 def dispay():
-"""
+    """Display the UI in the terminal
 
-Parameter
----------
+    Parameters
+    ----------
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
+    anthills_structure: Structure containing the anthills (list)
 
-Version
--------
-specification: Maxime Dufrasne (v.1 18/02/21)
-"""
+    Version
+    -------
+    specification: Youlan Collard (v.1 19/02/21)
+    """
