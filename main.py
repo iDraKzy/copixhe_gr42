@@ -169,7 +169,7 @@ specification: Maxime Dufrasne (v.1 18/02/21)
 """
 
 
-def dispay():
+def dispay(main_structure, ant_structure, anthills_structure):
     """Display the UI in the terminal
 
     Parameters
