@@ -140,43 +140,63 @@ def interpret_order(order):
     """
 
     
-
 def spawn(number_of_turn):
-    """ Spawn ant 
+""" Spawn ant 
 
-    Parameter
-    ---------
-    number_of_turn: 
+Parameter
+---------
+number_of_turn: The number of turn passed
 
-    Version
-    -------
-    specification: Maxime Dufrasne (v.1 18/02/21)
-    """
-
-
-def lift():
-    """
-
-    Parameter
-    ---------
-
-    Version
-    -------
-    specification: Maxime Dufrasne (v.1 18/02/21)
-    """
+Version
+-------
+specification: Maxime Dufrasne (v.1 18/02/21)
+"""
 
 
-def place():
-    """
+def lift(main_structure, ant_structure, ant_position):
+""" Lift dirt on Ants
 
-    Parameter
-    ---------
+Parameters
+----------
+main_structure: Library of board
+ant_structure: Library of all ants
+ant_position: Position of the ant that will lift dirt
 
-    Version
-    -------
-    specification: Maxime Dufrasne (v.1 18/02/21)
-    """
+Version
+-------
+specification: Maxime Dufrasne (v.1 19/02/21)
+"""
 
+
+def place(main_structure, ant_structure, ant_position):
+""" Place dirt on a case
+
+Parameters
+----------
+main_structure: Library of board
+ant_structure: Library of all ants
+ant_position: Position of the ant that will place dirt
+
+Version
+-------
+specification: Maxime Dufrasne (v.1 19/02/21)
+"""
+
+
+def exec_order(order):
+""" Execute order
+
+Parameter
+---------
+order: The order the user imput
+
+Version
+-------
+specification: Maxime Dufrasne (v.1 19/02/21)
+"""
+
+    
+    
 
 def dispay(main_structure, ant_structure, anthills_structure):
     """Display the UI in the terminal
