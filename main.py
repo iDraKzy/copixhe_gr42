@@ -184,7 +184,7 @@ def place(main_structure, ant_structure, ant_position):
 def exec_order(order_list):
     """ Execute orders
 
-    Parameter
+    Parameters
     ---------
     order_list: The list of orders the user imput (list)
     
