@@ -208,9 +208,22 @@ def dispay(main_structure, ant_structure, anthills_structure):
     """
 
 def validation_lift():
-    """
+    """Check if an ant has the force to carry clod and if there is clod where it is
     
-    
+    Parameters
+    ----------
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
+    ant_pos: Position of the ant executing the action (tuple)
+
+    Returns
+    -------
+    lift_valid: Wether the lifting action is valid or not (bool)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 21/02/2021)
+
     
     """
     
