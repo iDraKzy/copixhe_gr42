@@ -133,8 +133,8 @@ def exec_order(order_list, main_structure, ant_structure):
     
     return
     ------
-    main_structure: Main structure of the game board (list)
-    ant_structure: Structure containing all the ants (list)
+    main_structure: Modified main structure of the game board (list)
+    ant_structure: Modified structure containing all the ants (list)
 
     Version
     -------
