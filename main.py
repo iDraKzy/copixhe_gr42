@@ -213,14 +213,15 @@ def dispay(main_structure, ant_structure, anthills_structure):
     """
 
     
-def validation_deplacement(origin, destination, destination_state):
+def validation_deplacement(origin, destination, main_structructure, ant_structure):
     """check if deplacement is valid and return a boolean
     
     Parameter
     ---------
     origin: depart position (list)
     destination: destination position (list)
-    destination_state: potential object on the position blocking the move (list)
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
     
     Return
     ------
@@ -228,7 +229,7 @@ def validation_deplacement(origin, destination, destination_state):
     
     Version
     -------
-    specification: Martin Buchet (v.1 21/02/2021)
+    specification: Martin Buchet (v.2 21/02/2021)
     """
 def range_attack(attacker_pos, target_pos):
     """check if target is in range of the attacker and return a boolean
