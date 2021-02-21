@@ -212,8 +212,14 @@ def dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     """
 
+def validation_carry():
+    """
     
-def validation_deplacement(origin, destination, main_structructure, ant_structure):
+    
+    
+    """
+    
+def validation_deplacement(origin, destination, main_structure, ant_structure):
     """check if deplacement is valid and return a boolean
     
     Parameter
@@ -231,7 +237,7 @@ def validation_deplacement(origin, destination, main_structructure, ant_structur
     -------
     specification: Martin Buchet (v.2 21/02/2021)
     """
-def range_attack(attacker_pos, target_pos):
+def validation_attack(attacker_pos, target_pos):
     """check if target is in range of the attacker and return a boolean
     
     Parameter
