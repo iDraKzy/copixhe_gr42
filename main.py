@@ -181,12 +181,13 @@ def place(main_structure, ant_structure, ant_position):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-def exec_order(order):
-    """ Execute order
+def exec_order(orders):
+    """ Execute orders
 
     Parameter
     ---------
-    order: The order the user imput (str)
+    orders: The order the user imput (list)
+    
     Return
 
     Version
