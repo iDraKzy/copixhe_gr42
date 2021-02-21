@@ -139,12 +139,19 @@ def interpret_order(order):
     Specification : Letot Liam (v.1 18/02/21)
     """
    
-def spawn(number_of_turn):
+def spawn(number_of_turn,ant_structure,main_structure):
     """ Spawn ant 
 
     Parameter
     ---------
     number_of_turn: The number of turn passed (int)
+    main_structure: Library of board (list)
+    ant_structure: Library of all ants (list)
+
+    Returns
+    -------
+    main_structure: modified main structure (list)
+    ant_structure: modified ant structure (list)
 
     Version
     -------
@@ -159,7 +166,11 @@ def lift(main_structure, ant_structure, ant_position):
     main_structure: Library of board (list)
     ant_structure: Library of all ants (list)
     ant_position: Position of the ant that will lift dirt (tuple)
-    Return
+
+    Returns
+    -------
+    ant_structure: modified ant structure (list)
+    main_structure: modified main structure (list)
 
     Version
     -------
@@ -174,7 +185,11 @@ def place(main_structure, ant_structure, ant_position):
     main_structure: Library of board (list)
     ant_structure: Library of all ants (list)
     ant_position: Position of the ant that will place dirt (tuple)
-    Return
+
+    Returns
+    -------
+    main_structure: modified main structure (list)
+    ant_structure: modified ant structure (list)
 
     Version
     -------
