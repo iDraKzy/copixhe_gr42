@@ -182,7 +182,7 @@ def place(main_structure, ant_structure, ant_position):
     """
 
 def exec_order(order_list, main_structure, ant_structure):
-    """ Execute orders
+    """ Execute orders and give the structures to each order fonctions
 
     Parameters
     ---------
