@@ -181,18 +181,19 @@ def place(main_structure, ant_structure, ant_position):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-def exec_order(orders):
+def exec_order(order_list):
     """ Execute orders
 
     Parameter
     ---------
-    orders: The order the user imput (list)
+    order_list: The list of orders the user imput (list)
     
     Return
 
     Version
     -------
     specification: Maxime Dufrasne (v.1 19/02/21)
+                   Liam Letot (v1.5 21/02/21)
     """
 
 def init_dispay(main_structure, ant_structure, anthills_structure):
