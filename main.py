@@ -120,7 +120,6 @@ def main_fonction(path):
     Specification : Letot Liam (v.1 18/02/21)
     """
 
-
 def interpret_order(order):
     """take an input, check if it's a true fonction and if it is, return True , if it's not, return False and send an error to the player
 
@@ -138,7 +137,6 @@ def interpret_order(order):
     -------
     Specification : Letot Liam (v.1 18/02/21)
     """
-
     
 def spawn(number_of_turn):
     """ Spawn ant 
@@ -151,7 +149,6 @@ def spawn(number_of_turn):
     -------
     specification: Maxime Dufrasne (v.1 18/02/21)
     """
-
 
 def lift(main_structure, ant_structure, ant_position):
     """ Lift dirt on Ants
@@ -167,7 +164,6 @@ def lift(main_structure, ant_structure, ant_position):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-
 def place(main_structure, ant_structure, ant_position):
     """ Place dirt on a case
 
@@ -182,7 +178,6 @@ def place(main_structure, ant_structure, ant_position):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-
 def exec_order(order):
     """ Execute order
 
@@ -194,9 +189,6 @@ def exec_order(order):
     -------
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
-
-    
-    
 
 def dispay(main_structure, ant_structure, anthills_structure):
     """Display the UI in the terminal
@@ -237,6 +229,7 @@ def validation_deplacement(origin, destination, main_structure, ant_structure):
     -------
     specification: Martin Buchet (v.2 21/02/2021)
     """
+
 def validation_attack(attacker_pos, target_pos):
     """check if target is in range of the attacker and return a boolean
     
