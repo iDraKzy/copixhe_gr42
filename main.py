@@ -194,8 +194,8 @@ def exec_order(order):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-def dispay(main_structure, ant_structure, anthills_structure):
-    """Display the UI in the terminal
+def init_dispay(main_structure, ant_structure, anthills_structure):
+    """Initialize the display of the UI
 
     Parameters
     ----------
