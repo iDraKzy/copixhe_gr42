@@ -1,3 +1,15 @@
+def main(path):
+    """call the others fonctions and count the turns
+    
+    Parameters
+    ----------
+    path : the path to the file used to start the game (str)
+    
+    Version
+    --------
+    Specification : Letot Liam (v.1 18/02/21)
+    """
+
 def create_map(path):
     """Create the data structure for the map and returns it.
 
@@ -17,24 +29,6 @@ def create_map(path):
     
     """
 
-def check_level(main_structure, anthill):
-    """Check the level of an anthill and returns it.
-
-    Parameter
-    ---------
-    main_structure: Main structure of the game, containing the map (list)
-    anthill: The anthill to be checked, from the anthill structure (dict)
-
-    Returns
-    -------
-    level: The level of the anthill (int)
-
-    Version
-    -------
-    specification: Youlan Collard (v.1 18/02/2021)
-        
-    """
-
 def check_victory(main_structure, anthill_structure):
     """Check if one of the player has win the game and returns the number of the team who has won.
 
@@ -51,6 +45,100 @@ def check_victory(main_structure, anthill_structure):
     -------
     specification: Youlan Collard (v.1 18/02/2021)
     
+    """
+
+def interpret_order(main_structure, ant_structure, orders):
+    """take an input, check if it's a true fonction and if it's possible, if both conditions are met, return True , if not, return False and send an error to the player
+
+    Parameters
+    ----------
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
+    orders: the input of the user (str)
+
+    Return
+    ------
+    order_ok: True if order is a True order, False if it isn't (Bool)
+    order_list: return the orders in a list (list)
+    
+    Version
+    -------
+    Specification : Letot Liam (v.1 18/02/21)
+    """
+
+def validation_lift(main_structure, ant_structure, ant_pos):
+    """Check if an ant has the force to carry clod and if there is clod where it is
+    
+    Parameters
+    ----------
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
+    ant_pos: Position of the ant executing the action (tuple)
+
+    Return
+    ------
+    lift_valid: Wether the lifting action is valid or not (bool)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 21/02/2021)
+
+    
+    """
+
+def validation_deplacement(origin, destination, main_structure, ant_structure):
+    """check if deplacement is valid and return a boolean
+    
+    Parameter
+    ---------
+    origin: depart position (list)
+    destination: destination position (list)
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
+    
+    Return
+    ------
+    move_valid: wether move is valid or not (bool)
+    
+    Version
+    -------
+    specification: Martin Buchet (v.1 21/02/2021)
+    """
+
+def validation_attack(attacker_pos, target_pos):
+    """check if target is in range of the attacker and return a boolean
+    
+    Parameter
+    ---------
+    attacker_pos: pos of attacker (list)
+    target_pos: pos of target (list)
+    
+    Return
+    ------
+    is_in_range: wether the target is in range or not (bool)
+    
+    Version
+    -------
+    specification: Martin Buchet (v.1 21/02/2021)
+    """
+
+def exec_order(order_list, main_structure, ant_structure):
+    """ Execute orders and give the structures to each order fonctions
+
+    Parameters
+    ---------
+    order_list: The list of orders the user imput (list)
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
+    
+    return
+    ------
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
+
+    Version
+    -------
+    specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21)
     """
     
 def deplacement(main_structure, origin, destination):
@@ -88,74 +176,6 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
     Version
     -------
     specification: Martin Buchet (v.1 18/02/2021)
-    """
-
-def death(ant_pos, main_structure, ant_structure):
-    """if function called remove the dead ant
-
-    Parameters
-    ----------
-    ant_pos: pos of the dead ant (tupple)
-    main_structure: main structure of the board (list)
-    ant_structure: structure containing the ants (list)
-
-    Return
-    ------
-    main_structure: the modified main structure (list)
-    ant_structure: the modified ant structure (list)
-
-    Version
-    -------
-    specification: Martin Buchet (v.1 18/02/2021) (v.2 21/02/2021)
-    """
-    
-def main_fonction(path):
-    """call the others fonctions and count the turns
-    
-    Parameters
-    ----------
-    path : the path to the file used to start the game (str)
-    
-    Version
-    --------
-    Specification : Letot Liam (v.1 18/02/21)
-    """
-
-def interpret_order(order):
-    """take an input, check if it's a true fonction and if it is, return True , if it's not, return False and send an error to the player
-
-    Parameters
-    ----------
-    order : the input of the user (str)
-
-    Return
-    ------
-    order_ok : True if order is a True order, False if it isn't (Bool)
-    order_list: return the orders in a list (list)
-    
-    
-    Version
-    -------
-    Specification : Letot Liam (v.1 18/02/21)
-    """
-   
-def spawn(number_of_turn,ant_structure,main_structure):
-    """ Spawn ant 
-
-    Parameter
-    ---------
-    number_of_turn: The number of turn passed (int)
-    main_structure: Library of board (list)
-    ant_structure: Library of all ants (list)
-
-    Returns
-    -------
-    main_structure: modified main structure (list)
-    ant_structure: modified ant structure (list)
-
-    Version
-    -------
-    specification: Maxime Dufrasne (v.1 18/02/21)
     """
 
 def lift(main_structure, ant_structure, ant_position):
@@ -196,23 +216,60 @@ def place(main_structure, ant_structure, ant_position):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-def exec_order(order_list, main_structure, ant_structure):
-    """ Execute orders and give the structures to each order fonctions
+def death(ant_pos, main_structure, ant_structure):
+    """if function called remove the dead ant
 
     Parameters
-    ---------
-    order_list: The list of orders the user imput (list)
-    main_structure: Main structure of the game board (list)
-    ant_structure: Structure containing all the ants (list)
-    
-    return
+    ----------
+    ant_pos: pos of the dead ant (tupple)
+    main_structure: main structure of the board (list)
+    ant_structure: structure containing the ants (list)
+
+    Return
     ------
-    main_structure: Main structure of the game board (list)
-    ant_structure: Structure containing all the ants (list)
+    main_structure: the modified main structure (list)
+    ant_structure: the modified ant structure (list)
 
     Version
     -------
-    specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21)
+    specification: Martin Buchet (v.1 18/02/2021) (v.2 21/02/2021)
+    """
+
+def check_level(main_structure, anthill):
+    """Check the level of an anthill and returns it.
+
+    Parameter
+    ---------
+    main_structure: Main structure of the game, containing the map (list)
+    anthill: The anthill to be checked, from the anthill structure (dict)
+
+    Returns
+    -------
+    level: The level of the anthill (int)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 18/02/2021)
+        
+    """
+
+def spawn(number_of_turn,ant_structure,main_structure):
+    """ Spawn ant 
+
+    Parameter
+    ---------
+    number_of_turn: The number of turn passed (int)
+    main_structure: Library of board (list)
+    ant_structure: Library of all ants (list)
+
+    Returns
+    -------
+    main_structure: modified main structure (list)
+    ant_structure: modified ant structure (list)
+
+    Version
+    -------
+    specification: Maxime Dufrasne (v.1 18/02/21)
     """
 
 def init_dispay(main_structure, ant_structure, anthills_structure):
@@ -229,60 +286,18 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     """
 
-def validation_lift(main_structure, ant_structure, ant_pos):
-    """Check if an ant has the force to carry clod and if there is clod where it is
-    
+def life_point(main_structure, ant_structure, ant_position):
+    """Print life point on each ant
+
     Parameters
     ----------
-    main_structure: Main structure of the game board (list)
+    main_structure: Main Structure of the game board (list)
     ant_structure: Structure containing all the ants (list)
-    ant_pos: Position of the ant executing the action (tuple)
-
-    Return
-    ------
-    lift_valid: Wether the lifting action is valid or not (bool)
+    ant_position: The coordonate of a ant
 
     Version
     -------
-    specification: Youlan Collard (v.1 21/02/2021)
-
-    
-    """
-    
-def validation_deplacement(origin, destination, main_structure, ant_structure):
-    """check if deplacement is valid and return a boolean
-    
-    Parameter
-    ---------
-    origin: depart position (list)
-    destination: destination position (list)
-    main_structure: Main structure of the game board (list)
-    ant_structure: Structure containing all the ants (list)
-    
-    Return
-    ------
-    move_valid: wether move is valid or not (bool)
-    
-    Version
-    -------
-    specification: Martin Buchet (v.1 21/02/2021)
-    """
-
-def validation_attack(attacker_pos, target_pos):
-    """check if target is in range of the attacker and return a boolean
-    
-    Parameter
-    ---------
-    attacker_pos: pos of attacker (list)
-    target_pos: pos of target (list)
-    
-    Return
-    ------
-    is_in_range: wether the target is in range or not (bool)
-    
-    Version
-    -------
-    specification: Martin Buchet (v.1 21/02/2021)
+    spécification: Maxime Dufrasne/Youlan Collard (v.1 19/02/21)
     """
 
 def return_ant_by_id(ant_structure, ant_id):
@@ -300,18 +315,4 @@ def return_ant_by_id(ant_structure, ant_id):
     Version
     -------
     specification: Youlan Collard (v.1 21/02/2021)    
-    """
-
-def life_point(main_structure, ant_structure, ant_position):
-    """Print life point on each ant
-
-    Parameters
-    ----------
-    main_structure: Main Structure of the game board (list)
-    ant_structure: Structure containing all the ants (list)
-    ant_position: The coordonate of a ant
-
-    Version
-    -------
-    spécification: Maxime Dufrasne/Youlan Collard (v.1 19/02/21)
     """
