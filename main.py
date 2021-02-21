@@ -88,7 +88,7 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
     specification: Martin Buchet (v.1 18/02/2021)
     """
 
-def mourance(ant_pos):
+def mourance(ant_pos, main_structure, ant_structure):
     """if function called remove the dead ant
 
     Parameters
