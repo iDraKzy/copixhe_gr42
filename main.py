@@ -211,3 +211,38 @@ def dispay(main_structure, ant_structure, anthills_structure):
     -------
     specification: Youlan Collard (v.1 19/02/21)
     """
+
+    
+def validation_deplacement(origin, destination, destination_state):
+    """check if deplacement is valid and return a boolean
+    
+    Parameter
+    ---------
+    origin: depart position (list)
+    destination: destination position (list)
+    destination_state: potential object on the position blocking the move (list)
+    
+    Return
+    ------
+    move_valid: wether move is valid or not (bool)
+    
+    Version
+    -------
+    specification: Martin Buchet (v.1 21/02/2021)
+    """
+def range_attack(attacker_pos, target_pos):
+    """check if target is in range of the attacker and return a boolean
+    
+    Parameter
+    ---------
+    attacker_pos: pos of attacker (list)
+    target_pos: pos of target (list)
+    
+    Return
+    ------
+    is_in_range: wether the target is in range or not (bool)
+    
+    Version
+    -------
+    specification: Martin Buchet (v.1 21/02/2021)
+    """
