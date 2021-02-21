@@ -107,7 +107,7 @@ def mourance(ant_pos, main_structure, ant_structure):
     specification: Martin Buchet (v.2 21/02/2021)
     """
     
-def main_fonction():
+def main_fonction(path):
     """
     call the others fonctions and count the turns
     
