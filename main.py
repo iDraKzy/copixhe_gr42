@@ -55,6 +55,7 @@ def check_victory(main_structure, anthill_structure):
     
 def deplacement(main_structure, origin, destination):
     """if move valid return the new position of the ant
+
     Parameter
     ---------
     main_structure: main structure containing the game board (list)
@@ -72,6 +73,7 @@ def deplacement(main_structure, origin, destination):
 
 def attack(target_pos, target_health, ant_pos, ant_strengh):
     """compute damage done 
+
     Parameter
     ---------
     target_health: health of the target (int)
@@ -97,8 +99,8 @@ def death(ant_pos, main_structure, ant_structure):
     main_structure: main structure of the board (list)
     ant_structure: structure containing the ants (list)
 
-    Returns
-    -------
+    Return
+    ------
     main_structure: the modified main structure (list)
     ant_structure: the modified ant structure (list)
 
@@ -108,10 +110,9 @@ def death(ant_pos, main_structure, ant_structure):
     """
     
 def main_fonction(path):
-    """
-    call the others fonctions and count the turns
+    """call the others fonctions and count the turns
     
-    parameters
+    Parameters
     ----------
     path : the path to the file used to start the game (str)
     
@@ -123,11 +124,11 @@ def main_fonction(path):
 def interpret_order(order):
     """take an input, check if it's a true fonction and if it is, return True , if it's not, return False and send an error to the player
 
-    parameters
+    Parameters
     ----------
     order : the input of the user (str)
 
-    return
+    Return
     ------
     order_ok : True if order is a True order, False if it isn't (Bool)
     order_list: return the orders in a list (list)
@@ -216,8 +217,8 @@ def validation_lift(main_structure, ant_structure, ant_pos):
     ant_structure: Structure containing all the ants (list)
     ant_pos: Position of the ant executing the action (tuple)
 
-    Returns
-    -------
+    Return
+    ------
     lift_valid: Wether the lifting action is valid or not (bool)
 
     Version
@@ -283,8 +284,8 @@ def return_ant_by_id(ant_structure, ant_id):
 def life_point(main_structure, ant_structure, ant_position):
     """Print life point on each ant
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     main_structure: Main Structure of the game board (list)
     ant_structure: Structure containing all the ants (list)
     ant_position: The coordonate of a ant
