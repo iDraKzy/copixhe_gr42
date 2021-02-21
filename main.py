@@ -247,3 +247,20 @@ def range_attack(attacker_pos, target_pos):
     -------
     specification: Martin Buchet (v.1 21/02/2021)
     """
+
+def return_ant_by_id(ant_structure, ant_id):
+    """Find an ant by its id inside the ant structure
+
+    Parameters
+    ----------
+    ant_structure: The structure containing all the ants (list)
+    ant_id: Id of the desired ant (int)
+
+    Return
+    ------
+    ant: The desired ant (dict)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 21/02/2021)    
+    """
