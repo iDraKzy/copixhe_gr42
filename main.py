@@ -145,7 +145,7 @@ def spawn(number_of_turn):
 
     Parameter
     ---------
-    number_of_turn: The number of turn passed
+    number_of_turn: The number of turn passed (int)
 
     Version
     -------
@@ -158,9 +158,10 @@ def lift(main_structure, ant_structure, ant_position):
 
     Parameters
     ----------
-    main_structure: Library of board
-    ant_structure: Library of all ants
-    ant_position: Position of the ant that will lift dirt
+    main_structure: Library of board (list)
+    ant_structure: Library of all ants (list)
+    ant_position: Position of the ant that will lift dirt (tuple)
+    Return
 
     Version
     -------
@@ -173,9 +174,10 @@ def place(main_structure, ant_structure, ant_position):
 
     Parameters
     ----------
-    main_structure: Library of board
-    ant_structure: Library of all ants
-    ant_position: Position of the ant that will place dirt
+    main_structure: Library of board (list)
+    ant_structure: Library of all ants (list)
+    ant_position: Position of the ant that will place dirt (tuple)
+    Return
 
     Version
     -------
@@ -188,7 +190,8 @@ def exec_order(order):
 
     Parameter
     ---------
-    order: The order the user imput
+    order: The order the user imput (str)
+    Return
 
     Version
     -------
