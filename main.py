@@ -181,14 +181,19 @@ def place(main_structure, ant_structure, ant_position):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-def exec_order(order_list):
+def exec_order(order_list, main_structure, ant_structure):
     """ Execute orders
 
     Parameters
     ---------
     order_list: The list of orders the user imput (list)
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
     
-    Return
+    return
+    ------
+    main_structure: Main structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
 
     Version
     -------
