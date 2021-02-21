@@ -207,7 +207,7 @@ def dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     """
 
-def validation_carry():
+def validation_lift():
     """
     
     
