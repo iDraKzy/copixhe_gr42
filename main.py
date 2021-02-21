@@ -103,7 +103,7 @@ def validation_attack(attacker_pos, target_pos):
     specification: Martin Buchet (v.1 21/02/2021)
     """
 
-def validation_deplacement(origin, destination, main_structure, ant_structure):
+def validation_move(origin, destination, main_structure, ant_structure):
     """check if deplacement is valid and return a boolean
     
     Parameter
@@ -160,43 +160,6 @@ def lift(main_structure, ant_structure, ant_position):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-def attack(target_pos, target_health, ant_pos, ant_strengh):
-    """compute damage done 
-
-    Parameter
-    ---------
-    target_health: health of the target (int)
-    ant_strengh: strengh of the ant (int)
-    target_pos: pos of target (list)
-    ant_structure: Structure containing the ants (list)
-
-    Return
-    ------
-    ant_structure: Modified ant structure (list)
-
-    Version
-    -------
-    specification: Martin Buchet (v.1 18/02/2021)
-    """
-    
-def deplacement(main_structure, origin, destination):
-    """if move valid return the new position of the ant
-
-    Parameter
-    ---------
-    main_structure: main structure containing the game board (list)
-    origin: depart position (list)
-    destination: destination position (list)
-
-    Return
-    ------
-    main_structure: modified main structure (list)
-
-    Version
-    -------
-    specification: Martin Buchet (v.1 18/02/2021)
-    """
-
 def place(main_structure, ant_structure, ant_position):
     """ Place dirt on a case
 
@@ -216,23 +179,41 @@ def place(main_structure, ant_structure, ant_position):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-def death(ant_pos, main_structure, ant_structure):
-    """if function called remove the dead ant
+def attack(target_pos, target_health, ant_pos, ant_strengh):
+    """compute damage done 
 
-    Parameters
-    ----------
-    ant_pos: pos of the dead ant (tupple)
-    main_structure: main structure of the board (list)
-    ant_structure: structure containing the ants (list)
+    Parameter
+    ---------
+    target_health: health of the target (int)
+    ant_strengh: strengh of the ant (int)
+    target_pos: pos of target (list)
+    ant_structure: Structure containing the ants (list)
 
     Return
     ------
-    main_structure: the modified main structure (list)
-    ant_structure: the modified ant structure (list)
+    ant_structure: Modified ant structure (list)
 
     Version
     -------
-    specification: Martin Buchet (v.1 18/02/2021) (v.2 21/02/2021)
+    specification: Martin Buchet (v.1 18/02/2021)
+    """
+    
+def move(main_structure, origin, destination):
+    """if move valid return the new position of the ant
+
+    Parameter
+    ---------
+    main_structure: main structure containing the game board (list)
+    origin: depart position (list)
+    destination: destination position (list)
+
+    Return
+    ------
+    main_structure: modified main structure (list)
+
+    Version
+    -------
+    specification: Martin Buchet (v.1 18/02/2021)
     """
 
 def check_level(main_structure, anthill):
@@ -270,6 +251,25 @@ def spawn(number_of_turn,ant_structure,main_structure):
     Version
     -------
     specification: Maxime Dufrasne (v.1 18/02/21)
+    """
+
+def death(ant_pos, main_structure, ant_structure):
+    """if function called remove the dead ant
+
+    Parameters
+    ----------
+    ant_pos: pos of the dead ant (tupple)
+    main_structure: main structure of the board (list)
+    ant_structure: structure containing the ants (list)
+
+    Return
+    ------
+    main_structure: the modified main structure (list)
+    ant_structure: the modified ant structure (list)
+
+    Version
+    -------
+    specification: Martin Buchet (v.1 18/02/2021) (v.2 21/02/2021)
     """
 
 def init_dispay(main_structure, ant_structure, anthills_structure):
