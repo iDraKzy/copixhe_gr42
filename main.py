@@ -104,7 +104,7 @@ def death(ant_pos, main_structure, ant_structure):
 
     Version
     -------
-    specification: Martin Buchet (v.2 21/02/2021)
+    specification: Martin Buchet (v.1 18/02/2021) (v.2 21/02/2021)
     """
     
 def main_fonction(path):
@@ -243,7 +243,7 @@ def validation_deplacement(origin, destination, main_structure, ant_structure):
     
     Version
     -------
-    specification: Martin Buchet (v.2 21/02/2021)
+    specification: Martin Buchet (v.1 21/02/2021)
     """
 
 def validation_attack(attacker_pos, target_pos):
