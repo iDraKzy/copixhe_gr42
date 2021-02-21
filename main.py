@@ -196,12 +196,13 @@ def place(main_structure, ant_structure, ant_position):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-def exec_order(order):
-    """ Execute order
+def exec_order(orders):
+    """ Execute orders
 
     Parameter
     ---------
-    order: The order the user imput (str)
+    orders: The order the user imput (list)
+    
     Return
 
     Version
@@ -209,8 +210,8 @@ def exec_order(order):
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
 
-def dispay(main_structure, ant_structure, anthills_structure):
-    """Display the UI in the terminal
+def init_dispay(main_structure, ant_structure, anthills_structure):
+    """Initialize the display of the UI
 
     Parameters
     ----------
