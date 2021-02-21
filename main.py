@@ -270,3 +270,17 @@ def return_ant_by_id(ant_structure, ant_id):
     -------
     specification: Youlan Collard (v.1 21/02/2021)    
     """
+
+def life_point(main_structure, ant_structure, ant_position)
+    """Print life point on each ant
+
+    Parameter
+    ---------
+    main_structure: Main Structure of the game board (list)
+    ant_structure: Structure containing all the ants (list)
+    ant_position: The coordonate of a ant
+
+    Version
+    -------
+    spécification: Maxime Dufrasne/Youlan Collard (v.1 19/02/21)
+    """
