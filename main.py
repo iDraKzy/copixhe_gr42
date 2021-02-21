@@ -212,8 +212,7 @@ def exec_order(order_list, main_structure, ant_structure):
 
     Version
     -------
-    specification: Maxime Dufrasne (v.1 19/02/21)
-                   Liam Letot (v1.5 21/02/21)
+    specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21)
     """
 
 def init_dispay(main_structure, ant_structure, anthills_structure):
