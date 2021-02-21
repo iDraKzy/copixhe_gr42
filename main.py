@@ -89,8 +89,8 @@ def validation_lift(main_structure, ant_structure, ant_pos):
 def validation_attack(attacker_pos, target_pos):
     """check if target is in range of the attacker and return a boolean
     
-    Parameter
-    ---------
+    Parameters
+    ----------
     attacker_pos: pos of attacker (list)
     target_pos: pos of target (list)
     
