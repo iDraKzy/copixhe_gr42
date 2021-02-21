@@ -207,7 +207,7 @@ def dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     """
 
-def validation_lift():
+def validation_lift(main_structure, ant_structure, ant_pos):
     """Check if an ant has the force to carry clod and if there is clod where it is
     
     Parameters
