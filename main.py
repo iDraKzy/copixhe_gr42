@@ -3,7 +3,7 @@
 import blessed, math, os, time
 term = blessed.Terminal()
 
-
+# Initialize data structure
 def create_map(path):
     """Create the data structure for the map and returns it.
 
@@ -23,6 +23,7 @@ def create_map(path):
     
     """
 
+# Victory function
 def check_victory(main_structure, anthill_structure):
     """Check if one of the player has win the game and returns the number of the team who has won.
 
@@ -41,6 +42,7 @@ def check_victory(main_structure, anthill_structure):
     
     """
 
+# Validation of orders
 def interpret_order(main_structure, ant_structure, orders):
     """take an input, check if it's a true fonction and if it's possible, if both conditions are met, return True , if not, return False and send an error to the player
 
@@ -116,6 +118,7 @@ def validation_move(origin, destination, main_structure, ant_structure):
     specification: Martin Buchet (v.1 21/02/2021)
     """
 
+# Execution of orders
 def exec_order(order_list, main_structure, ant_structure):
     """ Execute orders and give the structures to each order fonctions
 
@@ -210,6 +213,7 @@ def move(main_structure, origin, destination):
     specification: Martin Buchet (v.1 18/02/2021)
     """
 
+# New ants functions
 def check_level(main_structure, anthill):
     """Check the level of an anthill and returns it.
 
@@ -247,6 +251,7 @@ def spawn(number_of_turn,ant_structure,main_structure):
     specification: Maxime Dufrasne (v.1 18/02/21)
     """
 
+# Removal of dead ant function
 def death(ant_pos, main_structure, ant_structure):
     """if function called remove the dead ant
 
@@ -266,6 +271,7 @@ def death(ant_pos, main_structure, ant_structure):
     specification: Martin Buchet (v.1 18/02/2021) (v.2 21/02/2021)
     """
 
+# UI Function
 def init_dispay(main_structure, ant_structure, anthills_structure):
     """Initialize the display of the UI, create the initial game board from scratch
 
@@ -310,6 +316,7 @@ def add_ant_on_display():
     
     """
 
+# Util function
 def return_ant_by_id(ant_structure, ant_id):
     """Find an ant by its id inside the ant structure
 
