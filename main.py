@@ -267,7 +267,7 @@ def death(ant_pos, main_structure, ant_structure):
     """
 
 def init_dispay(main_structure, ant_structure, anthills_structure):
-    """Initialize the display of the UI
+    """Initialize the display of the UI, create the initial game board from scratch
 
     Parameters
     ----------
@@ -278,6 +278,31 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     Version
     -------
     specification: Youlan Collard (v.1 19/02/21)
+    """
+
+def move_ant_on_display():
+    """
+    
+    """
+
+def remove_ant_on_display():
+    """
+    
+    """
+
+def update_lifepoint_on_display():
+    """
+    
+    """
+
+def lift_dirt_on_display():
+    """
+    
+    """
+
+def place_dirt_on_display():
+    """
+    
     """
 
 def life_point(main_structure, ant_structure, ant_position):
