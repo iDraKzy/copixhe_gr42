@@ -313,9 +313,16 @@ def remove_ant_on_display(ant_position,carrying):
     spécification: Maxime Dufrasne  (v.1 22/02/21)
     """
 
-def update_lifepoint_on_display():
+def update_lifepoint_on_display(ant_id, ant_structure,):
     """Update the health bar of an ant on display
+    Parameter
+    ---------
+    ant_structure: Structure containing all the ants (list)
+    ant_id: Id of the desired ant (int)
     
+    Version
+    -------
+    specification: Martin Buchet (v.1 22/02/2021)
     """
 
 def lift_dirt_on_display():
