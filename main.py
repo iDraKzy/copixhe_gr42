@@ -11,8 +11,8 @@ def create_map(path):
     ---------
     path: Path to the file containing the map information (str)
 
-    Return
-    ------
+    Returns
+    -------
     main_structure: Main structure for the map (list)
     ant_structure: List of existing ants (list)
     anthill_structure: List of 2 elements containing the anthills information (list)
@@ -27,8 +27,8 @@ def create_map(path):
 def check_victory(main_structure, anthill_structure):
     """Check if one of the player has win the game and returns the number of the team who has won.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     main_structure: Main structure of the game, containing the map (list)
     anthill_structure: list containing the anthills information (list)
 
@@ -52,10 +52,10 @@ def interpret_order(main_structure, ant_structure, orders):
     ant_structure: Structure containing all the ants (list)
     orders: the input of the user (str)
 
-    Return
-    ------
+    Returns
+    -------
     order_ok: True if order is a True order, False if it isn't (Bool)
-    order_list: return the orders in a list (list)
+    order_list: The orders in a list (list)
     
     Version
     -------
@@ -87,12 +87,12 @@ def validation_attack(attacker_pos, target_pos):
     
     Parameters
     ----------
-    attacker_pos: pos of attacker (list)
-    target_pos: pos of target (list)
+    attacker_pos: Position of attacker (list)
+    target_pos: Position of target (list)
     
     Return
     ------
-    is_in_range: wether the target is in range or not (bool)
+    is_in_range: Wether the target is in range or not (bool)
     
     Version
     -------
@@ -100,18 +100,18 @@ def validation_attack(attacker_pos, target_pos):
     """
 
 def validation_move(origin, destination, main_structure, ant_structure):
-    """check if deplacement is valid and return a boolean
+    """Check if deplacement is valid and return a boolean
     
-    Parameter
-    ---------
-    origin: depart position (list)
-    destination: destination position (list)
+    Parameters
+    ----------
+    origin: Depart position (list)
+    destination: Destination position (list)
     main_structure: Main structure of the game board (list)
     ant_structure: Structure containing all the ants (list)
     
     Return
     ------
-    move_valid: wether move is valid or not (bool)
+    move_valid: Wether move is valid or not (bool)
     
     Version
     -------
@@ -128,8 +128,8 @@ def exec_order(order_list, main_structure, ant_structure):
     main_structure: Main structure of the game board (list)
     ant_structure: Structure containing all the ants (list)
     
-    return
-    ------
+    Returns
+    -------
     main_structure: Modified main structure of the game board (list)
     ant_structure: Modified structure containing all the ants (list)
 
@@ -179,8 +179,8 @@ def place(main_structure, ant_structure, ant_position):
 def attack(target_pos, target_health, ant_pos, ant_strengh):
     """compute damage done 
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     target_health: health of the target (int)
     ant_strengh: strengh of the ant (int)
     target_pos: pos of target (list)
@@ -198,8 +198,8 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
 def move(main_structure, origin, destination):
     """if move valid return the new position of the ant
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     main_structure: main structure containing the game board (list)
     origin: depart position (list)
     destination: destination position (list)
@@ -217,8 +217,8 @@ def move(main_structure, origin, destination):
 def check_level(main_structure, anthill):
     """Check the level of an anthill and returns it.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     main_structure: Main structure of the game, containing the map (list)
     anthill: The anthill to be checked, from the anthill structure (dict)
 
@@ -235,8 +235,8 @@ def check_level(main_structure, anthill):
 def spawn(number_of_turn,ant_structure,main_structure):
     """ Spawn ant 
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     number_of_turn: The number of turn passed (int)
     main_structure: Library of board (list)
     ant_structure: Library of all ants (list)
@@ -313,10 +313,11 @@ def remove_ant_on_display(ant_position,carrying):
     spécification: Maxime Dufrasne  (v.1 22/02/21)
     """
 
-def update_lifepoint_on_display(ant_id, ant_structure,):
+def update_lifepoint_on_display(ant_id, ant_structure):
     """Update the health bar of an ant on display
-    Parameter
-    ---------
+
+    Parameters
+    ----------
     ant_structure: Structure containing all the ants (list)
     ant_id: Id of the desired ant (int)
     
@@ -326,10 +327,9 @@ def update_lifepoint_on_display(ant_id, ant_structure,):
     """
 
 def lift_dirt_on_display(ant_position):
-    """
-    make the dirt disappear and switch the ant to an ant with dirt on display
+    """Make the dirt disappear and switch the ant to an ant with dirt on display
     
-    parameter
+    Parameter
     ---------
     ant_position: the position of the ant who lift the dirt (tupple)
 
@@ -339,11 +339,10 @@ def lift_dirt_on_display(ant_position):
     """
 
 def place_dirt_on_display(ant_position):
-    """
-    make the dirt appear and switch the ant with a dirt to an ant on display
+    """Make the dirt appear and switch the ant with a dirt to an ant on display
 
-    parameter:
-    ----------
+    Parameter
+    ---------
     ant_position: the position of the ant who lift the dirt (tupple)
 
     Version
@@ -352,10 +351,9 @@ def place_dirt_on_display(ant_position):
     """
 
 def add_ant_on_display(ant_structure, ant_id):
-    """
-    Add an ant on display (game board and health bar)
+    """Add an ant on display (game board and health bar)
     
-    parameter:
+    Parameters
     ----------
     ant_structure: the list with all informations on ants (list)
     ant_id: the id of the new ant (int)
