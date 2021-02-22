@@ -305,8 +305,8 @@ def remove_ant_on_display(ant_position,carrying):
 
     Parameters
     ----------
-    ant_position (tuple)
-    carrying (bol)
+    ant_position: Position of an ant (tuple)
+    carrying: If the ant was carrying something (bool)
     
     Version
     -------
