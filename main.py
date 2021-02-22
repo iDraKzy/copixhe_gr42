@@ -44,7 +44,7 @@ def check_victory(main_structure, anthill_structure):
 
 # Validation of orders
 def interpret_order(main_structure, ant_structure, orders):
-    """Take an input, check if it's a true fonction and if it's possible, if both conditions are met, return True , if not, return False and send an error to the player
+    """Take an input, check if it's a true fonction and if it's possible, if both conditions are met, return True , if not, return False and send an error to the player.
 
     Parameters
     ----------
@@ -63,7 +63,7 @@ def interpret_order(main_structure, ant_structure, orders):
     """
 
 def validation_lift(main_structure, ant_structure, ant_pos):
-    """Check if an ant has the force to carry clod and if there is clod where it is
+    """Check if an ant has the force to carry clod and if there is clod where it is.
     
     Parameters
     ----------
@@ -83,7 +83,7 @@ def validation_lift(main_structure, ant_structure, ant_pos):
     """
 
 def validation_attack(attacker_pos, target_pos):
-    """Check if target is in range of the attacker and return a boolean
+    """Check if target is in range of the attacker and return a boolean.
     
     Parameters
     ----------
@@ -100,7 +100,7 @@ def validation_attack(attacker_pos, target_pos):
     """
 
 def validation_move(origin, destination, main_structure, ant_structure):
-    """Check if deplacement is valid and return a boolean
+    """Check if deplacement is valid and return a boolean.
     
     Parameters
     ----------
@@ -120,7 +120,7 @@ def validation_move(origin, destination, main_structure, ant_structure):
 
 # Execution of orders
 def exec_order(order_list, main_structure, ant_structure):
-    """Execute orders and give the structures to each order fonctions
+    """Execute orders and give the structures to each order fonctions.
 
     Parameters
     ---------
@@ -139,7 +139,7 @@ def exec_order(order_list, main_structure, ant_structure):
     """
 
 def lift(main_structure, ant_structure, ant_position):
-    """Lift dirt on Ants
+    """Lift dirt on ants.
 
     Parameters
     ----------
@@ -158,7 +158,7 @@ def lift(main_structure, ant_structure, ant_position):
     """
 
 def place(main_structure, ant_structure, ant_position):
-    """Place dirt on a case
+    """Place dirt on a case.
 
     Parameters
     ----------
@@ -177,7 +177,7 @@ def place(main_structure, ant_structure, ant_position):
     """
 
 def attack(target_pos, target_health, ant_pos, ant_strengh):
-    """Compute damage done 
+    """Compute damage done.
 
     Parameters
     ----------
@@ -196,7 +196,7 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
     """
     
 def move(main_structure, origin, destination):
-    """if move valid return the new position of the ant
+    """if move valid return the new position of the ant.
 
     Parameters
     ----------
@@ -233,7 +233,7 @@ def check_level(main_structure, anthill):
     """
 
 def spawn(number_of_turn,ant_structure,main_structure):
-    """ Spawn ant 
+    """Spawn ant.
 
     Parameters
     ----------
@@ -253,7 +253,7 @@ def spawn(number_of_turn,ant_structure,main_structure):
 
 # Removal of dead ant function
 def death(ant_pos, main_structure, ant_structure):
-    """if function called remove the dead ant
+    """Remove the specified ant.
 
     Parameters
     ----------
@@ -273,7 +273,7 @@ def death(ant_pos, main_structure, ant_structure):
 
 # UI Function
 def init_dispay(main_structure, ant_structure, anthills_structure):
-    """Initialize the display of the UI, create the initial game board from scratch
+    """Initialize the display of the UI, create the initial game board from scratch.
 
     Parameters
     ----------
@@ -287,7 +287,7 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     """
 
 def move_ant_on_display(old_position, new_position):
-    """Change the position of an ant on the dispay
+    """Change the position of an ant on the dispay.
 
     Paremeters
     ----------
@@ -301,7 +301,7 @@ def move_ant_on_display(old_position, new_position):
     """
 
 def remove_ant_on_display(ant_position,carrying):
-    """Remove ant on dispay when she died
+    """Remove ant on dispay when she died.
 
     Parameters
     ----------
@@ -314,7 +314,7 @@ def remove_ant_on_display(ant_position,carrying):
     """
 
 def update_lifepoint_on_display(ant_id, ant_structure):
-    """Update the health bar of an ant on display
+    """Update the health bar of an ant on display.
 
     Parameters
     ----------
@@ -327,7 +327,7 @@ def update_lifepoint_on_display(ant_id, ant_structure):
     """
 
 def lift_dirt_on_display(ant_position):
-    """Make the dirt disappear and switch the ant to an ant with dirt on display
+    """Make the dirt disappear and switch the ant to an ant with dirt on display.
     
     Parameter
     ---------
@@ -339,7 +339,7 @@ def lift_dirt_on_display(ant_position):
     """
 
 def place_dirt_on_display(ant_position):
-    """Make the dirt appear and switch the ant with a dirt to an ant on display
+    """Make the dirt appear and switch the ant with a dirt to an ant on display.
 
     Parameter
     ---------
@@ -351,7 +351,7 @@ def place_dirt_on_display(ant_position):
     """
 
 def add_ant_on_display(ant_structure, ant_id):
-    """Add an ant on display (game board and health bar)
+    """Add an ant on display (game board and health bar).
     
     Parameters
     ----------
@@ -365,7 +365,7 @@ def add_ant_on_display(ant_structure, ant_id):
 
 # Util function
 def return_ant_by_id(ant_structure, ant_id):
-    """Find an ant by its id inside the ant structure
+    """Find an ant by its id inside the ant structure.
 
     Parameters
     ----------
