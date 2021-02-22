@@ -286,14 +286,31 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     """
 
-def move_ant_on_display():
-    """
+def move_ant_on_display(old_position, new_position):
+    """Change the position of an ant on the dispay
+
+    Paremeters
+    ----------
+    old_position: The old position of an ant (tuple)
+    new_position: The new position of an ant (tuple)
+
+    Version
+    -------
+    spécification: Maxime Dufrasne (v.1 22/02/21)
     
     """
 
-def remove_ant_on_display():
-    """
+def remove_ant_on_display(ant_position,carrying):
+    """Remove ant on dispay when she died
+
+    Parameters
+    ----------
+    ant_position (tuple)
+    carrying (bol)
     
+    Version
+    -------
+    spécification: Maxime Dufrasne  (v.1 22/02/21)
     """
 
 def update_lifepoint_on_display():
