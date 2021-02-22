@@ -268,7 +268,7 @@ def death(ant_pos, main_structure, ant_structure):
 
     Version
     -------
-    specification: Martin Buchet (v.1 18/02/2021) (v.2 21/02/2021)
+    specification: Martin Buchet (v.1 21/02/2021)
     """
 
 # UI Function
