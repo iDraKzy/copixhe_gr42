@@ -19,7 +19,7 @@ def create_map(path):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/2021 )
+    specification: Youlan Collard (v.1 18/02/2021)
     
     """
 
