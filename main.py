@@ -268,7 +268,7 @@ def death(ant_pos, main_structure, ant_structure):
 
     Version
     -------
-    specification: Martin Buchet (v.1 21/02/2021)
+    specification: Martin Buchet (v.1 18/02/2021)
     """
 
 # UI Function
@@ -286,59 +286,59 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     """
 
-def move_ant_on_display(old_position, new_position):
-    """Change the position of an ant on the dispay
-
-    Paremeters
-    ----------
-    old_position: The old position of an ant (tuple)
-    new_position: The new position of an ant (tuple)
-
-    Version
-    -------
-    spécification: Maxime Dufrasne (v.1 22/02/21)
+def move_ant_on_display():
+    """
     
     """
 
-def remove_ant_on_display(ant_position,carrying):
-    """Remove ant on dispay when she died
-
-    Parameters
-    ----------
-    ant_position: Position of an ant (tuple)
-    carrying: If the ant was carrying something (bool)
+def remove_ant_on_display():
+    """
     
-    Version
-    -------
-    spécification: Maxime Dufrasne  (v.1 22/02/21)
     """
 
-def update_lifepoint_on_display(ant_id, ant_structure,):
+def update_lifepoint_on_display():
     """Update the health bar of an ant on display
     
-    Parameters
+    """
+
+def lift_dirt_on_display(ant_position):
+    """
+    make the dirt disappear and switch the ant to an ant with dirt on display
+    
+    parameter
+    ---------
+    ant_position: the position of the ant who lift the dirt (tupple)
+
+    Version
+    -------
+    specification: Liam Letot (v.1 22/02/21)
+    """
+
+def place_dirt_on_display(ant_position):
+    """
+    make the dirt appear and switch the ant with a dirt to an ant on display
+
+    parameter:
     ----------
-    ant_structure: Structure containing all the ants (list)
-    ant_id: Id of the desired ant (int)
+    ant_position: the position of the ant who lift the dirt (tupple)
+
+    Version
+    -------
+    specification: Liam Letot (v.1 22/02/21)
+    """
+
+def add_ant_on_display(ant_structure, ant_id):
+    """
+    Add an ant on display (game board and health bar)
+    
+    parameter:
+    ----------
+    ant_structure: the list with all informations on ants (list)
+    ant_id: the id of the new ant (int)
     
     Version
     -------
-    specification: Martin Buchet (v.1 22/02/2021)
-    """
-
-def lift_dirt_on_display():
-    """
-    
-    """
-
-def place_dirt_on_display():
-    """
-    
-    """
-
-def add_ant_on_display():
-    """Add an ant on display (game board and health bar)
-    
+    specification: Liam Letot (v.1 22/02/21)
     """
 
 # Util function
