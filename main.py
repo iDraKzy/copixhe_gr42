@@ -315,8 +315,9 @@ def remove_ant_on_display(ant_position,carrying):
 
 def update_lifepoint_on_display(ant_id, ant_structure,):
     """Update the health bar of an ant on display
-    Parameter
-    ---------
+    
+    Parameters
+    ----------
     ant_structure: Structure containing all the ants (list)
     ant_id: Id of the desired ant (int)
     
