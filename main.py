@@ -1,14 +1,8 @@
-def main(path):
-    """call the others fonctions and count the turns
-    
-    Parameters
-    ----------
-    path : the path to the file used to start the game (str)
-    
-    Version
-    --------
-    Specification : Letot Liam (v.1 18/02/21)
-    """
+#-*- coding: utf-8 -*-
+
+import blessed, math, os, time
+term = blessed.Terminal()
+
 
 def create_map(path):
     """Create the data structure for the map and returns it.
@@ -315,4 +309,24 @@ def return_ant_by_id(ant_structure, ant_id):
     Version
     -------
     specification: Youlan Collard (v.1 21/02/2021)    
+    """
+
+# main function
+def play_game(CPX_file, group_1, type_1, group_2, type_2):
+    """Play a Copixhe game.
+    
+    Parameters
+    ----------
+    CPX_file: name of CPX file (str)
+    group_1: group of player 1 (str)
+    type_1: type of player 1 (str)
+    group_2: group of player 2 (str)
+    type_2: type of player 2 (str)
+    
+    Notes
+    -----
+    Player type is either human, AI or remote.
+    
+    If there is an external referee, set group id to 0 for remote player.
+    
     """
