@@ -19,7 +19,7 @@ def create_map(path):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/2021)
+    specification: Youlan Collard (v.1 18/02/21)
     
     """
 
@@ -38,7 +38,7 @@ def check_victory(main_structure, anthill_structure):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/2021)
+    specification: Youlan Collard (v.1 18/02/21)
     
     """
 
@@ -77,7 +77,7 @@ def validation_lift(main_structure, ant_structure, ant_pos):
 
     Version
     -------
-    specification: Youlan Collard (v.1 21/02/2021)
+    specification: Youlan Collard (v.1 21/02/21)
 
     
     """
@@ -96,7 +96,7 @@ def validation_attack(attacker_pos, target_pos):
     
     Version
     -------
-    specification: Martin Buchet (v.1 21/02/2021)
+    specification: Martin Buchet (v.1 21/02/21)
     """
 
 def validation_move(origin, destination, main_structure, ant_structure):
@@ -115,7 +115,7 @@ def validation_move(origin, destination, main_structure, ant_structure):
     
     Version
     -------
-    specification: Martin Buchet (v.1 21/02/2021)
+    specification: Martin Buchet (v.1 21/02/21)
     """
 
 # Execution of orders
@@ -192,7 +192,7 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
 
     Version
     -------
-    specification: Martin Buchet (v.1 18/02/2021)
+    specification: Martin Buchet (v.1 18/02/21)
     """
     
 def move(main_structure, origin, destination):
@@ -210,7 +210,7 @@ def move(main_structure, origin, destination):
 
     Version
     -------
-    specification: Martin Buchet (v.1 18/02/2021)
+    specification: Martin Buchet (v.1 18/02/21)
     """
 
 # New ants functions
@@ -228,7 +228,7 @@ def check_level(main_structure, anthill):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/2021)
+    specification: Youlan Collard (v.1 18/02/21)
         
     """
 
@@ -268,7 +268,7 @@ def death(ant_pos, main_structure, ant_structure):
 
     Version
     -------
-    specification: Martin Buchet (v.1 18/02/2021)
+    specification: Martin Buchet (v.1 18/02/21)
     """
 
 # UI Function
@@ -323,7 +323,7 @@ def update_lifepoint_on_display(ant_id, ant_structure):
     
     Version
     -------
-    specification: Martin Buchet (v.1 22/02/2021)
+    specification: Martin Buchet (v.1 22/02/21)
     """
 
 def lift_dirt_on_display(ant_position):
@@ -378,7 +378,7 @@ def return_ant_by_id(ant_structure, ant_id):
 
     Version
     -------
-    specification: Youlan Collard (v.1 21/02/2021)    
+    specification: Youlan Collard (v.1 21/02/21)    
     """
 
 # main function
