@@ -61,6 +61,7 @@ def interpret_order(main_structure, ant_structure, orders):
     -------
     Specification : Letot Liam (v.1 18/02/21)
     """
+    pass
 
 def validation_lift(main_structure, ant_structure, ant_pos):
     """Check if an ant has the force to carry clod and if there is clod where it is.
@@ -81,6 +82,7 @@ def validation_lift(main_structure, ant_structure, ant_pos):
 
     
     """
+    pass
 
 def validation_attack(attacker_pos, target_pos):
     """Check if target is in range of the attacker and return a boolean.
@@ -98,6 +100,7 @@ def validation_attack(attacker_pos, target_pos):
     -------
     specification: Martin Buchet (v.1 21/02/21)
     """
+    pass
 
 def validation_move(origin, destination, main_structure, ant_structure):
     """Check if deplacement is valid and return a boolean.
@@ -137,6 +140,7 @@ def exec_order(order_list, main_structure, ant_structure):
     -------
     specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21)
     """
+    pass
 
 def lift(main_structure, ant_structure, ant_position):
     """Lift dirt on ants.
@@ -156,6 +160,7 @@ def lift(main_structure, ant_structure, ant_position):
     -------
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
+    pass
 
 def place(main_structure, ant_structure, ant_position):
     """Place dirt on a case.
@@ -175,6 +180,7 @@ def place(main_structure, ant_structure, ant_position):
     -------
     specification: Maxime Dufrasne (v.1 19/02/21)
     """
+    pass
 
 def attack(target_pos, target_health, ant_pos, ant_strengh):
     """Compute damage done.
@@ -194,6 +200,7 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
     -------
     specification: Martin Buchet (v.1 18/02/21)
     """
+    pass
     
 def move(main_structure, origin, destination):
     """if move valid return the new position of the ant.
@@ -212,6 +219,7 @@ def move(main_structure, origin, destination):
     -------
     specification: Martin Buchet (v.1 18/02/21)
     """
+    pass
 
 # New ants functions
 def check_level(main_structure, anthill):
@@ -231,6 +239,7 @@ def check_level(main_structure, anthill):
     specification: Youlan Collard (v.1 18/02/21)
         
     """
+    pass
 
 def spawn(number_of_turn,ant_structure,main_structure):
     """Spawn ant.
@@ -250,6 +259,7 @@ def spawn(number_of_turn,ant_structure,main_structure):
     -------
     specification: Maxime Dufrasne (v.1 18/02/21)
     """
+    pass
 
 # Removal of dead ant function
 def death(ant_pos, main_structure, ant_structure):
@@ -270,6 +280,7 @@ def death(ant_pos, main_structure, ant_structure):
     -------
     specification: Martin Buchet (v.1 18/02/21)
     """
+    pass
 
 # UI Function
 def init_dispay(main_structure, ant_structure, anthills_structure):
@@ -299,6 +310,7 @@ def move_ant_on_display(old_position, new_position):
     spécification: Maxime Dufrasne (v.1 22/02/21)
     
     """
+    pass
 
 def remove_ant_on_display(ant_position,carrying):
     """Remove ant on dispay when she died.
@@ -312,6 +324,7 @@ def remove_ant_on_display(ant_position,carrying):
     -------
     spécification: Maxime Dufrasne  (v.1 22/02/21)
     """
+    pass
 
 def update_lifepoint_on_display(ant_id, ant_structure):
     """Update the health bar of an ant on display.
@@ -325,6 +338,7 @@ def update_lifepoint_on_display(ant_id, ant_structure):
     -------
     specification: Martin Buchet (v.1 22/02/21)
     """
+    pass
 
 def lift_dirt_on_display(ant_position):
     """Make the dirt disappear and switch the ant to an ant with dirt on display.
@@ -337,6 +351,7 @@ def lift_dirt_on_display(ant_position):
     -------
     specification: Liam Letot (v.1 22/02/21)
     """
+    pass
 
 def place_dirt_on_display(ant_position):
     """Make the dirt appear and switch the ant with a dirt to an ant on display.
@@ -349,6 +364,7 @@ def place_dirt_on_display(ant_position):
     -------
     specification: Liam Letot (v.1 22/02/21)
     """
+    pass
 
 def add_ant_on_display(ant_structure, ant_id):
     """Add an ant on display (game board and health bar).
@@ -362,6 +378,7 @@ def add_ant_on_display(ant_structure, ant_id):
     -------
     specification: Liam Letot (v.1 22/02/21)
     """
+    pass
 
 # Util function
 def return_ant_by_id(ant_structure, ant_id):
@@ -380,6 +397,7 @@ def return_ant_by_id(ant_structure, ant_id):
     -------
     specification: Youlan Collard (v.1 21/02/21)    
     """
+    pass
 
 # main function
 def play_game(CPX_file, group_1, type_1, group_2, type_2):
