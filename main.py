@@ -22,6 +22,7 @@ def create_map(path):
     specification: Youlan Collard (v.1 18/02/21)
     
     """
+    
 
 # Victory function
 def check_victory(main_structure, anthill_structure):
