@@ -85,7 +85,43 @@ def create_map(board_size, anthills, clods):
     # TODO: anthill structure
     # TODO: Add 2 first ants to ant structure
 
-    return main_structure
+    anthill_structure = [
+        {
+            'team': 1,
+            'pos_x': anthills[0][0],
+            'pos_y': anthills[0][1]
+        },
+        {
+            'team': 2,
+            'pos_x': anthills[1][0],
+            'pos_y': anthills[1][1]
+        }
+    ]
+
+    # Maybe replace that with spawn func
+    ant_structure = [
+        {
+            'id': 0,
+            'team': 1,
+            'health': 3,
+            'level': 1,
+            'carrying': False,
+            'dirt_force': None
+        },
+        {
+            'id': 1,
+            'team': 2,
+            'health': 3,
+            'level': 1,
+            'carrying': False,
+            'dirt_force': None
+        }
+    ]
+
+    main_structure[anthill_structure[0]['pos_x']][anthill_structure[0]['pos_y']]['ant'] = 0
+    main_structure[anthill_structure[1]['pos_x']][anthill_structure[1]['pos_y']]['ant'] = 1
+
+    return main_structure, ant_structure, anthill_structure
         
 
     
@@ -287,9 +323,10 @@ def check_level(main_structure, anthill):
     specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21)
         
     """
+
     pass
 
-def spawn(number_of_turn,ant_structure,main_structure):
+def spawn(number_of_turn, main_structure, ant_structure, anthill_structure):
     """Spawn ant.
 
     Parameters
@@ -297,6 +334,7 @@ def spawn(number_of_turn,ant_structure,main_structure):
     number_of_turn: the number of turn passed (int)
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
+    anthill_structure: library of all anthills (list)
 
     Returns
     -------
