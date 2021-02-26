@@ -25,8 +25,14 @@ def create_map(path):
     fh = open(path, 'r')
     lines = fh.readlines()
     board_size = lines[1].split(' ')
-    
+    anthill_pos_team_1 = lines[3].split(' ')
+    anthill_pos_team_2 = lines[3].split(' ')
 
+    anthill_structure = [
+        {'team': 1, 'pos_x': anthill_pos_team_1[0], 'pos_y': anthill_pos_team_1[1]},
+        {'team': 2, 'pos_x': anthill_pos_team_2[0], 'pos_y': anthill_pos_team_2[1]}
+    ]
+    
 
 # Victory function
 def check_victory(main_structure, anthill_structure):
@@ -135,15 +141,10 @@ def exec_order(order_list, main_structure, ant_structure):
     order_list: the list of orders the user imput (list)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
-    
-    Returns
-    -------
-    main_structure: modified main structure of the game board (list)
-    ant_structure: modified structure containing all the ants (list)
 
     Version
     -------
-    specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21)
+    specification: Maxime Dufrasne, Liam Letot (v.2 26/02/21)
     """
     pass
 
@@ -156,14 +157,9 @@ def lift(main_structure, ant_structure, ant_position):
     ant_structure: library of all ants (list)
     ant_position: position of the ant that will lift dirt (tuple)
 
-    Returns
-    -------
-    ant_structure: modified ant structure (list)
-    main_structure: modified main structure (list)
-
     Version
     -------
-    specification: Maxime Dufrasne (v.1 19/02/21)
+    specification: Maxime Dufrasne (v.2 26/02/21)
     """
     pass
 
@@ -176,14 +172,9 @@ def place(main_structure, ant_structure, ant_position):
     ant_structure: library of all ants (list)
     ant_position: position of the ant that will place dirt (tuple)
 
-    Returns
-    -------
-    main_structure: modified main structure (list)
-    ant_structure: modified ant structure (list)
-
     Version
     -------
-    specification: Maxime Dufrasne (v.1 19/02/21)
+    specification: Maxime Dufrasne (v.2 26/02/21)
     """
     pass
 
@@ -197,13 +188,9 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
     target_pos: position of target (list)
     ant_structure: structure containing the ants (list)
 
-    Return
-    ------
-    ant_structure: modified ant structure (list)
-
     Version
     -------
-    specification: Martin Buchet (v.1 18/02/21)
+    specification: Martin Buchet (v.2 26/02/21)
     """
     pass
     
@@ -216,13 +203,9 @@ def move(main_structure, origin, destination):
     origin: depart position (list)
     destination: destination position (list)
 
-    Return
-    ------
-    main_structure: modified main structure (list)
-
     Version
     -------
-    specification: Martin Buchet (v.1 18/02/21)
+    specification: Martin Buchet (v.2 26/02/21)
     """
     pass
 
@@ -241,7 +224,7 @@ def check_level(main_structure, anthill):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/21)
+    specification: Youlan Collard (v.2 26/02/21)
         
     """
     pass
@@ -276,14 +259,9 @@ def death(ant_pos, main_structure, ant_structure):
     main_structure: main structure of the board (list)
     ant_structure: structure containing the ants (list)
 
-    Return
-    ------
-    main_structure: the modified main structure (list)
-    ant_structure: the modified ant structure (list)
-
     Version
     -------
-    specification: Martin Buchet (v.1 18/02/21)
+    specification: Martin Buchet (v.2 26/02/21)
     """
     pass
 
