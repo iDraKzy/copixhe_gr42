@@ -23,7 +23,7 @@ def parse_map_file(path):
     
     """
 
-def create_map(path):
+def create_map(board_size, anthills, clods):
     """Create the data structure for the map and returns it.
 
     Parameters
