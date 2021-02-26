@@ -508,20 +508,14 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
     #Note (Youlan): Change in the way create_map should be called, see spec
 
-    # number_of_turn = 0
+    number_of_turn = 0
 
-    # main_structure, ant_structure, anthill_structure = create_map(CPX_file)
-    # init_dispay(main_structure, ant_structure)
+    main_structure, ant_structure, anthill_structure = create_map(CPX_file)
+    init_dispay(main_structure, ant_structure)
 
-    # while not check_victory:
-    #     orders = input('what do you want to do?')
-    #     orders_list = interpret_order(main_structure, ant_structure, orders)
-    #     exec_order(orders_list, main_structure, ant_structure)
-    #     spawn(number_of_turn, ant_structure, main_structure)
-    #     number_of_turn += 1
-
-board_size, anthills_pos, clods_info = parse_map_file('./basic.cpx')
-
-main_structure = create_map(board_size, anthills_pos, clods_info)
-
-print(main_structure)
+    while not check_victory:
+        orders = input('what do you want to do?')
+        orders_list = interpret_order(main_structure, ant_structure, orders)
+        exec_order(orders_list, main_structure, ant_structure)
+        spawn(number_of_turn, ant_structure, main_structure)
+        number_of_turn += 1
