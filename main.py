@@ -22,7 +22,11 @@ def create_map(path):
     specification: Youlan Collard (v.1 18/02/21)
     
     """
+    fh = open(path, 'r')
+    lines = fh.readlines()
+    board_size = lines[1].split(' ')
     
+
 
 # Victory function
 def check_victory(main_structure, anthill_structure):
