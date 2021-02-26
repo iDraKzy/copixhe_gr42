@@ -33,12 +33,18 @@ def parse_map_file(path):
     anthills_pos = []
 
     for line_index in range(3, 5):
-        anthills_pos.append(lines[line_index].split(' '))
+        anthill_pos = lines[line_index].split(' ')
+        for index in range(len(anthill_pos)):
+            anthill_pos[index] = int(anthill_pos[index])
+        anthills_pos.append(anthill_pos)
     
     clods_info = []
 
-    for line_index_clods in range(6, lines.length):
-        clods_info.append(lines[line_index_clods].split(' '))
+    for line_index_clods in range(6, len(lines)):
+        clod_info = lines[line_index_clods].split(' ')
+        for index in range(len(clod_info)):
+            clod_info[index] = int(clod_info[index])
+        clods_info.append(clod_info)
 
     return board_size, anthills_pos, clods_info
 
@@ -62,7 +68,25 @@ def create_map(board_size, anthills, clods):
     specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21) 
     implementation: Youlan Collard
     """
-    pass
+    main_structure = []
+    for y in range(int(board_size[1])):
+        row = []
+        for x in range(int(board_size[0])):
+            cell = {
+                'ant': None,
+                'dirt': None
+            }
+            row.append(cell)
+        main_structure.append(row)
+    
+    for clod in clods:
+        main_structure[clod[0]][clod[1]]['dirt'] = clod[2]
+
+    # TODO: anthill structure
+    # TODO: Add 2 first ants to ant structure
+
+    return main_structure
+        
 
     
     
@@ -446,14 +470,20 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
     #Note (Youlan): Change in the way create_map should be called, see spec
 
-    number_of_turn = 0
+    # number_of_turn = 0
 
-    main_structure, ant_structure, anthill_structure = create_map(CPX_file)
-    init_dispay(main_structure, ant_structure)
+    # main_structure, ant_structure, anthill_structure = create_map(CPX_file)
+    # init_dispay(main_structure, ant_structure)
 
-    while not check_victory:
-        orders = input('what do you want to do?')
-        orders_list = interpret_order(main_structure, ant_structure, orders)
-        exec_order(orders_list, main_structure, ant_structure)
-        spawn(number_of_turn, ant_structure, main_structure)
-        number_of_turn += 1
+    # while not check_victory:
+    #     orders = input('what do you want to do?')
+    #     orders_list = interpret_order(main_structure, ant_structure, orders)
+    #     exec_order(orders_list, main_structure, ant_structure)
+    #     spawn(number_of_turn, ant_structure, main_structure)
+    #     number_of_turn += 1
+
+board_size, anthills_pos, clods_info = parse_map_file('./basic.cpx')
+
+main_structure = create_map(board_size, anthills_pos, clods_info)
+
+print(main_structure)
