@@ -20,8 +20,26 @@ def parse_map_file(path):
     Version
     -------
     specification: Youlan Collard (v.1 26/02/21)
+    implementation: Youlan Collard (v.1 26/02/21)
     
     """
+
+    fh = open(path, 'r')
+    lines = fh.readlines()
+
+    board_size = lines[1].split(' ')
+
+    anthills_pos = []
+
+    for line_index in range(3, 5):
+        anthills_pos.append(lines[line_index].split(' '))
+    
+    clods_pos = []
+
+    for line_index_clods in range(6, lines.length):
+        clods_pos.append(lines[line_index_clods].split(' '))
+
+    return board_size, anthills_pos, clods_pos
 
 def create_map(board_size, anthills, clods):
     """Create the data structure for the map and returns it.
@@ -43,6 +61,8 @@ def create_map(board_size, anthills, clods):
     specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21)
     
     """
+
+    
     
 
 # Victory function
