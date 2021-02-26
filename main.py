@@ -4,12 +4,33 @@ import blessed, math, os, time
 term = blessed.Terminal()
 
 # Initialize data structure
-def create_map(path):
-    """Create the data structure for the map and returns it.
+def parse_map_file(path):
+    """Parse the information from the cpx file.
 
     Parameter
     ---------
-    path: path to the file containing the map information (str)
+    path: path to the cpx file containing the map information (str)
+
+    Returns
+    -------
+    board_size: Size of the board (tuple)
+    antthills: Anthills's positions (list)
+    clods: clods's positions (list)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 26/02/2021)
+    
+    """
+
+def create_map(path):
+    """Create the data structure for the map and returns it.
+
+    Parameters
+    ----------
+    board_size: Size of the game board (tuple)
+    anthills: Anthills's positions (list)
+    clods: clods's positions (list)
 
     Returns
     -------
@@ -19,19 +40,9 @@ def create_map(path):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/21)
+    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/2021)
     
     """
-    fh = open(path, 'r')
-    lines = fh.readlines()
-    board_size = lines[1].split(' ')
-    anthill_pos_team_1 = lines[3].split(' ')
-    anthill_pos_team_2 = lines[3].split(' ')
-
-    anthill_structure = [
-        {'team': 1, 'pos_x': anthill_pos_team_1[0], 'pos_y': anthill_pos_team_1[1]},
-        {'team': 2, 'pos_x': anthill_pos_team_2[0], 'pos_y': anthill_pos_team_2[1]}
-    ]
     
 
 # Victory function
@@ -144,7 +155,7 @@ def exec_order(order_list, main_structure, ant_structure):
 
     Version
     -------
-    specification: Maxime Dufrasne, Liam Letot (v.2 26/02/21)
+    specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21) (v.2 26/02/21)
     """
     pass
 
@@ -159,7 +170,7 @@ def lift(main_structure, ant_structure, ant_position):
 
     Version
     -------
-    specification: Maxime Dufrasne (v.2 26/02/21)
+    specification: Maxime Dufrasne (v.1 19/02/21) (v.2 26/02/21)
     """
     pass
 
@@ -174,7 +185,7 @@ def place(main_structure, ant_structure, ant_position):
 
     Version
     -------
-    specification: Maxime Dufrasne (v.2 26/02/21)
+    specification: Maxime Dufrasne (v.1 19/02/21) (v.2 26/02/21)
     """
     pass
 
@@ -190,7 +201,7 @@ def attack(target_pos, target_health, ant_pos, ant_strengh):
 
     Version
     -------
-    specification: Martin Buchet (v.2 26/02/21)
+    specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
     """
     pass
     
@@ -205,7 +216,7 @@ def move(main_structure, origin, destination):
 
     Version
     -------
-    specification: Martin Buchet (v.2 26/02/21)
+    specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
     """
     pass
 
@@ -224,7 +235,7 @@ def check_level(main_structure, anthill):
 
     Version
     -------
-    specification: Youlan Collard (v.2 26/02/21)
+    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21)
         
     """
     pass
@@ -261,7 +272,7 @@ def death(ant_pos, main_structure, ant_structure):
 
     Version
     -------
-    specification: Martin Buchet (v.2 26/02/21)
+    specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
     """
     pass
 
