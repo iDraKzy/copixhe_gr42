@@ -166,6 +166,7 @@ def validation_move(origin, destination, main_structure, ant_structure):
     -------
     specification: Martin Buchet (v.1 21/02/21)
     """
+    pass
 
 # Execution of orders
 def exec_order(order_list, main_structure, ant_structure):
