@@ -35,7 +35,7 @@ def parse_map_file(path):
     for line_index in range(3, 5):
         anthill_pos = lines[line_index].split(' ')
         for index in range(len(anthill_pos)):
-            anthill_pos[index] = int(anthill_pos[index])
+            anthill_pos[index] = int(anthill_pos[index]) - 1
         anthills_pos.append(anthill_pos)
     
     clods_info = []
@@ -43,7 +43,7 @@ def parse_map_file(path):
     for line_index_clods in range(6, len(lines)):
         clod_info = lines[line_index_clods].split(' ')
         for index in range(len(clod_info)):
-            clod_info[index] = int(clod_info[index])
+            clod_info[index] = int(clod_info[index]) - 1
         clods_info.append(clod_info)
 
     return board_size, anthills_pos, clods_info
@@ -69,9 +69,9 @@ def create_map(board_size, anthills, clods):
     implementation: Youlan Collard
     """
     main_structure = []
-    for y in range(int(board_size[1])):
+    for x in range(int(board_size[0])):
         row = []
-        for x in range(int(board_size[0])):
+        for y in range(int(board_size[1])):
             cell = {
                 'ant': None,
                 'dirt': None
