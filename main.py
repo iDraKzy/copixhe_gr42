@@ -26,6 +26,7 @@ def parse_map_file(path):
 
     fh = open(path, 'r')
     lines = fh.readlines()
+    fh.close()
 
     board_size = lines[1].split(' ')
 
