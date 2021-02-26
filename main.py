@@ -35,12 +35,12 @@ def parse_map_file(path):
     for line_index in range(3, 5):
         anthills_pos.append(lines[line_index].split(' '))
     
-    clods_pos = []
+    clods_info = []
 
     for line_index_clods in range(6, lines.length):
-        clods_pos.append(lines[line_index_clods].split(' '))
+        clods_info.append(lines[line_index_clods].split(' '))
 
-    return board_size, anthills_pos, clods_pos
+    return board_size, anthills_pos, clods_info
 
 def create_map(board_size, anthills, clods):
     """Create the data structure for the map and returns it.
@@ -49,7 +49,7 @@ def create_map(board_size, anthills, clods):
     ----------
     board_size: Size of the game board (tuple)
     anthills: Anthills's positions (list)
-    clods: clods's positions (list)
+    clods: clods's informations (list)
 
     Returns
     -------
