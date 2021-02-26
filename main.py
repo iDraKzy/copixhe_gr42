@@ -19,7 +19,7 @@ def parse_map_file(path):
 
     Version
     -------
-    specification: Youlan Collard (v.1 26/02/2021)
+    specification: Youlan Collard (v.1 26/02/21)
     
     """
 
@@ -40,7 +40,7 @@ def create_map(path):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/2021)
+    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21)
     
     """
     
