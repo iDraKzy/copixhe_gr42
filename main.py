@@ -423,7 +423,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     init_dispay(main_structure, ant_structure)
 
     while not check_victory(number_of_turn, main_structure, anthill_structure):
-        orders = input('what do you want to do?')
+        orders = input()
         orders_list = interpret_order(main_structure, ant_structure, orders)
         exec_order(orders_list, main_structure, ant_structure)
         spawn(number_of_turn, ant_structure, main_structure)
