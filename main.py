@@ -59,9 +59,10 @@ def create_map(board_size, anthills, clods):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21)
-    
+    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21) 
+    implementation: Youlan Collard
     """
+    pass
 
     
     
@@ -82,8 +83,10 @@ def check_victory(main_structure, anthill_structure):
     Version
     -------
     specification: Youlan Collard (v.1 18/02/21)
+    implementation: Maxime Dufrasne
     
     """
+    pass
 
 # Validation of orders
 def interpret_order(main_structure, ant_structure, orders):
@@ -310,7 +313,9 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     Version
     -------
     specification: Youlan Collard (v.1 19/02/21)
+    implementation: Martin Buchet
     """
+    pass
 
 def move_ant_on_display(old_position, new_position):
     """Change the position of an ant on the dispay.
