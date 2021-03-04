@@ -396,9 +396,9 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     #clear screen and hide the cursor
     print(term.home + term.clear + term.hide_cursor)
 
-    print(ulcorner + (2*hline + ttee)*(line-1) + 2*hline + urcorner)
+    print(ulcorner + (2*hline + ttee)*(col - 1) + 2*hline + urcorner)
     for 
-        print((vline + 2*space)*(line - 1) + vline/n (ltee + 2*space)*line - 1 +rtee)
+        print((vline + 2*space)*(col - 1) + vline/n (ltee + 2*space)*(col - 1) + rtee)
 
 
 
