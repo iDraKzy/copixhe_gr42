@@ -376,7 +376,7 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     Version
     -------
     specification: Youlan Collard (v.1 19/02/21)
-    implementation: Martin Buchet
+    implementation: Martin Buchet, Youlan Collard (v.1 04/03/21)
     """
     llcorner = "└"
     ulcorner = "┌"
