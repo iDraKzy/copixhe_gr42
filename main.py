@@ -378,9 +378,28 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     implementation: Martin Buchet
     """
+    llcorner = "└"
+    ulcorner = "┌"
+    lrcorner = "┘"
+    urcorner = "┐"
+    hline = "─"
+    bigplus = "┼"
+    vline = "│"
+    ttee = "┬"
+    btee = "┴"
+    ltee = "├"
+    rtee = "┤"
+    space = " "
+    line = 20
+    col = 20
 
     #clear screen and hide the cursor
     print(term.home + term.clear + term.hide_cursor)
+
+    print(ulcorner + (2*hline + ttee)*(line-1) + 2*hline + urcorner)
+    for 
+        print((vline + 2*space)*(line - 1) + vline/n (ltee + 2*space)*line - 1 +rtee)
+
 
 
 
