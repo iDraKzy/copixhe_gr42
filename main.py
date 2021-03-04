@@ -393,12 +393,13 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     line = 20
     col = 20
 
-    #clear screen and hide the cursor
+    # clear screen and hide the cursor
     print(term.home + term.clear + term.hide_cursor)
-
+    # print board 
     print(ulcorner + (2*hline + ttee)*(col - 1) + 2*hline + urcorner)
-    for 
-        print((vline + 2*space)*(col - 1) + vline/n (ltee + 2*space)*(col - 1) + rtee)
+    for x in range(col + 1)
+        print((vline + 2*space)*(col - 1) + vline/n ltee + (2*space + bigplus)*(col - 1) + rtee)
+    print(llcorner + (2*hline + btee)*(col - 1) + lrcorner)
 
 
 
