@@ -390,10 +390,10 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     ltee = "├"
     rtee = "┤"
     space = " "
-    line = 20
-    col = 20
+    row = len(main_structure)
+    col = len(main_structure[0])
 
-    print(term.clear + term.home + term.hide_cursor)
+    print(term.clear + term.home)
     # print grid
     print(ulcorner + (4*hline + ttee)*(col - 1) + 4*hline + urcorner)
     for x in range(line - 1):
