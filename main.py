@@ -378,7 +378,11 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     implementation: Martin Buchet
     """
-    pass
+
+    #clear screen and hide the cursor
+    print(term.home + term.clear + term.hide_cursor)
+
+
 
 def move_ant_on_display(old_position, new_position):
     """Change the position of an ant on the dispay.
