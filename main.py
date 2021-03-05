@@ -493,10 +493,8 @@ def place_dirt_on_display(ant_position):
     """
     pass
 
-def add_ant_on_display(ant_structure, ant_id):
+def add_ant_on_display(ant_structure, ant_id, ant_pos):
     """Add an ant on display (game board and health bar).
-
-    TO VALIDATE
     
     Parameters
     ----------
@@ -506,9 +504,9 @@ def add_ant_on_display(ant_structure, ant_id):
     
     Version
     -------
-    specification: Liam Letot (v.1 22/02/21)
+    specification: Liam Letot (v.1 22/02/21) (v.2 05/03/21)
     """
-    pass
+    
 
 # Util function
 def return_ant_by_id(ant_structure, ant_id):
@@ -573,5 +571,7 @@ def test():
     board_size, anthills, clods = parse_map_file("./basic.cpx")
     main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
     init_dispay(main_structure, ant_structure, anthills_structure)
+
+    print(term.move(2, 3) + "⚇")
 
 test()
