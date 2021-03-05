@@ -188,6 +188,7 @@ def interpret_order(main_structure, ant_structure, orders):
     Version
     -------
     Specification : Letot Liam (v.1 18/02/21)
+    implementation: Youlan Collard
     """
     pass
 
@@ -263,6 +264,7 @@ def exec_order(order_list, main_structure, ant_structure):
     Version
     -------
     specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21) (v.2 26/02/21)
+    implementation: Youlan Collard
     """
     pass
 
@@ -415,14 +417,14 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     row = len(main_structure)
     col = len(main_structure[0])
 
-    print(term.clear + term.home)
+    print(term.home + term.clear + term.hide_cursor)
     # print grid
-    print(ulcorner + (4*hline + ttee)*(col - 1) + 4*hline + urcorner)
+    print(term.move(0,0) + ulcorner + (3*hline + ttee)*(col - 1) + 3*hline + urcorner)
     for x in range(row - 1):
-        print((vline + 4*space)*col + vline)
-        print(ltee + (4*hline + bigplus)*(col - 1) + 4*hline + rtee)
-    print((vline + 4*space)*col + vline)
-    print(llcorner + (4*hline + btee)*(col - 1) + 4*hline + lrcorner)
+        print((vline + 3*space)*col + vline)
+        print(ltee + (3*hline + bigplus)*(col - 1) + 3*hline + rtee)
+    print((vline + 3*space)*col + vline)
+    print(llcorner + (3*hline + btee)*(col - 1) + 3*hline + lrcorner)
 
 def move_ant_on_display(old_position, new_position):
     """Change the position of an ant on the dispay.
@@ -434,7 +436,7 @@ def move_ant_on_display(old_position, new_position):
 
     Version
     -------
-    spécification: Maxime Dufrasne (v.1 22/02/21)
+    specification: Maxime Dufrasne (v.1 22/02/21)
     
     """
     pass
@@ -449,7 +451,7 @@ def remove_ant_on_display(ant_position,carrying):
     
     Version
     -------
-    spécification: Maxime Dufrasne  (v.1 22/02/21)
+    specification: Maxime Dufrasne  (v.1 22/02/21)
     """
     pass
 
@@ -572,7 +574,7 @@ def test():
     board_size, anthills, clods = parse_map_file("./basic.cpx")
     main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
     init_dispay(main_structure, ant_structure, anthills_structure)
+    print(len(main_structure))
 
-    print(term.move(2, 3) + "⚇")
-
+    print(term.move(1, 3) + "⚇")
 test()
