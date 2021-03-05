@@ -525,7 +525,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     
     If there is an external referee, set group id to 0 for remote player.
     
-      Version
+    Version
     -------
     implementation : Liam Letot (v.1 26/02/21)
     
@@ -537,9 +537,19 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
     main_structure, ant_structure, anthill_structure = create_map(CPX_file)
     init_dispay(main_structure, ant_structure)
+    
+    with open(CPX_file) as f:
+    lines= f.readlines
+    f.close()
 
-    while not check_victory:
-        orders = input('what do you want to do?')
+    board_size = lines[1]
+    anthills = lines[3:5]
+    clods = lines[5: ]
+    
+    create_map(board_size, anthills, clods)
+    
+    while not check_victory(number_of_turn, main_structure, anthill_structure):
+        orders = input()
         orders_list = interpret_order(main_structure, ant_structure, orders)
         exec_order(orders_list, main_structure, ant_structure)
         spawn(number_of_turn, ant_structure, main_structure)
