@@ -150,7 +150,7 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     """
     pass
 
-def check_dirt(main_structure)
+def check_dirt(main_structure):
     """Check the number of dirt around anthill
 
     Parameter
