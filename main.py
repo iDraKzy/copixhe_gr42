@@ -19,18 +19,43 @@ def parse_map_file(path):
 
     Version
     -------
-    specification: Youlan Collard (v.1 26/02/2021)
+    specification: Youlan Collard (v.1 26/02/21)
+    implementation: Youlan Collard (v.1 26/02/21)
     
     """
 
-def create_map(path):
+    fh = open(path, 'r')
+    lines = fh.readlines()
+    fh.close()
+
+    board_size = lines[1].split(' ')
+
+    anthills_pos = []
+
+    for line_index in range(3, 5):
+        anthill_pos = lines[line_index].split(' ')
+        for index in range(len(anthill_pos)):
+            anthill_pos[index] = int(anthill_pos[index]) - 1
+        anthills_pos.append(anthill_pos)
+    
+    clods_info = []
+
+    for line_index_clods in range(6, len(lines)):
+        clod_info = lines[line_index_clods].split(' ')
+        for index in range(len(clod_info)):
+            clod_info[index] = int(clod_info[index]) - 1
+        clods_info.append(clod_info)
+
+    return board_size, anthills_pos, clods_info
+
+def create_map(board_size, anthills, clods):
     """Create the data structure for the map and returns it.
 
     Parameters
     ----------
     board_size: Size of the game board (tuple)
     anthills: Anthills's positions (list)
-    clods: clods's positions (list)
+    clods: clods's informations (list)
 
     Returns
     -------
@@ -40,9 +65,66 @@ def create_map(path):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/2021)
-    
+    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21) 
+    implementation: Youlan Collard
     """
+    main_structure = []
+    for x in range(int(board_size[0])):
+        row = []
+        for y in range(int(board_size[1])):
+            cell = {
+                'ant': None,
+                'dirt': None
+            }
+            row.append(cell)
+        main_structure.append(row)
+    
+    for clod in clods:
+        main_structure[clod[0]][clod[1]]['dirt'] = clod[2]
+
+    # TODO: anthill structure
+    # TODO: Add 2 first ants to ant structure
+
+    anthill_structure = [
+        {
+            'team': 1,
+            'pos_x': anthills[0][0],
+            'pos_y': anthills[0][1]
+        },
+        {
+            'team': 2,
+            'pos_x': anthills[1][0],
+            'pos_y': anthills[1][1]
+        }
+    ]
+
+    # Maybe replace that with spawn func
+    ant_structure = [
+        {
+            'id': 0,
+            'team': 1,
+            'health': 3,
+            'level': 1,
+            'carrying': False,
+            'dirt_force': None
+        },
+        {
+            'id': 1,
+            'team': 2,
+            'health': 3,
+            'level': 1,
+            'carrying': False,
+            'dirt_force': None
+        }
+    ]
+
+    main_structure[anthill_structure[0]['pos_x']][anthill_structure[0]['pos_y']]['ant'] = 0
+    main_structure[anthill_structure[1]['pos_x']][anthill_structure[1]['pos_y']]['ant'] = 1
+
+    return main_structure, ant_structure, anthill_structure
+        
+
+    
     
 
 # Victory function
@@ -61,8 +143,10 @@ def check_victory(main_structure, anthill_structure):
     Version
     -------
     specification: Youlan Collard (v.1 18/02/21)
+    implementation: Maxime Dufrasne
     
     """
+    pass
 
 # Validation of orders
 def interpret_order(main_structure, ant_structure, orders):
@@ -142,6 +226,7 @@ def validation_move(origin, destination, main_structure, ant_structure):
     -------
     specification: Martin Buchet (v.1 21/02/21)
     """
+    pass
 
 # Execution of orders
 def exec_order(order_list, main_structure, ant_structure):
@@ -238,9 +323,10 @@ def check_level(main_structure, anthill):
     specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21)
         
     """
+
     pass
 
-def spawn(number_of_turn,ant_structure,main_structure):
+def spawn(number_of_turn, main_structure, ant_structure, anthill_structure):
     """Spawn ant.
 
     Parameters
@@ -248,6 +334,7 @@ def spawn(number_of_turn,ant_structure,main_structure):
     number_of_turn: the number of turn passed (int)
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
+    anthill_structure: library of all anthills (list)
 
     Returns
     -------
@@ -289,7 +376,31 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     Version
     -------
     specification: Youlan Collard (v.1 19/02/21)
+    implementation: Martin Buchet, Youlan Collard (v.1 04/03/21)
     """
+    llcorner = "└"
+    ulcorner = "┌"
+    lrcorner = "┘"
+    urcorner = "┐"
+    hline = "─"
+    bigplus = "┼"
+    vline = "│"
+    ttee = "┬"
+    btee = "┴"
+    ltee = "├"
+    rtee = "┤"
+    space = " "
+    row = len(main_structure)
+    col = len(main_structure[0])
+
+    print(term.clear + term.home)
+    # print grid
+    print(ulcorner + (4*hline + ttee)*(col - 1) + 4*hline + urcorner)
+    for x in range(line - 1):
+        print((vline + 4*space)*col + vline)
+        print(ltee + (4*hline + bigplus)*(col - 1) + 4*hline + rtee)
+    print((vline + 4*space)*col + vline)
+    print(llcorner + (4*hline + btee)*(col - 1) + 4*hline + lrcorner)
 
 def move_ant_on_display(old_position, new_position):
     """Change the position of an ant on the dispay.
@@ -416,6 +527,8 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     implementation : Liam Letot (v.1 26/02/21)
     
     """
+
+    #Note (Youlan): Change in the way create_map should be called, see spec
 
     number_of_turn = 0
 
