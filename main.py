@@ -531,16 +531,13 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     
     """
 
-    #Note (Youlan): Change in the way create_map should be called, see spec
+    
 
     number_of_turn = 0
-
-    main_structure, ant_structure, anthill_structure = create_map(CPX_file)
-    init_dispay(main_structure, ant_structure)
-    
     board_size, anthills, clods = parse_map_file(CPX_file)
-    
-    create_map(board_size, anthills, clods)
+
+    init_dispay(main_structure, ant_structure)
+    main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
     
     while not check_victory(number_of_turn, main_structure, anthill_structure):
         orders = input()
