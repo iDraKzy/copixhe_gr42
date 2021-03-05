@@ -128,23 +128,45 @@ def create_map(board_size, anthills, clods):
     
 
 # Victory function
-def check_victory(main_structure, anthill_structure):
+def check_victory(main_structure, anthill_structure, number_of_turn):
     """Check if one of the player has win the game and returns the number of the team who has won.
 
     Parameters
     ----------
     main_structure: main structure of the game, containing the map (list)
-    anthill_structure: list containing the anthills information (list)
+    anthill_structure: 
+    number_of_turn: The number of turn for this game (int)
 
     Return
     ------
     won: number of the team who has won, None if nobody has (int)
+    
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/21)
+    specification: Youlan Collard (v.1 18/02/21). Maxime Dufrasne (v.2 05/03/21)
     implementation: Maxime Dufrasne
     
+    """
+    pass
+
+def check_dirt(main_structure)
+    """Check the number of dirt around anthill
+
+    Parameter
+    ----------
+    main_structure: main structure of the game, containing the map (list)
+    anthill_structure: (list)
+
+    Return
+    -------
+    nbr_dirt_pl_1: Number of dirt player 1 has around his anthill (int)
+    nbr_dirt_pl_2: Number of dirt player 2 has around his anthill (int)
+
+
+    Version
+    --------
+    spécification: Maxime Dufrasne (v.1 05/02/21)
     """
     pass
 
