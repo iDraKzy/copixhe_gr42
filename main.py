@@ -368,6 +368,7 @@ def spawn(number_of_turn, main_structure, ant_structure, anthill_structure):
     Version
     -------
     specification: Maxime Dufrasne (v.1 18/02/21)
+    implementation: Martin Buchet
     """
     pass
 
