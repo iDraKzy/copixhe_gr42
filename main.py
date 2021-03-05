@@ -396,7 +396,7 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     print(term.clear + term.home)
     # print grid
     print(ulcorner + (4*hline + ttee)*(col - 1) + 4*hline + urcorner)
-    for x in range(line - 1):
+    for x in range(row - 1):
         print((vline + 4*space)*col + vline)
         print(ltee + (4*hline + bigplus)*(col - 1) + 4*hline + rtee)
     print((vline + 4*space)*col + vline)
@@ -541,3 +541,11 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         exec_order(orders_list, main_structure, ant_structure)
         spawn(number_of_turn, ant_structure, main_structure)
         number_of_turn += 1
+
+def test():
+
+    board_size, anthills, clods = parse_map_file("./basic.cpx")
+    main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
+    init_dispay(main_structure, ant_structure, anthills_structure)
+
+test()
