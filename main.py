@@ -473,11 +473,14 @@ def place_dirt_on_display(ant_position):
 
 def add_ant_on_display(ant_structure, ant_id):
     """Add an ant on display (game board and health bar).
+
+    TO VALIDATE
     
     Parameters
     ----------
     ant_structure: the list with all informations on ants (list)
     ant_id: the id of the new ant (int)
+    ant_pos: Position of the ant to add (tuple)
     
     Version
     -------
