@@ -42,8 +42,9 @@ def parse_map_file(path):
 
     for line_index_clods in range(6, len(lines)):
         clod_info = lines[line_index_clods].split(' ')
-        for index in range(len(clod_info)):
+        for index in range(2):
             clod_info[index] = int(clod_info[index]) - 1
+        clod_info[2] = int(clod_info[index])
         clods_info.append(clod_info)
 
     return board_size, anthills_pos, clods_info
