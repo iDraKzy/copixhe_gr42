@@ -351,12 +351,11 @@ def check_level(main_structure, anthill):
 
     pass
 
-def spawn(number_of_turn, main_structure, ant_structure, anthill_structure):
+def spawn(main_structure, ant_structure, anthill_structure):
     """Spawn ant.
 
     Parameters
     ----------
-    number_of_turn: the number of turn passed (int)
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
     anthill_structure: library of all anthills (list)
@@ -368,7 +367,7 @@ def spawn(number_of_turn, main_structure, ant_structure, anthill_structure):
 
     Version
     -------
-    specification: Maxime Dufrasne (v.1 18/02/21)
+    specification: Maxime Dufrasne (v.1 18/02/21) (v.2 10/03/21)
     implementation: Liam Letot (v.1 10/03/21)
     """
     for anthill in anthill_structure:
@@ -390,6 +389,7 @@ def spawn(number_of_turn, main_structure, ant_structure, anthill_structure):
         'dirt_force': None
     })
     main_structure[anthill['pos_x']][anthill['pos_y']]['ant'] = len(ant_structure)-1
+    return main_structure, ant_structure
 
 # Removal of dead ant function
 def death(ant_pos, main_structure, ant_structure):
