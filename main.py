@@ -369,9 +369,27 @@ def spawn(number_of_turn, main_structure, ant_structure, anthill_structure):
     Version
     -------
     specification: Maxime Dufrasne (v.1 18/02/21)
-    implementation: Martin Buchet
+    implementation: Liam Letot (v.1 10/03/21)
     """
-    pass
+    for anthill in anthill_structure:
+    ant_level = check_level(main_structure, anthill),
+    ant_level = str(ant_level[0])
+    if ant_level == '1':
+        health = 3
+    elif ant_level =='2':
+        health = 5
+    elif ant_level == '3':
+        health = 7
+    
+    ant_structure.append({
+        'id': len(ant_structure),
+        'team': anthill['team'],
+        'health': health,
+        'level':  ant_level,
+        'carrying': False,
+        'dirt_force': None
+    })
+    main_structure[anthill['pos_x']][anthill['pos_y']]['ant'] = len(ant_structure)-1
 
 # Removal of dead ant function
 def death(ant_pos, main_structure, ant_structure):
@@ -581,7 +599,8 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             orders += execfile(AI2_code)
         orders_list = interpret_order(main_structure, ant_structure, orders)
         exec_order(orders_list, main_structure, ant_structure)
-        spawn(number_of_turn, ant_structure, main_structure)
+        if number_of_turn % 5 == 0:
+        spawn( ant_structure, main_structure, anthill_structure)
         number_of_turn += 1
     #print the end message
     if check_victory == 1:
