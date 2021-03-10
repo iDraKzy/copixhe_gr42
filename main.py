@@ -562,10 +562,23 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
     init_dispay(main_structure, ant_structure)
     main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
-    
+    if type_1 == AI:
+        AI1_code = input("path to the ia code file")
+    if type_2 == AI:
+        AI2_code = input("path to the ia code file")
+
+        
     #run the game
+    
     while check_victory(number_of_turn, main_structure, anthill_structure) == None:
-        orders = input()
+        if type_1 == 'human':
+            orders = input("team_1 input")
+        elif type_1 == 'AI':
+            orders = execfile(AI1_code)
+        if type_2 == 'human':
+            orders += input("team_2 input")
+        elif type_2 == 'AI':
+            orders += execfile(AI2_code)
         orders_list = interpret_order(main_structure, ant_structure, orders)
         exec_order(orders_list, main_structure, ant_structure)
         spawn(number_of_turn, ant_structure, main_structure)
