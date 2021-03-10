@@ -373,6 +373,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
     for anthill in anthill_structure:
         #check the level the next ant will have
         ant_level = check_level(main_structure, anthill),
+        #problème de tuple à régler/ vérifier une fois check_level fait
         ant_level = str(ant_level[0])
 
         #with the level, take the health of the ant
