@@ -615,7 +615,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         exec_order(orders_list, main_structure, ant_structure)
         #check and spawn new ant if it's needed
         if number_of_turn % 5 == 0:
-        spawn( ant_structure, main_structure, anthill_structure)
+            spawn( ant_structure, main_structure, anthill_structure)
         number_of_turn += 1
     #print the end message
     if check_victory == 1:
