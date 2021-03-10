@@ -570,7 +570,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         exec_order(orders_list, main_structure, ant_structure)
         spawn(number_of_turn, ant_structure, main_structure)
         number_of_turn += 1
-    #pirint the end message
+    #print the end message
     if check_victory == 1:
         print('Team 1 win')
     else:
