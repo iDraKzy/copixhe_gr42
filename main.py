@@ -146,10 +146,20 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     Version
     -------
     specification: Youlan Collard (v.1 18/02/21). Maxime Dufrasne (v.2 05/03/21)
-    implementation: Maxime Dufrasne
+    implementation: Maxime Dufrasne (v.1 09/03/21)
     
     """
-    pass
+    if number_of_turn > 200:
+        return None
+
+    nbr_dirt_pl_1, nbr_dirt_pl_2 = check_dirt(main_structure)
+
+    if nbr_dirt_pl_1 == 8 and nbr_dirt_pl_2 < 8:
+        return 1
+    elif nbr_dirt_pl_1 < 8 and nbr_dirt_pl_2 == 8:
+        return 2
+    else:
+        return None
 
 def check_dirt(main_structure):
     """Check the number of dirt around anthill
@@ -167,8 +177,23 @@ def check_dirt(main_structure):
 
     Version
     --------
-    spécification: Maxime Dufrasne (v.1 05/02/21)
+    specification: Maxime Dufrasne (v.1 05/02/21)
+    implemmentation: Maxime Dufrasne (v.1 09/02/21)
     """
+    # TODO: Faudrait la position des deux anthills je pense
+
+    # dirt_1, dirt_2 = 0, 0
+    # anthill_1, anthill_2 = recup les deux positions
+    around = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
+
+    # for all pos in around:
+    #        if anthill_1 + pos est une dirt:
+    #            dirt_1 += 1
+    #        if anthill_2 + pos est une dirt:
+    #            dirt_2 += 2
+    #
+    # return dirt_1, dirt_2
+
     pass
 
 # Validation of orders
