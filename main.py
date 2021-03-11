@@ -172,35 +172,78 @@ def check_dirt(main_structure):
     pass
 
 # Validation of orders
-def interpret_order(main_structure, ant_structure, orders):
+def interpret_order(team, main_structure, ant_structure, orders):
     """Take an input, check if it's a true fonction and if it's possible, if both conditions are met, return True , if not, return False and send an error to the player.
 
     Parameters
     ----------
+    team: number of the team who sent the order (int)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
     orders: the input of the user (str)
 
     Returns
     -------
-    order_ok: true if order is a True order, False if it isn't (Bool)
     order_list: the orders in a list (list)
     
     Version
     -------
-    Specification : Letot Liam (v.1 18/02/21)
-    implementation: Youlan Collard
+    Specification : Letot Liam/Youlan Collard (v.1 18/02/21) (v.2 11/03/21)
+    implementation: Youlan Collard (v.1 11/03/21)
     """
-    pass
+    orders_list = orders.split(" ")
 
-def validation_lift(main_structure, ant_structure, ant_pos):
+    seems_valid = [] # Items are [order, type] (type is one of lift, drop, move or attack)
+
+    for order in orders_list:
+        if ":" in order:
+            order_seperated = order.split(":") # Seperate the first part of the order from the second
+            if "-" in order_seperated[0]:
+                ant_pos = order_seperated[0].split("-")
+                if (len(ant_pos) == 2) and (ant_pos[0].isdigit() and ant_pos[1].isdigit()):
+                    if order_seperated[1] == "lift":
+                        seems_valid.append([order, "lift"])
+                    elif order_seperated[1] == "drop":
+                        seems_valid.append([order, "drop"])
+                    elif "-" in order_seperated[1]:
+                        action_pos = order_seperated[1][1:].split("-")
+                        if (len(action_pos) == 2) and (action_pos[0].isdigit() and action_pos[1].isdigit()):
+                            if order_seperated[1][0] == "@":
+                                seems_valid.append([order, "move"])
+                            elif order_seperated[1][0] == "*":
+                                seems_valid.append([order, "attack"])
+
+    valid_orders = []
+
+    for seems_valid_order in seems_valid:
+        order_seperated = seems_valid_order.split(":")
+        ant_pos = order_seperated[0].split("-")
+        if seems_valid_order[1] == "move":
+            move_to = order_seperated[1][1:].split("-")
+            if validation_move(team, ant_pos, move_to, main_structure, ant_structure):
+                valid_orders.append(seems_valid_order)
+        elif seems_valid_order[1] == "attack":
+            attack_to = order_seperated[1][1:].split("-")
+            if validation_attack(team, ant_pos, attack_to):
+                valid_orders.append(seems_valid_order)
+        elif seems_valid_order[1] == "lift":
+            if validation_lift(team, ant_pos, main_structure, ant_structure):
+                valid_orders.append(seems_valid_order)
+        elif seems_valid_order[1] == "drop":
+            valid_orders.append(seems_valid_order)
+
+    return valid_orders
+
+
+def validation_lift(team, ant_pos, main_structure, ant_structure):
     """Check if an ant has the force to carry clod and if there is clod where it is.
     
     Parameters
     ----------
+    team: number of the team who made the order (int)
+    ant_pos: position of the ant executing the action (tuple)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
-    ant_pos: position of the ant executing the action (tuple)
 
     Return
     ------
@@ -208,17 +251,19 @@ def validation_lift(main_structure, ant_structure, ant_pos):
 
     Version
     -------
-    specification: Youlan Collard (v.1 21/02/21)
+    specification: Youlan Collard (v.1 21/02/21) (v.2 11/03/21)
 
     
     """
+    # To revalidate
     pass
 
-def validation_attack(attacker_pos, target_pos):
+def validation_attack(team, attacker_pos, target_pos):
     """Check if target is in range of the attacker and return a boolean.
     
     Parameters
     ----------
+    team: number of the team who made the order (int)
     attacker_pos: position of attacker (list)
     target_pos: position of target (list)
     
@@ -228,15 +273,17 @@ def validation_attack(attacker_pos, target_pos):
     
     Version
     -------
-    specification: Martin Buchet (v.1 21/02/21)
+    specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
     """
+    # To revalidate
     pass
 
-def validation_move(origin, destination, main_structure, ant_structure):
+def validation_move(team, origin, destination, main_structure, ant_structure):
     """Check if deplacement is valid and return a boolean.
     
     Parameters
     ----------
+    team: number of the team who made the order (int)
     origin: depart position (list)
     destination: destination position (list)
     main_structure: main structure of the game board (list)
@@ -248,8 +295,9 @@ def validation_move(origin, destination, main_structure, ant_structure):
     
     Version
     -------
-    specification: Martin Buchet (v.1 21/02/21)
+    specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
     """
+    # To revalidate
     pass
 
 # Execution of orders
@@ -262,11 +310,17 @@ def exec_order(order_list, main_structure, ant_structure):
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
 
+    Notes
+    -----
+    order_list has been parsed by interpret order already when it reaches this function
+    the format of the order_list's item is [order, type] 
+
     Version
     -------
-    specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21) (v.2 26/02/21)
+    specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21) (v.2 26/02/21) (v.3 11/03/21)
     implementation: Youlan Collard
     """
+    # To revalidate
     pass
 
 def lift(main_structure, ant_structure, ant_position):
