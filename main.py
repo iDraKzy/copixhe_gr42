@@ -70,9 +70,9 @@ def create_map(board_size, anthills, clods):
     implementation: Youlan Collard (v.1 26/02/21)
     """
     main_structure = []
-    for x in range(int(board_size[0])):
+    for y in range(int(board_size[1])):
         row = []
-        for y in range(int(board_size[1])):
+        for x in range(int(board_size[0])):
             cell = {
                 'ant': None,
                 'dirt': None
