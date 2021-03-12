@@ -252,7 +252,7 @@ def interpret_order(team, main_structure, ant_structure, orders):
                 valid_orders.append(seems_valid_order)
         elif seems_valid_order[1] == "attack":
             attack_to = order_seperated[1][1:].split("-")
-            if validation_attack(team, ant_pos, attack_to):
+            if validation_attack(team, main_structure, ant_structure, ant_pos, attack_to):
                 valid_orders.append(seems_valid_order)
         elif seems_valid_order[1] == "lift":
             if validation_lift(team, ant_pos, main_structure, ant_structure):
@@ -285,12 +285,14 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     """
     pass
 
-def validation_attack(team, attacker_pos, target_pos):
+def validation_attack(team, main_structure, ant_structure, attacker_pos, target_pos):
     """Check if target is in range of the attacker and return a boolean.
     
     Parameters
     ----------
     team: number of the team who made the order (int)
+    main_structure: main structure of the game board (list)
+    ant_structure: structure containing all the ants (list)
     attacker_pos: position of attacker (list)
     target_pos: position of target (list)
     
@@ -300,7 +302,7 @@ def validation_attack(team, attacker_pos, target_pos):
     
     Version
     -------
-    specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)(v.3 12/03/21)
+    specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21) (v.3 12/03/21)
     """
     pass
 
@@ -330,10 +332,10 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     ant_id = origin_tile['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
     if ant['team'] == team:
-        around = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
-        for relative in around:
-            if origin[0] + relative[0] == destination[0] and origin[1] + relative[1] == destination[1]:
-                return True
+        offset_origin_x = origin[0] - destination[0]
+        offset_origin_y = origin[1] - destination[1] 
+        if (offset_origin_x in (-1, 0, 1)) and (offset_origin_y in (-1, 0, 1)) and (not offset_origin_x == 0 and offset_origin_y == 0):
+            return True
 
     return False
 
@@ -425,8 +427,20 @@ def place(main_structure, ant_structure, ant_position):
     Version
     -------
     specification: Maxime Dufrasne (v.1 19/02/21) (v.2 26/02/21)
+    implementation: Liam Letot (v.1 12/03/21)
     """
-    pass
+    #search the id of ants in the board
+    ant_id = main_structure[ant_position[0]][ant_position[1]]['ant']
+    dirt = main_structure[ant_position[0]][ant_position[1]]['ant']
+    #take the ant in the ant_structure
+    ant = return_ant_by_id(ant_structure, ant_id)
+    #place the dirt on the ground
+    dirt = ant['dirt_force'] 
+    ant['carrying'] = False
+    #remove the dirt from the ant
+    ant['dirt_force']= None
+    #remove the dirt on the display
+    place_dirt_on_display(ant_position)
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
