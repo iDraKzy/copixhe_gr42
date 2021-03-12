@@ -346,7 +346,25 @@ def exec_order(order_list, main_structure, ant_structure):
     implementation: Youlan Collard
     """
     # To revalidate
-    pass
+    for order in order_list:
+        if order[1] == "move":
+            order_seperated = order[0].split(":")
+            origin = order_seperated[0].split("-")
+            destination = order_seperated[1][1:].split("-")
+            move(main_structure, origin, destination)
+        elif order[1] == "attack":
+            order_seperated = order[0].split(":")
+            attacker = order_seperated[0].split("-")
+            attacked = order_seperated[1][1:].split("-")
+            attack(ant_structure, main_structure, attacker, attacked)
+        elif order[1] == "lift":
+            order_seperated = order[0].split(":")
+            ant_pos = order_seperated[0].split("-")
+            lift(main_structure, ant_structure, ant_pos)
+        elif order[1] == "drop":
+            order_seperated = order[0].split(":")
+            ant_pos = order_seperated[0].split("-")
+            place(main_structure, ant_structure, ant_pos)
 
 def lift(main_structure, ant_structure, ant_position):
     """Lift dirt on ants.
@@ -378,20 +396,21 @@ def place(main_structure, ant_structure, ant_position):
     """
     pass
 
-def attack(target_pos, target_health, ant_pos, ant_strengh):
+def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
 
     Parameters
     ----------
-    target_health: health of the target (int)
-    ant_strengh: strengh of the ant (int)
-    target_pos: position of target (list)
     ant_structure: structure containing the ants (list)
+    main_structure: main structure of the game board (list)
+    ant_pos: position of the attacking ant (list)
+    target_pos: position of target (list)
 
     Version
     -------
-    specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
+    specification: Martin Buchet/Youlan Collard (v.1 18/02/21) (v.2 26/02/21) (v.3 12/03/21)
     """
+    # To revalidate
     pass
     
 def move(main_structure, origin, destination):
