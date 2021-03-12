@@ -483,6 +483,9 @@ def move(main_structure, origin, destination):
     implementation: Youlan Collard (v.1 12/03/21)
     """
     # Description should be changed
+
+    #TODO: Fix for move_ant_on_display
+
     ant_id = main_structure[origin[0]][origin[1]]['ant']
     main_structure[origin[0]][origin[1]]['ant'] = None
     main_structure[destination[0]][destination[1]]['ant'] = ant_id
@@ -608,18 +611,18 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     implementation: Martin Buchet, Youlan Collard (v.1 04/03/21)
     """
-    llcorner = '└'
-    ulcorner = '┌'
-    lrcorner = '┘'
-    urcorner = '┐'
-    hline = '─'
-    bigplus = '┼'
-    vline = '│'
-    ttee = '┬'
-    btee = '┴'
-    ltee = '├'
-    rtee = '┤'
-    space = ' '
+    llcorner = "└"
+    ulcorner = "┌"
+    lrcorner = "┘"
+    urcorner = "┐"
+    hline = "─"
+    bigplus = "┼"
+    vline = "│"
+    ttee = "┬"
+    btee = "┴"
+    ltee = "├"
+    rtee = "┤"
+    space = " "
     row = len(main_structure)
     col = len(main_structure[0])
 
@@ -632,9 +635,9 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
         print(ltee + (3*hline + bigplus)*(col - 1) + 3*hline + rtee)
     print((vline + 3*space)*col + vline)
     print(llcorner + (3*hline + btee)*(col - 1) + 3*hline + lrcorner)
-    #* 4 + 1 for ants
-    print(term.on_blue + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 3, anthills_structure[0]['pos_y'] * 2 + 1) + '⤊')
-    print(term.on_red + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 3, anthills_structure[1]['pos_y'] * 2 + 1) + '⤊')
+#* 4 + 1 for ants
+    print(term.move_xy(anthills_structure[0]["pos_x"] * 4 + 3, anthills_structure[0]["pos_y"] * 2 + 1) + "⤊")
+    print(term.move_xy(anthills_structure[1]["pos_x"] * 4 + 3, anthills_structure[1]["pos_y"] * 2 + 1) + "⤊")
 
   
 def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
