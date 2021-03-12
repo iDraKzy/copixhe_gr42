@@ -326,7 +326,7 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     """
     #TODO: Check if ant doesn't leave board
 
-    origin_tile = main_structure[origin[0] - 1][origin[1] - 1] # -1 because our structure is 0 indexed and the game is 1 indexed
+    origin_tile = main_structure[origin[0]][origin[1]]
     ant_id = origin_tile['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
     if ant['team'] == team:
@@ -366,11 +366,15 @@ def exec_order(order_list, main_structure, ant_structure):
             order_seperated = order[0].split(":")
             origin = order_seperated[0].split("-")
             destination = order_seperated[1][1:].split("-")
+            destination[0] -= 1 # Substract one from both axis because system structure is 0 indexed and game is 1 indexed
+            destination[1] -= 1
             move(main_structure, origin, destination)
         elif order[1] == "attack":
             order_seperated = order[0].split(":")
             attacker = order_seperated[0].split("-")
             attacked = order_seperated[1][1:].split("-")
+            attacked[0] -= 1 # Same as above
+            attacked[1] -= 1
             attack(ant_structure, main_structure, attacker, attacked)
         elif order[1] == "lift":
             order_seperated = order[0].split(":")
@@ -441,7 +445,11 @@ def move(main_structure, origin, destination):
     specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
     """
     # Description should be changed
-    pass
+    ant_id = main_structure[origin[0]][origin[1]]['ant']
+    main_structure[origin[0]][origin[1]]['ant'] = None
+    main_structure[destination[0]][destination[1]]['ant'] = ant_id
+
+    move_ant_on_display(origin, destination)
 
 # New ants functions
 def check_level(main_structure, anthill):
