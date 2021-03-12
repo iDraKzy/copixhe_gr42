@@ -615,18 +615,18 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     implementation: Martin Buchet, Youlan Collard (v.1 04/03/21)
     """
-    llcorner = "└"
-    ulcorner = "┌"
-    lrcorner = "┘"
-    urcorner = "┐"
-    hline = "─"
-    bigplus = "┼"
-    vline = "│"
-    ttee = "┬"
-    btee = "┴"
-    ltee = "├"
-    rtee = "┤"
-    space = " "
+    llcorner = '└'
+    ulcorner = '┌'
+    lrcorner = '┘'
+    urcorner = '┐'
+    hline = '─'
+    bigplus = '┼'
+    vline = '│'
+    ttee = '┬'
+    btee = '┴'
+    ltee = '├'
+    rtee = '┤'
+    space = ' '
     row = len(main_structure)
     col = len(main_structure[0])
 
@@ -639,25 +639,46 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
         print(ltee + (3*hline + bigplus)*(col - 1) + 3*hline + rtee)
     print((vline + 3*space)*col + vline)
     print(llcorner + (3*hline + btee)*(col - 1) + 3*hline + lrcorner)
-#* 4 + 1 for ants
-    print(term.move_xy(anthills_structure[0]["pos_x"] * 4 + 3, anthills_structure[0]["pos_y"] * 2 + 1) + "⤊")
-    print(term.move_xy(anthills_structure[1]["pos_x"] * 4 + 3, anthills_structure[1]["pos_y"] * 2 + 1) + "⤊")
+    #* 4 + 1 for ants
+    print(term.on_blue + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 3, anthills_structure[0]['pos_y'] * 2 + 1) + '⤊')
+    print(term.on_red + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 3, anthills_structure[1]['pos_y'] * 2 + 1) + '⤊')
 
   
-def move_ant_on_display(old_position, new_position):
+def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
 
     Paremeters
     ----------
+    team: number of the team owning the ant (int)
+    ant_level: level of the ant being moved (int)
+    ant_is_carrying: wether the ant is carrying a clods (bool)
     old_position: the old position of an ant (tuple)
     new_position: the new position of an ant (tuple)
 
     Version
     -------
     specification: Maxime Dufrasne (v.1 22/02/21)
-    
+    implementation: Youlan Collard (v.1 12/03/21)
     """
-    pass
+    if team == 1:
+        bg_color = term.on_blue
+    else:
+        bg_color = term.on_red
+
+    if ant_level == 1:
+        color = ''
+    elif ant_level == 2:
+        color = term.yellow
+    elif ant_level == 3:
+        color = term.green
+
+    if ant_is_carrying:
+        possible_underline = term.underline
+    else:
+        possible_underline = ''
+
+    print(term.move_xy(old_position[0] * 4 + 1, old_position[1] * 2 + 1) + ' ') # remove previous ant
+    print(term.move_xy(new_position[0] * 4 + 1, old_position[1] * 2 + 1) + bg_color + color + '⚇' + possible_underline) # add it back
 
 def remove_ant_on_display(ant_position,carrying):
     """Remove ant on dispay when she died.
