@@ -689,9 +689,9 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
     
     #if the game is played with AI, take the AI path to execute them
-    if type_1 == AI:
+    if type_1 == 'AI':
         AI1_code = input("path to the ia code file")
-    if type_2 == AI:
+    if type_2 == 'AI':
         AI2_code = input("path to the ia code file")
 
         
@@ -701,16 +701,16 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         
         #take the orders
         if type_1 == 'human':
-            orders = input("team_1 input")
-        elif type_1 == 'AI':
-            orders = execfile(AI1_code)
+            orders_1 = input("team_1 input")
+        #elif type_1 == 'AI':
+            #orders = execfile(AI1_code)
         if type_2 == 'human':
-            orders += input("team_2 input")
-        elif type_2 == 'AI':
-            orders += execfile(AI2_code)
+            orders_2 = input("team_2 input")
+        #elif type_2 == 'AI':
+            #orders += execfile(AI2_code)
         
         #check and execute the orders
-        orders_list = interpret_order(main_structure, ant_structure, orders)
+        orders_list = interpret_order(main_structure, ant_structure, orders_1, orders_2)
         exec_order(orders_list, main_structure, ant_structure)
         #check and spawn new ant if it's needed
         if number_of_turn % 5 == 0:
