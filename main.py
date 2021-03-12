@@ -618,10 +618,11 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
         print(ltee + (3*hline + bigplus)*(col - 1) + 3*hline + rtee)
     print((vline + 3*space)*col + vline)
     print(llcorner + (3*hline + btee)*(col - 1) + 3*hline + lrcorner)
+#* 4 + 1 for ants
+    print(term.move_xy(anthills_structure[0]["pos_x"] * 4 + 3, anthills_structure[0]["pos_y"] * 2 + 1) + "⤊")
+    print(term.move_xy(anthills_structure[1]["pos_x"] * 4 + 3, anthills_structure[1]["pos_y"] * 2 + 1) + "⤊")
 
-    print(term.move(anthills_structure[0][0], anthills_structure[0][1]) + "⤊")
-    print(term.move(anthills_structure[1][0], anthills_structure[1][1]) + "⤊")
-
+  
 def move_ant_on_display(old_position, new_position):
     """Change the position of an ant on the dispay.
 
@@ -797,7 +798,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
 def test():
 
-    board_size, anthills, clods = parse_map_file("./basic.cpx")
+    board_size, anthills, clods = parse_map_file("./small.cpx")
     main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
     init_dispay(main_structure, ant_structure, anthills_structure)
     print(len(main_structure))
