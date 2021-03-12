@@ -13,13 +13,13 @@ def parse_map_file(path):
 
     Returns
     -------
-    board_size: Size of the board (tuple)
+    board_size: Size of the board (list)
     antthills: Anthills's positions (list)
     clods: clods's positions (list)
 
     Version
     -------
-    specification: Youlan Collard (v.1 26/02/21)
+    specification: Youlan Collard (v.1 26/02/21) (v.2 12/03/21)
     implementation: Youlan Collard (v.1 26/02/21)
     
     """
@@ -54,7 +54,7 @@ def create_map(board_size, anthills, clods):
 
     Parameters
     ----------
-    board_size: Size of the game board (tuple)
+    board_size: Size of the game board (list)
     anthills: Anthills's positions (list)
     clods: clods's informations (list)
 
@@ -66,7 +66,7 @@ def create_map(board_size, anthills, clods):
 
     Version
     -------
-    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21) 
+    specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21) (v.3 12/03/21)
     implementation: Youlan Collard
     """
     main_structure = []
@@ -269,7 +269,7 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     Parameters
     ----------
     team: number of the team who made the order (int)
-    ant_pos: position of the ant executing the action (tuple)
+    ant_pos: position of the ant executing the action (list)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
 
@@ -279,7 +279,7 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
 
     Version
     -------
-    specification: Youlan Collard (v.1 21/02/21) (v.2 11/03/21)
+    specification: Youlan Collard (v.1 21/02/21) (v.2 11/03/21)(v.3 12/03/21)
 
     
     """
@@ -300,7 +300,7 @@ def validation_attack(team, attacker_pos, target_pos):
     
     Version
     -------
-    specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
+    specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)(v.3 12/03/21)
     """
     pass
 
@@ -392,7 +392,7 @@ def lift(main_structure, ant_structure, ant_position):
     ----------
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
-    ant_position: position of the ant that will lift dirt (tuple)
+    ant_position: position of the ant that will lift dirt (list)
 
     Version
     -------
@@ -407,7 +407,7 @@ def place(main_structure, ant_structure, ant_position):
     ----------
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
-    ant_position: position of the ant that will place dirt (tuple)
+    ant_position: position of the ant that will place dirt (list)
 
     Version
     -------
