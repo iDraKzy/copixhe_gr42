@@ -443,6 +443,7 @@ def move(main_structure, origin, destination):
     Version
     -------
     specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
+    implementation: Youlan Collard (v.1 12/03/21)
     """
     # Description should be changed
     ant_id = main_structure[origin[0]][origin[1]]['ant']
