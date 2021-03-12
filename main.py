@@ -552,28 +552,35 @@ def spawn(main_structure, ant_structure, anthill_structure):
     """
     for anthill in anthill_structure:
         #check the level the next ant will have
-        ant_level = check_level(main_structure, anthill),
+        ant_level = check_level(main_structure, anthill)
         
-        #with the level, take the health of the ant
+        #with the level, take the health and color of the ant
         if ant_level == 1:
             health = 3
+            term_color =' '
         elif ant_level == 2:
             health = 5
+            term_color = term.yellow
         elif ant_level == 3:
             health = 7
+            term_color = term.green
     
         #add the nex ant in ant_structure
         ant_structure.append({
             'id': len(ant_structure),
             'team': anthill['team'],
             'health': health,
-            'level':  ant_level,
+            'level': ant_level,
             'carrying': False,
             'dirt_force': None
             })
 
         #add the new ant in the board (main_structure) 
         main_structure[anthill['pos_x']][anthill['pos_y']]['ant'] = len(ant_structure)-1
+        #take parameters for add_ant on display
+        ant_pos = (anthill['pos_x'],[anthill['pos_y'])
+        team = anthill['team']
+        add_ant_on_display(ant_pos, term_color, team) 
     #return the structures
     return main_structure, ant_structure
 
@@ -642,20 +649,41 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
         print(term.move_xy(mainstructure[][]['clod']))
 
 
-def move_ant_on_display(old_position, new_position):
+def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
 
     Paremeters
     ----------
+    team: number of the team owning the ant (int)
+    ant_level: level of the ant being moved (int)
+    ant_is_carrying: wether the ant is carrying a clods (bool)
     old_position: the old position of an ant (tuple)
     new_position: the new position of an ant (tuple)
 
     Version
     -------
     specification: Maxime Dufrasne (v.1 22/02/21)
-    
+    implementation: Youlan Collard (v.1 12/03/21)
     """
-    pass
+    if team == 1:
+        bg_color = term.on_blue
+    else:
+        bg_color = term.on_red
+
+    if ant_level == 1:
+        color = ''
+    elif ant_level == 2:
+        color = term.yellow
+    elif ant_level == 3:
+        color = term.green
+
+    if ant_is_carrying:
+        possible_underline = term.underline
+    else:
+        possible_underline = ''
+
+    print(term.move_xy(old_position[0] * 4 + 1, old_position[1] * 2 + 1) + ' ') # remove previous ant
+    print(term.move_xy(new_position[0] * 4 + 1, old_position[1] * 2 + 1) + bg_color + color + '⚇' + possible_underline) # add it back
 
 def remove_ant_on_display(ant_position,carrying):
     """Remove ant on dispay when she died.
@@ -711,20 +739,25 @@ def place_dirt_on_display(ant_position):
     """
     pass
 
-def add_ant_on_display(ant_structure, ant_id, ant_pos):
+def add_ant_on_display(ant_pos, term_color, team) :
     """Add an ant on display (game board and health bar).
     
     Parameters
     ----------
-    ant_structure: the list with all informations on ants (list)
-    ant_id: the id of the new ant (int)
-    ant_pos: Position of the ant to add (tuple)
-    
+    ant_pos: Position of the ant to add (list)
+    term_color: the color of the ant (str)
+    team: the team of the ant (int)
     Version
     -------
-    specification: Liam Letot (v.1 22/02/21) (v.2 05/03/21)
+    specification: Liam Letot (v.1 22/02/21) (v.2 05/03/21) (v.3 12/03/21)
+    implementation: Liam Letot (v.1 12/03/21)
     """
     
+    if team == 1:
+        bg_color = term.on_blue
+    elif team == 2:
+        bg_color = term.on_red 
+    print(term.move_xy(ant_pos[0] * 4 + 1, ant_pos[1] * 2 + 1) + '⚇'+ term_color + bg_color)
 
 # Util function
 def return_ant_by_id(ant_structure, ant_id):
