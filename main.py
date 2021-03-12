@@ -330,10 +330,10 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     ant_id = origin_tile['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
     if ant['team'] == team:
-        around = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
-        for relative in around:
-            if origin[0] + relative[0] == destination[0] and origin[1] + relative[1] == destination[1]:
-                return True
+        offset_origin_x = origin[0] - destination[0]
+        offset_origin_y = origin[1] - destination[1] 
+        if (offset_origin_x in (-1, 0, 1)) and (offset_origin_y in (-1, 0, 1)) and (not offset_origin_x == 0 and offset_origin_y == 0):
+            return True
 
     return False
 
