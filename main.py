@@ -342,7 +342,7 @@ def exec_order(order_list, main_structure, ant_structure):
 
     Version
     -------
-    specification: Maxime Dufrasne, Liam Letot (v.1 19/02/21) (v.2 26/02/21) (v.3 11/03/21)
+    specification: Maxime Dufrasne, Liam Letot, Youlan Collard (v.1 19/02/21) (v.2 26/02/21) (v.3 11/03/21)
     implementation: Youlan Collard (v.1 12/03/21)
     """
     # To revalidate
