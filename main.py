@@ -252,7 +252,7 @@ def interpret_order(team, main_structure, ant_structure, orders):
                 valid_orders.append(seems_valid_order)
         elif seems_valid_order[1] == "attack":
             attack_to = order_seperated[1][1:].split("-")
-            if validation_attack(team, ant_pos, attack_to):
+            if validation_attack(team, main_structure, ant_structure, ant_pos, attack_to):
                 valid_orders.append(seems_valid_order)
         elif seems_valid_order[1] == "lift":
             if validation_lift(team, ant_pos, main_structure, ant_structure):
@@ -285,12 +285,14 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     """
     pass
 
-def validation_attack(team, attacker_pos, target_pos):
+def validation_attack(team, main_structure, ant_structure, attacker_pos, target_pos):
     """Check if target is in range of the attacker and return a boolean.
     
     Parameters
     ----------
     team: number of the team who made the order (int)
+    main_structure: main structure of the game board (list)
+    ant_structure: structure containing all the ants (list)
     attacker_pos: position of attacker (list)
     target_pos: position of target (list)
     
@@ -300,7 +302,7 @@ def validation_attack(team, attacker_pos, target_pos):
     
     Version
     -------
-    specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)(v.3 12/03/21)
+    specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21) (v.3 12/03/21)
     """
     pass
 
