@@ -426,6 +426,7 @@ def move(main_structure, origin, destination):
     -------
     specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
     """
+    # Description should be changed
     pass
 
 # New ants functions
