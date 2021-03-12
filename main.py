@@ -75,13 +75,13 @@ def create_map(board_size, anthills, clods):
         for x in range(int(board_size[0])):
             cell = {
                 'ant': None,
-                'dirt': None
+                'clod': None
             }
             row.append(cell)
         main_structure.append(row)
     
     for clod in clods:
-        main_structure[clod[0]][clod[1]]['dirt'] = clod[2]
+        main_structure[clod[0]][clod[1]]['clod'] = clod[2]
 
     # TODO: anthill structure
     # TODO: Add 2 first ants to ant structure
@@ -107,7 +107,7 @@ def create_map(board_size, anthills, clods):
             'health': 3,
             'level': 1,
             'carrying': False,
-            'dirt_force': None
+            'clod_force': None
         },
         {
             'id': 1,
@@ -115,7 +115,7 @@ def create_map(board_size, anthills, clods):
             'health': 3,
             'level': 1,
             'carrying': False,
-            'dirt_force': None
+            'clod_force': None
         }
     ]
 
@@ -152,17 +152,17 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     if number_of_turn > 200:
         return None
 
-    nbr_dirt_pl_1, nbr_dirt_pl_2 = check_dirt(main_structure)
+    nbr_clod_pl_1, nbr_clod_pl_2 = check_clod(main_structure)
 
-    if nbr_dirt_pl_1 == 8 and nbr_dirt_pl_2 < 8:
+    if nbr_clod_pl_1 == 8 and nbr_clod_pl_2 < 8:
         return 1
-    elif nbr_dirt_pl_1 < 8 and nbr_dirt_pl_2 == 8:
+    elif nbr_clod_pl_1 < 8 and nbr_clod_pl_2 == 8:
         return 2
     else:
         return None
 
-def check_dirt(main_structure):
-    """Check the number of dirt around anthill
+def check_clod(main_structure):
+    """Check the number of clod around anthill
 
     Parameter
     ----------
@@ -171,8 +171,8 @@ def check_dirt(main_structure):
 
     Return
     -------
-    nbr_dirt_pl_1: Number of dirt player 1 has around his anthill (int)
-    nbr_dirt_pl_2: Number of dirt player 2 has around his anthill (int)
+    nbr_clod_pl_1: Number of clod player 1 has around his anthill (int)
+    nbr_clod_pl_2: Number of clod player 2 has around his anthill (int)
 
 
     Version
@@ -182,17 +182,17 @@ def check_dirt(main_structure):
     """
     # TODO: Faudrait la position des deux anthills je pense
 
-    # dirt_1, dirt_2 = 0, 0
+    # clod_1, clod_2 = 0, 0
     # anthill_1, anthill_2 = recup les deux positions
     around = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
 
     # for all pos in around:
-    #        if anthill_1 + pos est une dirt:
-    #            dirt_1 += 1
-    #        if anthill_2 + pos est une dirt:
-    #            dirt_2 += 2
+    #        if anthill_1 + pos est une clod:
+    #            clod_1 += 1
+    #        if anthill_2 + pos est une clod:
+    #            clod_2 += 2
     #
-    # return dirt_1, dirt_2
+    # return clod_1, clod_2
 
     pass
 
@@ -388,13 +388,13 @@ def exec_order(order_list, main_structure, ant_structure):
             place(main_structure, ant_structure, ant_pos)
 
 def lift(main_structure, ant_structure, ant_position):
-    """Lift dirt on ants.
+    """Lift clod on ants.
 
     Parameters
     ----------
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
-    ant_position: position of the ant that will lift dirt (list)
+    ant_position: position of the ant that will lift clod (list)
 
     Version
     -------
@@ -403,26 +403,26 @@ def lift(main_structure, ant_structure, ant_position):
     """
     #search the id of ants in the board
     ant_id = main_structure[ant_position[0]][ant_position[1]]['ant']
-    dirt = main_structure[ant_position[0]][ant_position[1]]['ant']
+    clod = main_structure[ant_position[0]][ant_position[1]]['ant']
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
-    #place the dirt on the ant
-    ant['dirt_force'] = dirt
+    #place the clod on the ant
+    ant['clod_force'] = clod
     ant['carrying'] = True
-    #remove the dirt from the board
-    dirt = None
-    #remove the dirt on the display
-    lift_dirt_on_display(ant_position)
+    #remove the clod from the board
+    clod = None
+    #remove the clod on the display
+    lift_clod_on_display(ant_position)
 
 
 def place(main_structure, ant_structure, ant_position):
-    """Place dirt on a case.
+    """Place clod on a case.
 
     Parameters
     ----------
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
-    ant_position: position of the ant that will place dirt (list)
+    ant_position: position of the ant that will place clod (list)
 
     Version
     -------
@@ -431,16 +431,16 @@ def place(main_structure, ant_structure, ant_position):
     """
     #search the id of ants in the board
     ant_id = main_structure[ant_position[0]][ant_position[1]]['ant']
-    dirt = main_structure[ant_position[0]][ant_position[1]]['ant']
+    clod = main_structure[ant_position[0]][ant_position[1]]['ant']
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
-    #place the dirt on the ground
-    dirt = ant['dirt_force'] 
+    #place the clod on the ground
+    clod = ant['clod_force'] 
     ant['carrying'] = False
-    #remove the dirt from the ant
-    ant['dirt_force']= None
-    #remove the dirt on the display
-    place_dirt_on_display(ant_position)
+    #remove the clod from the ant
+    ant['clod_force']= None
+    #remove the clod on the display
+    place_clod_on_display(ant_position)
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
@@ -508,24 +508,24 @@ def check_level(main_structure, anthill):
     implementation: Liam Letot (v.1 12/03/2021)
     """
 
-    nbr_dirt_pl_1, nbr_dirt_pl_2 = check_dirt(main_structure)
+    nbr_clod_pl_1, nbr_clod_pl_2 = check_clod(main_structure)
         
     #check the level for team 1
     if anthill['team']== 1:
-        if nbr_dirt_pl_1 <= 2:
+        if nbr_clod_pl_1 <= 2:
             level = 1
-        elif nbr_dirt_pl_1 <= 5:
+        elif nbr_clod_pl_1 <= 5:
             level = 2
-        elif nbr_dirt_pl_1 <= 8:
+        elif nbr_clod_pl_1 <= 8:
             level = 3
         
     #check the level for team 2
     elif anthill['team']== 2:
-        if nbr_dirt_pl_2 <= 2:
+        if nbr_clod_pl_2 <= 2:
             level = 1
-        elif nbr_dirt_pl_2 <= 5:
+        elif nbr_clod_pl_2 <= 5:
             level = 2
-        elif nbr_dirt_pl_2 <= 8:
+        elif nbr_clod_pl_2 <= 8:
             level = 3
 
     return level
@@ -572,7 +572,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
             'health': health,
             'level': ant_level,
             'carrying': False,
-            'dirt_force': None
+            'clod_force': None
             })
 
         #add the new ant in the board (main_structure) 
@@ -708,12 +708,12 @@ def update_lifepoint_on_display(ant_id, ant_structure):
     """
     pass
 
-def lift_dirt_on_display(ant_position):
-    """Make the dirt disappear and switch the ant to an ant with dirt on display.
+def lift_clod_on_display(ant_position):
+    """Make the clod disappear and switch the ant to an ant with clod on display.
     
     Parameter
     ---------
-    ant_position: the position of the ant who lift the dirt (tupple)
+    ant_position: the position of the ant who lift the clod (tupple)
 
     Version
     -------
@@ -721,12 +721,12 @@ def lift_dirt_on_display(ant_position):
     """
     pass
 
-def place_dirt_on_display(ant_position):
-    """Make the dirt appear and switch the ant with a dirt to an ant on display.
+def place_clod_on_display(ant_position):
+    """Make the clod appear and switch the ant with a clod to an ant on display.
 
     Parameter
     ---------
-    ant_position: the position of the ant who lift the dirt (tupple)
+    ant_position: the position of the ant who lift the clod (tupple)
 
     Version
     -------
