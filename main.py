@@ -438,6 +438,8 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
     ant_2 = return_ant_by_id(ant_structure, ant_2_id)
     #do the attack
     ant_2["health"] -= ant_1['level']
+
+    update_lifepoint_on_display(ant_2, ant_structure)
     
 def move(main_structure, origin, destination):
     """if move valid return the new position of the ant.
