@@ -216,6 +216,9 @@ def interpret_order(team, main_structure, ant_structure, orders):
     Specification : Letot Liam/Youlan Collard (v.1 18/02/21) (v.2 11/03/21)
     implementation: Youlan Collard (v.1 11/03/21)
     """
+
+    #TODO: Créer un dictionnaire pour les ordres pour ne devoir décoder l'ordre qu'une fois
+
     orders_list = orders.split(" ")
 
     seems_valid = [] # Items are [order, type] (type is one of lift, drop, move or attack)
@@ -280,7 +283,6 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
 
     
     """
-    # To revalidate
     pass
 
 def validation_attack(team, attacker_pos, target_pos):
@@ -300,7 +302,6 @@ def validation_attack(team, attacker_pos, target_pos):
     -------
     specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
     """
-    # To revalidate
     pass
 
 def validation_move(team, origin, destination, main_structure, ant_structure):
@@ -357,7 +358,9 @@ def exec_order(order_list, main_structure, ant_structure):
     specification: Maxime Dufrasne, Liam Letot, Youlan Collard (v.1 19/02/21) (v.2 26/02/21) (v.3 11/03/21)
     implementation: Youlan Collard (v.1 12/03/21)
     """
-    # To revalidate
+
+    #TODO: Order the list (lift, drop, attack, move)
+
     for order in order_list:
         if order[1] == "move":
             order_seperated = order[0].split(":")
@@ -422,7 +425,6 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
     -------
     specification: Martin Buchet/Youlan Collard (v.1 18/02/21) (v.2 26/02/21) (v.3 12/03/21)
     """
-    # To revalidate
     pass
     
 def move(main_structure, origin, destination):
