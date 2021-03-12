@@ -425,8 +425,20 @@ def place(main_structure, ant_structure, ant_position):
     Version
     -------
     specification: Maxime Dufrasne (v.1 19/02/21) (v.2 26/02/21)
+    implementation: Liam Letot (v.1 12/03/21)
     """
-    pass
+    #search the id of ants in the board
+    ant_id = main_structure[ant_position[0]][ant_position[1]]['ant']
+    dirt = main_structure[ant_position[0]][ant_position[1]]['ant']
+    #take the ant in the ant_structure
+    ant = return_ant_by_id(ant_structure, ant_id)
+    #place the dirt on the ground
+    dirt = ant['dirt_force'] 
+    ant['carrying'] = False
+    #remove the dirt from the ant
+    ant['dirt_force']= None
+    #remove the dirt on the display
+    place_dirt_on_display(ant_position)
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
