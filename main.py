@@ -460,7 +460,28 @@ def check_level(main_structure, anthill):
         
     """
 
-    pass
+    nbr_dirt_pl_1, nbr_dirt_pl_2 = check_dirt(main_structure)
+        
+    #check the level for team 1
+    if anthill['team']== 1:
+        if nbr_dirt_pl_1 <= 2:
+            level = 1
+        elif nbr_dirt_pl_1 <= 5:
+            level = 2
+        elif nbr_dirt_pl_1 <= 8:
+            level = 3
+        
+    #check the level for team 2
+    elif anthill['team']== 2:
+        if nbr_dirt_pl_2 <= 2:
+            level = 1
+        elif nbr_dirt_pl_2 <= 5:
+            level = 2
+        elif nbr_dirt_pl_2 <= 8:
+            level = 3
+
+    return level
+
 
 def spawn(main_structure, ant_structure, anthill_structure):
     """Spawn ant.
