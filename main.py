@@ -428,8 +428,16 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
     Version
     -------
     specification: Martin Buchet/Youlan Collard (v.1 18/02/21) (v.2 26/02/21) (v.3 12/03/21)
+    implementation: Liam Letot (v.1 12/03/21)
     """
-    pass
+    #search the id of ants in the board
+    ant_1_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+    ant_2_id = main_structure[target_pos[0]][target_pos[1]]['ant']
+    #take each ant in the ant_structure
+    ant_1 = return_ant_by_id(ant_structure, ant_1_id)
+    ant_2 = return_ant_by_id(ant_structure, ant_2_id)
+    #do the attack
+    ant_2["health"] -= ant_1['level']
     
 def move(main_structure, origin, destination):
     """if move valid return the new position of the ant.
