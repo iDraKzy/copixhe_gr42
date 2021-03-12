@@ -633,8 +633,8 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     print((vline + 3*space)*col + vline)
     print(llcorner + (3*hline + btee)*(col - 1) + 3*hline + lrcorner)
     #* 4 + 1 for ants
-    print(term.on_red + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 3, anthills_structure[0]['pos_y'] * 2 + 1) + '⤊')
-    print(term.on_blue + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 3, anthills_structure[1]['pos_y'] * 2 + 1) + '⤊')
+    print(term.on_blue + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 3, anthills_structure[0]['pos_y'] * 2 + 1) + '⤊')
+    print(term.on_red + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 3, anthills_structure[1]['pos_y'] * 2 + 1) + '⤊')
 
   
 def move_ant_on_display(old_position, new_position):
