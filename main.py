@@ -67,12 +67,12 @@ def create_map(board_size, anthills, clods):
     Version
     -------
     specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21) (v.3 12/03/21)
-    implementation: Youlan Collard
+    implementation: Youlan Collard (v.1 26/02/21)
     """
     main_structure = []
-    for x in range(int(board_size[0])):
+    for y in range(int(board_size[1])):
         row = []
-        for y in range(int(board_size[1])):
+        for x in range(int(board_size[0])):
             cell = {
                 'ant': None,
                 'dirt': None
@@ -753,8 +753,8 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     number_of_turn = 0
     board_size, anthills, clods = parse_map_file(CPX_file)
 
-    init_dispay(main_structure, ant_structure)
     main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
+    init_dispay(main_structure, ant_structure, anthill_structure)
     
     #if the game is played with AI, take the AI path to execute them
     if type_1 == 'AI':
