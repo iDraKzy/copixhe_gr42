@@ -67,7 +67,7 @@ def create_map(board_size, anthills, clods):
     Version
     -------
     specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21) (v.3 12/03/21)
-    implementation: Youlan Collard
+    implementation: Youlan Collard (v.1 26/02/21)
     """
     main_structure = []
     for x in range(int(board_size[0])):
