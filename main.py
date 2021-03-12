@@ -573,7 +573,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
         #add the new ant in the board (main_structure) 
         main_structure[anthill['pos_x']][anthill['pos_y']]['ant'] = len(ant_structure)-1
         #take parameters for add_ant on display
-        ant_pos = (anthill['pos_x'],[anthill['pos_y'])
+        ant_pos = (anthill['pos_x'],anthill['pos_y'])
         team = anthill['team']
         add_ant_on_display(ant_pos, term_color, team) 
     #return the structures
