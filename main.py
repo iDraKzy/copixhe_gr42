@@ -321,9 +321,21 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     Version
     -------
     specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
+    implementation: Youlan Collard (v.1 12/03/21)
     """
-    # To revalidate
-    pass
+    #TODO: Check if ant doesn't leave board
+
+    origin_tile = main_structure[origin[0] - 1][origin[1] - 1] # -1 because our structure is 0 indexed and the game is 1 indexed
+    ant_id = origin_tile['ant']
+    ant = return_ant_by_id(ant_structure, ant_id)
+    if ant['team'] == team:
+        around = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
+        for relative in around:
+            if origin[0] + relative[0] == destination[0] and origin[1] + relative[1] == destination[1]:
+                return True
+
+    return False
+
 
 # Execution of orders
 def exec_order(order_list, main_structure, ant_structure):
@@ -652,9 +664,12 @@ def return_ant_by_id(ant_structure, ant_id):
 
     Version
     -------
-    specification: Youlan Collard (v.1 21/02/21)    
+    specification: Youlan Collard (v.1 21/02/21)   
+    implementation: Youlan Collard (v.1 12/03/21) 
     """
-    pass
+    for ant in ant_structure:
+        if ant['id'] == ant_id:
+            return ant
 
 # main function
 def play_game(CPX_file, group_1, type_1, group_2, type_2):
