@@ -459,7 +459,7 @@ def check_level(main_structure, anthill):
     Version
     -------
     specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21)
-        
+    implementation: Liam Letot (v.1 12/03/2021)
     """
 
     nbr_dirt_pl_1, nbr_dirt_pl_2 = check_dirt(main_structure)
