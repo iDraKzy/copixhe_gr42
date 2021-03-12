@@ -123,10 +123,6 @@ def create_map(board_size, anthills, clods):
     main_structure[anthill_structure[1]['pos_x']][anthill_structure[1]['pos_y']]['ant'] = 1
 
     return main_structure, ant_structure, anthill_structure
-        
-
-    
-    
 
 # Victory function
 def check_victory(main_structure, anthill_structure, number_of_turn):
@@ -262,7 +258,6 @@ def interpret_order(team, main_structure, ant_structure, orders):
 
     return valid_orders
 
-
 def validation_lift(team, ant_pos, main_structure, ant_structure):
     """Check if an ant has the force to carry clod and if there is clod where it is.
     
@@ -339,7 +334,6 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
 
     return False
 
-
 # Execution of orders
 def exec_order(order_list, main_structure, ant_structure):
     """Execute orders and give the structures to each order fonctions.
@@ -413,7 +407,6 @@ def lift(main_structure, ant_structure, ant_position):
     clod = None
     #remove the clod on the display
     lift_clod_on_display(ant_position)
-
 
 def place(main_structure, ant_structure, ant_position):
     """Place clod on a case.
@@ -529,7 +522,6 @@ def check_level(main_structure, anthill):
             level = 3
 
     return level
-
 
 def spawn(main_structure, ant_structure, anthill_structure):
     """Spawn ant.
@@ -647,7 +639,6 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     for x in range main_structure
         for y in range len(main_structure[0])
         print(term.move_xy(mainstructure[][]['clod']))
-
 
 def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
