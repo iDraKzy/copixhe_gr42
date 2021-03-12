@@ -552,7 +552,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
     """
     for anthill in anthill_structure:
         #check the level the next ant will have
-        ant_level = check_level(main_structure, anthill),
+        ant_level = check_level(main_structure, anthill)
         
         #with the level, take the health and color of the ant
         if ant_level == 1:
