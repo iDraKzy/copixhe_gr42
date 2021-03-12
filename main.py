@@ -710,7 +710,8 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             #orders += execfile(AI2_code)
         
         #check and execute the orders
-        orders_list = interpret_order(main_structure, ant_structure, orders_1, orders_2)
+        orders_list = interpret_order( 1 ,main_structure, ant_structure, orders_1)
+        orders_list += interpret_order(2, main_structure, ant_structure, orders_2)
         exec_order(orders_list, main_structure, ant_structure)
         #check and spawn new ant if it's needed
         if number_of_turn % 5 == 0:
