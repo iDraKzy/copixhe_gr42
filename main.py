@@ -623,12 +623,16 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
 
     print(term.home + term.clear + term.hide_cursor)
     # print grid
+    term.clear
     print(term.move(0,0) + ulcorner + (3*hline + ttee)*(col - 1) + 3*hline + urcorner)
     for x in range(row - 1):
         print((vline + 3*space)*col + vline)
         print(ltee + (3*hline + bigplus)*(col - 1) + 3*hline + rtee)
     print((vline + 3*space)*col + vline)
     print(llcorner + (3*hline + btee)*(col - 1) + 3*hline + lrcorner)
+
+    print(term.move(anthills_structure[0][0], anthills_structure[0][1]) + "⤊")
+    print(term.move(anthills_structure[1][0], anthills_structure[1][1]) + "⤊")
 
 def move_ant_on_display(old_position, new_position):
     """Change the position of an ant on the dispay.
