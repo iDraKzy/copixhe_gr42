@@ -467,7 +467,7 @@ def check_level(main_structure, anthill):
     Version
     -------
     specification: Youlan Collard (v.1 18/02/21) (v.2 26/02/21)
-        
+    implementation: Liam Letot (v.1 12/03/2021)
     """
 
     nbr_dirt_pl_1, nbr_dirt_pl_2 = check_dirt(main_structure)
@@ -515,15 +515,13 @@ def spawn(main_structure, ant_structure, anthill_structure):
     for anthill in anthill_structure:
         #check the level the next ant will have
         ant_level = check_level(main_structure, anthill),
-        #problème de tuple à régler/ vérifier une fois check_level fait
-        ant_level = str(ant_level[0]) # Note(Youlan): Pourquoi transformer en string ici ??
-
+        
         #with the level, take the health of the ant
-        if ant_level == '1':
+        if ant_level == 1:
             health = 3
-        elif ant_level =='2':
+        elif ant_level == 2:
             health = 5
-        elif ant_level == '3':
+        elif ant_level == 3:
             health = 7
     
         #add the nex ant in ant_structure
