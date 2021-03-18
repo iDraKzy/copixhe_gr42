@@ -424,15 +424,14 @@ def place(main_structure, ant_structure, ant_position):
     """
     #search the id of ants in the board
     ant_id = main_structure[ant_position[0]][ant_position[1]]['ant']
-    clod = main_structure[ant_position[0]][ant_position[1]]['ant']
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ground
-    clod = ant['clod_force'] # Note Youlan: Tu affectes clod à une nouvelle fonction les modification que tu fais ne sont pas affecté dans la liste
+    main_structure[ant_position[0]][ant_position[1]]['clod'] = ant['clod_force']
     ant['carrying'] = False
     #remove the clod from the ant
     ant['clod_force']= None
-    #remove the clod on the display
+    #place the clod on the display
     place_clod_on_display(ant_position)
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
