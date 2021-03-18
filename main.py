@@ -408,14 +408,13 @@ def lift(main_structure, ant_structure, ant_pos):
     """
     #search the id of ants in the board
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
-    clod = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ant
     ant['clod_force'] = clod
     ant['carrying'] = True
     #remove the clod from the board
-    clod = None
+    main_structure[ant_pos[0]][ant_pos[1]]['clod'] = None
     #remove the clod on the display
     lift_clod_on_display(ant_pos)
 
@@ -634,14 +633,15 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     print(llcorner + (3*hline + btee)*(col - 1) + 3*hline + lrcorner)
     # * 4 + 1 for ants
     # print anthills on grid
-    print(term.on_blue + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 3, anthills_structure[0]['pos_y'] * 2 + 1) + '⤊')
-    print(term.on_red + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 3, anthills_structure[1]['pos_y'] * 2 + 1) + '⤊')
+    print(term.on_blue + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 3, anthills_structure[0]['pos_y'] * 2 + 1) + '⤊' + term.normal)
+    print(term.on_red + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 3, anthills_structure[1]['pos_y'] * 2 + 1) + '⤊' + term.normal)
 
+    #TODO: Replace this with function call (place_clod_on_display)
     for y in range(len(main_structure)):
         for x in range(len(main_structure[0])):
             if main_structure[y][x]['clod']:
                 color = get_color(main_structure[y][x]['clod'])
-                print(term.move_xy((x * 4 + 3), (y * 2 + 1)) + '∆' + color)
+                print(term.move_xy((x * 4 + 3), (y * 2 + 1)) + '∆' + color + term.normal)
 
 def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
@@ -672,7 +672,7 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
         possible_underline = ''
 
     print(term.move_xy(old_position[0] * 4 + 1, old_position[1] * 2 + 1) + ' ') # remove previous ant
-    print(term.move_xy(new_position[0] * 4 + 1, old_position[1] * 2 + 1) + bg_color + color + '⚇' + possible_underline) # add it back
+    print(term.move_xy(new_position[0] * 4 + 1, old_position[1] * 2 + 1) + bg_color + color + '⚇' + possible_underline + term.normal) # add it back
 
 def remove_ant_on_display(ant_pos, carrying):
     """Remove ant on dispay when she died.
@@ -746,7 +746,7 @@ def add_ant_on_display(ant_pos, term_color, team) :
         bg_color = term.on_blue
     elif team == 2:
         bg_color = term.on_red 
-    print(term.move_xy(ant_pos[0] * 4 + 1, ant_pos[1] * 2 + 1) + '⚇'+ term_color + bg_color)
+    print(term.move_xy(ant_pos[0] * 4 + 1, ant_pos[1] * 2 + 1) + '⚇'+ term_color + bg_color + term.normal)
 
 # Util function
 def return_ant_by_id(ant_structure, ant_id):
