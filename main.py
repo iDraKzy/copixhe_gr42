@@ -644,7 +644,7 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     for y in range(len(main_structure)):
         for x in range(len(main_structure[0])):
             if main_structure[y][x]['clod']:
-                color = get_color(main_structure[x][y]['clod'])
+                color = get_color(main_structure[y][x]['clod'])
                 print(term.move_xy((x * 4 + 3), (y * 2 + 1)) + '∆' + color)
 
 def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
