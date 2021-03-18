@@ -663,7 +663,7 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
     print(term.move_xy(old_position[0] * 4 + 1, old_position[1] * 2 + 1) + ' ') # remove previous ant
     print(term.move_xy(new_position[0] * 4 + 1, old_position[1] * 2 + 1) + bg_color + color + '⚇' + possible_underline) # add it back
 
-def remove_ant_on_display(ant_pos,carrying):
+def remove_ant_on_display(ant_pos, carrying):
     """Remove ant on dispay when she died.
 
     Parameters
