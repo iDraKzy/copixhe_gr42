@@ -280,13 +280,14 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     """
     lift_valid = False
 
+    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
 
-    if team == ant['team']
+    if team == ant['team']:
         if main_structure[ant_pos[0]][ant_pos[1]]['clod'] and ant_structure['carrying']:
             if ant_structure['clod_force'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
 
-            lift_valid = "True"
+                lift_valid = True
     
     return lift_valid
 
