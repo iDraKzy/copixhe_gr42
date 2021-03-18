@@ -291,7 +291,6 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     
     return lift_valid
 
-
 def validation_attack(team, main_structure, ant_structure, attacker_pos, target_pos):
     """Check if target is in range of the attacker and return a boolean.
     
