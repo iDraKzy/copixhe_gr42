@@ -539,8 +539,14 @@ def spawn(main_structure, ant_structure, anthill_structure):
         ant_level = check_level(main_structure, anthill)
         
         #with the level, take the health and color of the ant
+        if ant_level == 1:
+            health = 3
+        elif ant_level == 2:
+            health = 5
+        elif ant_level == 3:
+            health = 7
         term_color = get_color(ant_level)
-    
+
         #add the nex ant in ant_structure
         ant_structure.append({
             'id': len(ant_structure),
