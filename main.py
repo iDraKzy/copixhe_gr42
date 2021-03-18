@@ -275,10 +275,18 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     Version
     -------
     specification: Youlan Collard (v.1 21/02/21) (v.2 11/03/21)(v.3 12/03/21)
-
+    implementation: Martin Buchet (v.1 18/03/21)
     
     """
-    pass
+    lift_valid = False
+
+    if main_structure[ant_pos[0]][ant_pos[][1]]['clod'] and ant_structure[team]['carrying']:
+        if ant_structure[team]['clod_force'] >= main_structure[ant_pos[0][ant_pos[2]['clod']:
+            list_valid = True
+            return list_valid
+    
+    return lift_valid
+
 
 def validation_attack(team, main_structure, ant_structure, attacker_pos, target_pos):
     """Check if target is in range of the attacker and return a boolean.
