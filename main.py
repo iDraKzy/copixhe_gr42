@@ -428,7 +428,7 @@ def place(main_structure, ant_structure, ant_position):
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ground
-    clod = ant['clod_force'] # Note Youlan: Tu affectes clod à une nouvelle fonction les modification que tu fais ne sont pas affecté sur le dictionnaire
+    clod = ant['clod_force'] # Note Youlan: Tu affectes clod à une nouvelle fonction les modification que tu fais ne sont pas affecté dans la liste
     ant['carrying'] = False
     #remove the clod from the ant
     ant['clod_force']= None
