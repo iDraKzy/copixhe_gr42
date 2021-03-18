@@ -609,8 +609,14 @@ def death(ant_pos, main_structure, ant_structure):
     Version
     -------
     specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
+    implementation: Martin Buchet (v.1 18/03/21)
     """
-    pass
+    # get ant_id from ant_pos then get the ant dict
+    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+    dead_ant = return_ant_by_id(ant_structure, ant_id)
+
+    # remove ant from ant_structure
+    ant_structure.remove(dead_ant)
 
 # UI Function
 def init_dispay(main_structure, ant_structure, anthills_structure):
