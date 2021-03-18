@@ -317,15 +317,18 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
 
     is_in_range = False
 
+    # compute distance between ants
+    range_x = target_pos[0] - attacker_pos[0]
+    range_y = target_pos[1] - attacker_pos[1]
+
     # get ant_id from ant_pos then get the ant dict
     ant_id = main_structure[attacker_pos[0]][attacker_pos[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
 
     # check if the attacker ant belong to the team giving the order then check range
     if team == ant['team']:
-        if target_pos[0] == attacker_pos[0] + 1 or target_pos[0] == attacker_pos[0] - 1 or target_pos[0] == attacker_pos[0]:
-            if target_pos[1] == attacker_pos[1] + 1 or target_pos[1] == attacker_pos[1] - 1 or target_pos[1] == attacker_pos[1]:
-                is_in_range = True
+        if range_x <= 3 and range_y <= 3:
+            is_in_range = True
 
     return is_in_range
 
