@@ -506,12 +506,12 @@ def check_level(main_structure, anthill):
     nbr_clod_pl = check_clod(main_structure)
         
     #check the level
-        if nbr_clod_pl[anthill['team' - 1]] <= 2:
-            level = 1
-        elif nbr_clod_pl[anthill['team' - 1]] <= 5:
-            level = 2
-        elif nbr_clod_pl[anthill['team' - 1]] <= 8:
-            level = 3
+    if nbr_clod_pl[anthill['team'] - 1] <= 2:
+        level = 1
+    elif nbr_clod_pl[anthill['team'] - 1] <= 5:
+        level = 2
+    elif nbr_clod_pl[anthill['team'] - 1] <= 8:
+        level = 3
 
     return level
 
