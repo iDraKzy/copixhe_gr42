@@ -503,26 +503,14 @@ def check_level(main_structure, anthill):
     implementation: Liam Letot (v.1 12/03/2021)
     """
 
-    # Note Youlan: Ici tu peux juste assigné check_clod à une seule variable ça te fera un tupple.
-    # Une fois que t'aurais le tupple tu pourras juste check level en faisant nbr_clod[anthill['team'] - 1] ça évitera la répétition
-    nbr_clod_pl_1, nbr_clod_pl_2 = check_clod(main_structure)
+    nbr_clod_pl = check_clod(main_structure)
         
-    #check the level for team 1
-    if anthill['team']== 1:
-        if nbr_clod_pl_1 <= 2:
+    #check the level
+        if nbr_clod_pl[anthill['team' - 1]] <= 2:
             level = 1
-        elif nbr_clod_pl_1 <= 5:
+        elif nbr_clod_pl[anthill['team' - 1]] <= 5:
             level = 2
-        elif nbr_clod_pl_1 <= 8:
-            level = 3
-        
-    #check the level for team 2
-    elif anthill['team']== 2:
-        if nbr_clod_pl_2 <= 2:
-            level = 1
-        elif nbr_clod_pl_2 <= 5:
-            level = 2
-        elif nbr_clod_pl_2 <= 8:
+        elif nbr_clod_pl[anthill['team' - 1]] <= 8:
             level = 3
 
     return level
