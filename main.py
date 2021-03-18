@@ -278,11 +278,14 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     implementation: Martin Buchet (v.1 18/03/21)
     
     """
+
     lift_valid = False
 
+    # get ant_id from ant_pos then get the ant dict
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
 
+    # check team and if ant is strong enough, already carrying and if there is a clod
     if team == ant['team']:
         if main_structure[ant_pos[0]][ant_pos[1]]['clod'] and ant_structure['carrying']:
             if ant_structure['clod_force'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
@@ -314,14 +317,16 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
 
     is_in_range = False
 
+    # get ant_id from ant_pos then get the ant dict
     ant_id = main_structure[attacker_pos[0]][attacker_pos[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
 
+    # check if the attacker ant belong to the team giving the order then check range
     if team == ant['team']:
         if target_pos[0] == attacker_pos[0] + 1 or target_pos[0] == attacker_pos[0] - 1 or target_pos[0] == attacker_pos[0]:
             if target_pos[1] == attacker_pos[1] + 1 or target_pos[1] == attacker_pos[1] - 1 or target_pos[1] == attacker_pos[1]:
                 is_in_range = True
-                
+
     return is_in_range
 
 def validation_move(team, origin, destination, main_structure, ant_structure):
@@ -594,7 +599,7 @@ def death(ant_pos, main_structure, ant_structure):
 
     Parameters
     ----------
-    ant_pos: position of the dead ant (tupple)
+    ant_pos: position of the dead ant (list)
     main_structure: main structure of the board (list)
     ant_structure: structure containing the ants (list)
 
