@@ -309,8 +309,20 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
     Version
     -------
     specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21) (v.3 12/03/21)
+    implementation: Martin Buchet (v.1 18/03/21)
     """
-    pass
+
+    is_in_range = False
+
+    ant_id = main_structure[attacker_pos[0]][attacker_pos[1]]['ant']
+    ant = return_ant_by_id(ant_structure, ant_id)
+
+    if team == ant['team']:
+        if target_pos[0] == attacker_pos[0] + 1 or target_pos[0] == attacker_pos[0] - 1 or target_pos[0] == attacker_pos[0]:
+            if target_pos[1] == attacker_pos[1] + 1 or target_pos[1] == attacker_pos[1] - 1 or target_pos[1] == attacker_pos[1]:
+                is_in_range = True
+                
+    return is_in_range
 
 def validation_move(team, origin, destination, main_structure, ant_structure):
     """Check if deplacement is valid and return a boolean.
