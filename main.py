@@ -597,7 +597,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
     return main_structure, ant_structure
 
 # Removal of dead ant function
-def death(ant_pos, main_structure, ant_structure):
+def death(ant_pos, main_structure, ant_structure, carrying):
     """Remove the specified ant.
 
     Parameters
@@ -605,6 +605,7 @@ def death(ant_pos, main_structure, ant_structure):
     ant_pos: position of the dead ant (list)
     main_structure: main structure of the board (list)
     ant_structure: structure containing the ants (list)
+    carrying: if the ant was carrying something (bool)
 
     Version
     -------
@@ -616,12 +617,10 @@ def death(ant_pos, main_structure, ant_structure):
     dead_ant = return_ant_by_id(ant_structure, ant_id)
 
     # remove dead ant from grid
-    remove_ant_on_display(ant_pos, carrying)
+    remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure)
 
     # remove ant from ant_structure
     ant_structure.remove(dead_ant)
-
-    
 
 # UI Function
 def init_dispay(main_structure, ant_structure, anthills_structure):
@@ -710,7 +709,7 @@ def remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure):
 
     Parameters
     ----------
-    ant_pos: position of an ant (tuple)
+    ant_pos: position of an ant (list)
     carrying: if the ant was carrying something (bool)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
