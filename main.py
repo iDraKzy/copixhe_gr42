@@ -633,6 +633,7 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     print(term.on_blue + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 3, anthills_structure[0]['pos_y'] * 2 + 1) + '⤊')
     print(term.on_red + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 3, anthills_structure[1]['pos_y'] * 2 + 1) + '⤊')
 
+    #TODO: Replace this with function call (place_clod_on_display)
     for y in range(len(main_structure)):
         for x in range(len(main_structure[0])):
             if main_structure[y][x]['clod']:
