@@ -389,14 +389,14 @@ def exec_order(order_list, main_structure, ant_structure):
             ant_pos = order_seperated[0].split("-")
             place(main_structure, ant_structure, ant_pos)
 
-def lift(main_structure, ant_structure, ant_position):
+def lift(main_structure, ant_structure, ant_pos):
     """Lift clod on ants.
 
     Parameters
     ----------
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
-    ant_position: position of the ant that will lift clod (list)
+    ant_pos: position of the ant that will lift clod (list)
 
     Version
     -------
@@ -404,8 +404,8 @@ def lift(main_structure, ant_structure, ant_position):
     implementation: Liam Letot (v.1 12/03/21)
     """
     #search the id of ants in the board
-    ant_id = main_structure[ant_position[0]][ant_position[1]]['ant']
-    clod = main_structure[ant_position[0]][ant_position[1]]['ant']
+    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+    clod = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ant
@@ -414,16 +414,16 @@ def lift(main_structure, ant_structure, ant_position):
     #remove the clod from the board
     clod = None
     #remove the clod on the display
-    lift_clod_on_display(ant_position)
+    lift_clod_on_display(ant_pos)
 
-def place(main_structure, ant_structure, ant_position):
+def place(main_structure, ant_structure, ant_pos):
     """Place clod on a case.
 
     Parameters
     ----------
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
-    ant_position: position of the ant that will place clod (list)
+    ant_pos: position of the ant that will place clod (list)
 
     Version
     -------
@@ -431,17 +431,16 @@ def place(main_structure, ant_structure, ant_position):
     implementation: Liam Letot (v.1 12/03/21)
     """
     #search the id of ants in the board
-    ant_id = main_structure[ant_position[0]][ant_position[1]]['ant']
-    clod = main_structure[ant_position[0]][ant_position[1]]['ant']
+    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ground
-    clod = ant['clod_force'] # Note Youlan: Tu affectes clod à une nouvelle fonction les modification que tu fais ne sont pas affecté dans la liste
+    main_structure[ant_pos[0]][ant_pos[1]]['clod'] = ant['clod_force']
     ant['carrying'] = False
     #remove the clod from the ant
     ant['clod_force']= None
-    #remove the clod on the display
-    place_clod_on_display(ant_position)
+    #place the clod on the display
+    place_clod_on_display(ant_pos)
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
@@ -512,27 +511,15 @@ def check_level(main_structure, anthill):
     implementation: Liam Letot (v.1 12/03/2021)
     """
 
-    # Note Youlan: Ici tu peux juste assigné check_clod à une seule variable ça te fera un tupple.
-    # Une fois que t'aurais le tupple tu pourras juste check level en faisant nbr_clod[anthill['team'] - 1] ça évitera la répétition
-    nbr_clod_pl_1, nbr_clod_pl_2 = check_clod(main_structure)
+    nbr_clod_pl = check_clod(main_structure)
         
-    #check the level for team 1
-    if anthill['team']== 1:
-        if nbr_clod_pl_1 <= 2:
-            level = 1
-        elif nbr_clod_pl_1 <= 5:
-            level = 2
-        elif nbr_clod_pl_1 <= 8:
-            level = 3
-        
-    #check the level for team 2
-    elif anthill['team']== 2:
-        if nbr_clod_pl_2 <= 2:
-            level = 1
-        elif nbr_clod_pl_2 <= 5:
-            level = 2
-        elif nbr_clod_pl_2 <= 8:
-            level = 3
+    #check the level
+    if nbr_clod_pl[anthill['team'] - 1] <= 2:
+        level = 1
+    elif nbr_clod_pl[anthill['team'] - 1] <= 5:
+        level = 2
+    elif nbr_clod_pl[anthill['team'] - 1] <= 8:
+        level = 3
 
     return level
 
@@ -562,14 +549,12 @@ def spawn(main_structure, ant_structure, anthill_structure):
         #with the level, take the health and color of the ant
         if ant_level == 1:
             health = 3
-            term_color =' '
         elif ant_level == 2:
             health = 5
-            term_color = term.yellow
         elif ant_level == 3:
             health = 7
-            term_color = term.green
-    
+        term_color = get_color(ant_level)
+
         #add the nex ant in ant_structure
         ant_structure.append({
             'id': len(ant_structure),
@@ -686,12 +671,12 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
     print(term.move_xy(old_position[0] * 4 + 1, old_position[1] * 2 + 1) + ' ') # remove previous ant
     print(term.move_xy(new_position[0] * 4 + 1, old_position[1] * 2 + 1) + bg_color + color + '⚇' + possible_underline) # add it back
 
-def remove_ant_on_display(ant_position,carrying):
+def remove_ant_on_display(ant_pos, carrying):
     """Remove ant on dispay when she died.
 
     Parameters
     ----------
-    ant_position: position of an ant (tuple)
+    ant_pos: position of an ant (tuple)
     carrying: if the ant was carrying something (bool)
     
     Version
@@ -714,12 +699,12 @@ def update_lifepoint_on_display(ant_id, ant_structure):
     """
     pass
 
-def lift_clod_on_display(ant_position):
+def lift_clod_on_display(ant_pos):
     """Make the clod disappear and switch the ant to an ant with clod on display.
     
     Parameter
     ---------
-    ant_position: the position of the ant who lift the clod (tupple)
+    ant_pos: the position of the ant who lift the clod (tupple)
 
     Version
     -------
@@ -727,12 +712,12 @@ def lift_clod_on_display(ant_position):
     """
     pass
 
-def place_clod_on_display(ant_position):
+def place_clod_on_display(ant_pos):
     """Make the clod appear and switch the ant with a clod to an ant on display.
 
     Parameter
     ---------
-    ant_position: the position of the ant who lift the clod (tupple)
+    ant_pos: the position of the ant who lift the clod (tupple)
 
     Version
     -------
@@ -846,7 +831,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         
     #run the game
     
-    while check_victory(number_of_turn, main_structure, anthill_structure) == None:
+    while check_victory(number_of_turn, main_structure, anthill_structure) is None:
         
         #take the orders
         if type_1 == 'human':
@@ -877,7 +862,10 @@ def test():
     board_size, anthills, clods = parse_map_file("./small.cpx")
     main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
     init_dispay(main_structure, ant_structure, anthills_structure)
-    print(len(main_structure))
 
     print(term.move(1, 3) + "⚇")
+    i = 0
+    while i < 100:
+        i += 1
+        time.sleep(1)
 test()
