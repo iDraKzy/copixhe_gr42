@@ -823,7 +823,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         
     #run the game
     
-    while check_victory(number_of_turn, main_structure, anthill_structure) == None:
+    while check_victory(number_of_turn, main_structure, anthill_structure) is None:
         
         #take the orders
         if type_1 == 'human':
