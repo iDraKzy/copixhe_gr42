@@ -854,7 +854,10 @@ def test():
     board_size, anthills, clods = parse_map_file("./small.cpx")
     main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
     init_dispay(main_structure, ant_structure, anthills_structure)
-    print(len(main_structure))
 
     print(term.move(1, 3) + "⚇")
+    i = 0
+    while i < 100:
+        i += 1
+        time.sleep(1)
 test()
