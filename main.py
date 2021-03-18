@@ -283,7 +283,7 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     if main_structure[ant_pos[0]][ant_pos[1]]['clod'] and ant_structure[team]['carrying']:
         if ant_structure[team]['clod_force'] >= main_structure[ant_pos[0][ant_pos[1]['clod']:
             list_valid = True
-            return list_valid
+            return lift_valid
     
     return lift_valid
 
