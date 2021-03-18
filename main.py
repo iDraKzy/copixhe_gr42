@@ -327,7 +327,7 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
 
     # check if the attacker ant belong to the team giving the order then check range
     if team == ant['team']:
-        if (range_x <= 3 or range_x >= -3) and (range_y <= 3 or range_y >= -3):
+        if (range_x <= 3 and range_x >= -3) and (range_y <= 3 and range_y >= -3):
             is_in_range = True
 
     return is_in_range
