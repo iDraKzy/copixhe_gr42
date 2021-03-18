@@ -405,14 +405,13 @@ def lift(main_structure, ant_structure, ant_pos):
     """
     #search the id of ants in the board
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
-    clod = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ant
     ant['clod_force'] = clod
     ant['carrying'] = True
     #remove the clod from the board
-    clod = None
+    main_structure[ant_pos[0]][ant_pos[1]]['clod'] = None
     #remove the clod on the display
     lift_clod_on_display(ant_pos)
 
