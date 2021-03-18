@@ -748,7 +748,7 @@ def lift_clod_on_display(ant_pos):
     
     Parameter
     ---------
-    ant_pos: the position of the ant who lift the clod (tupple)
+    ant_pos: the position of the ant who lift the clod (list)
 
     Version
     -------
@@ -761,7 +761,7 @@ def place_clod_on_display(ant_pos):
 
     Parameter
     ---------
-    ant_pos: the position of the ant who lift the clod (tupple)
+    ant_pos: the position of the ant who lift the clod (list)
 
     Version
     -------
