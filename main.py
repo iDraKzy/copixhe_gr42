@@ -381,14 +381,14 @@ def exec_order(order_list, main_structure, ant_structure):
             ant_pos = order_seperated[0].split("-")
             place(main_structure, ant_structure, ant_pos)
 
-def lift(main_structure, ant_structure, ant_position):
+def lift(main_structure, ant_structure, ant_pos):
     """Lift clod on ants.
 
     Parameters
     ----------
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
-    ant_position: position of the ant that will lift clod (list)
+    ant_pos: position of the ant that will lift clod (list)
 
     Version
     -------
@@ -396,8 +396,8 @@ def lift(main_structure, ant_structure, ant_position):
     implementation: Liam Letot (v.1 12/03/21)
     """
     #search the id of ants in the board
-    ant_id = main_structure[ant_position[0]][ant_position[1]]['ant']
-    clod = main_structure[ant_position[0]][ant_position[1]]['ant']
+    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+    clod = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ant
@@ -406,16 +406,16 @@ def lift(main_structure, ant_structure, ant_position):
     #remove the clod from the board
     clod = None
     #remove the clod on the display
-    lift_clod_on_display(ant_position)
+    lift_clod_on_display(ant_pos)
 
-def place(main_structure, ant_structure, ant_position):
+def place(main_structure, ant_structure, ant_pos):
     """Place clod on a case.
 
     Parameters
     ----------
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
-    ant_position: position of the ant that will place clod (list)
+    ant_pos: position of the ant that will place clod (list)
 
     Version
     -------
@@ -423,16 +423,16 @@ def place(main_structure, ant_structure, ant_position):
     implementation: Liam Letot (v.1 12/03/21)
     """
     #search the id of ants in the board
-    ant_id = main_structure[ant_position[0]][ant_position[1]]['ant']
+    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ground
-    main_structure[ant_position[0]][ant_position[1]]['clod'] = ant['clod_force']
+    main_structure[ant_pos[0]][ant_pos[1]]['clod'] = ant['clod_force']
     ant['carrying'] = False
     #remove the clod from the ant
     ant['clod_force']= None
     #place the clod on the display
-    place_clod_on_display(ant_position)
+    place_clod_on_display(ant_pos)
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
@@ -663,12 +663,12 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
     print(term.move_xy(old_position[0] * 4 + 1, old_position[1] * 2 + 1) + ' ') # remove previous ant
     print(term.move_xy(new_position[0] * 4 + 1, old_position[1] * 2 + 1) + bg_color + color + '⚇' + possible_underline) # add it back
 
-def remove_ant_on_display(ant_position,carrying):
+def remove_ant_on_display(ant_pos,carrying):
     """Remove ant on dispay when she died.
 
     Parameters
     ----------
-    ant_position: position of an ant (tuple)
+    ant_pos: position of an ant (tuple)
     carrying: if the ant was carrying something (bool)
     
     Version
@@ -691,12 +691,12 @@ def update_lifepoint_on_display(ant_id, ant_structure):
     """
     pass
 
-def lift_clod_on_display(ant_position):
+def lift_clod_on_display(ant_pos):
     """Make the clod disappear and switch the ant to an ant with clod on display.
     
     Parameter
     ---------
-    ant_position: the position of the ant who lift the clod (tupple)
+    ant_pos: the position of the ant who lift the clod (tupple)
 
     Version
     -------
@@ -704,12 +704,12 @@ def lift_clod_on_display(ant_position):
     """
     pass
 
-def place_clod_on_display(ant_position):
+def place_clod_on_display(ant_pos):
     """Make the clod appear and switch the ant with a clod to an ant on display.
 
     Parameter
     ---------
-    ant_position: the position of the ant who lift the clod (tupple)
+    ant_pos: the position of the ant who lift the clod (tupple)
 
     Version
     -------
