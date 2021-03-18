@@ -641,7 +641,9 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
 
     for x in range(len(main_structure)):
         for y in range(len(main_structure[0])):
-            print(term.move_xy(mainstructure[x][y]['clod']))
+            if main_structure[x][y]['clod']:
+                color = get_color(main_structure[x][y]['clod'])
+                print(term.move_xy((x * 4 + 3), (y * 2 + 1)) + '∆' + color)
 
 def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
@@ -664,12 +666,7 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
     else:
         bg_color = term.on_red
 
-    if ant_level == 1:
-        color = ''
-    elif ant_level == 2:
-        color = term.yellow
-    elif ant_level == 3:
-        color = term.green
+    color = get_color(ant_level)
 
     if ant_is_carrying:
         possible_underline = term.underline
@@ -774,6 +771,29 @@ def return_ant_by_id(ant_structure, ant_id):
     for ant in ant_structure:
         if ant['id'] == ant_id:
             return ant
+
+def get_color(level):
+    """Send the color string for the specified level using blessed
+
+    Parameter
+    ---------
+    level: the level to check [1-3] (int)
+
+    Return
+    ------
+    color: term color escape character or an empty str if level is 1 (str)
+
+    Version
+    -------
+    specificaiton: Youlan Collard (v.1 18/03/21)
+    implementation: Youlan Collard (v.1 18/03/21)
+    """
+    if level == 1:
+        return ''
+    elif level == 2:
+        return term.yellow
+    else:
+        return term.green
 
 # main function
 def play_game(CPX_file, group_1, type_1, group_2, type_2):
