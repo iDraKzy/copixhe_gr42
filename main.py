@@ -615,8 +615,13 @@ def death(ant_pos, main_structure, ant_structure):
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     dead_ant = return_ant_by_id(ant_structure, ant_id)
 
+    # remove dead ant from grid
+    remove_ant_on_display(ant_pos, carrying)
+
     # remove ant from ant_structure
     ant_structure.remove(dead_ant)
+
+    
 
 # UI Function
 def init_dispay(main_structure, ant_structure, anthills_structure):
@@ -700,19 +705,30 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
     print(term.move_xy(old_position[0] * 4 + 1, old_position[1] * 2 + 1) + ' ') # remove previous ant
     print(term.move_xy(new_position[0] * 4 + 1, old_position[1] * 2 + 1) + bg_color + color + '⚇' + possible_underline + term.normal) # add it back
 
-def remove_ant_on_display(ant_pos, carrying):
+def remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure):
     """Remove ant on dispay when she died.
 
     Parameters
     ----------
     ant_pos: position of an ant (tuple)
     carrying: if the ant was carrying something (bool)
+    main_structure: main structure of the game board (list)
+    ant_structure: structure containing all the ants (list)
     
     Version
     -------
     specification: Maxime Dufrasne  (v.1 22/02/21)
+    implementation: Martin Buchet (v.1 18/03/21)
     """
-    pass
+    print(term.move_xy(ant_pos[0] * 4 + 3, ant_pos[1] * 2 + 1) + ' ' + term.normal)
+
+    if carrying:
+        # get ant_id from ant_pos then get the ant dict
+        ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+        dead_ant = return_ant_by_id(ant_structure, ant_id)
+
+        color = get_color(dead_ant['clod_force'])
+        print(term.move_xy((ant_pos[0] * 4 + 3), (ant_pos[1] * 2 + 1)) + '∆' + color + term.normal)
 
 def update_lifepoint_on_display(ant_id, ant_structure):
     """Update the health bar of an ant on display.
