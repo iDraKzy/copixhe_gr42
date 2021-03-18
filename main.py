@@ -44,7 +44,7 @@ def parse_map_file(path):
         clod_info = lines[line_index_clods].split(' ')
         for index in range(2):
             clod_info[index] = int(clod_info[index]) - 1
-        clod_info[2] = int(clod_info[index])
+        clod_info[2] = int(clod_info[2])
         clods_info.append(clod_info)
 
     return board_size, anthills_pos, clods_info
@@ -855,7 +855,6 @@ def test():
     main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
     init_dispay(main_structure, ant_structure, anthills_structure)
 
-    print(term.move(1, 3) + "⚇")
     i = 0
     while i < 100:
         i += 1
