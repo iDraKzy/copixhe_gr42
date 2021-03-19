@@ -157,7 +157,7 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     else:
         return None
 
-def check_clod(main_structure):
+def check_clod(main_structure, anthill_structure):
     """Check the number of clod around anthill
 
     Parameter
@@ -178,19 +178,18 @@ def check_clod(main_structure):
     """
     # TODO: Faudrait la position des deux anthills je pense
 
-    # clod_1, clod_2 = 0, 0
-    # anthill_1, anthill_2 = recup les deux positions
+    clod_numbers = [0, 0]
+
     around = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
 
-    # for all pos in around:
-    #        if anthill_1 + pos est une clod:
-    #            clod_1 += 1
-    #        if anthill_2 + pos est une clod:
-    #            clod_2 += 2
-    #
-    # return clod_1, clod_2
-
-    pass
+    for pos in around:
+        for anthill in anthill_structure:
+            pos_x = pos[0] + anthill['pos_x']
+            pos_y = pos[1] + anthill['pos_y']
+            if main_structure[pos_x][pos_y]['clod']:
+                clod_numbers[anthill['team'] - 1] += 1
+    
+    return clod_numbers[0], clod_numbers[1]
 
 # Validation of orders
 def interpret_order(team, main_structure, ant_structure, orders):
@@ -220,11 +219,13 @@ def interpret_order(team, main_structure, ant_structure, orders):
     seems_valid = [] # Items are [order, type] (type is one of lift, drop, move or attack)
 
     for order in orders_list:
+        # order_dict = {}
         if ":" in order:
             order_seperated = order.split(":") # Seperate the first part of the order from the second
             if "-" in order_seperated[0]:
                 ant_pos = order_seperated[0].split("-")
                 if (len(ant_pos) == 2) and (ant_pos[0].isdigit() and ant_pos[1].isdigit()):
+                    # order_dict['origin'] = (int(ant_pos[0]) - 1, int(ant_pos[1] - 1))
                     if order_seperated[1] == "lift":
                         seems_valid.append([order, "lift"])
                     elif order_seperated[1] == "drop":
@@ -286,11 +287,12 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     ant = return_ant_by_id(ant_structure, ant_id)
 
     # check team and if ant is strong enough and if there is a clod
-    if team == ant['team']:
-        if main_structure[ant_pos[0]][ant_pos[1]]['clod']:
-            if ant_structure['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
+    if ant['health'] > 0:
+        if team == ant['team']:
+            if main_structure[ant_pos[0]][ant_pos[1]]['clod']:
+                if ant_structure['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
 
-                lift_valid = True
+                    lift_valid = True
     
     return lift_valid
 
