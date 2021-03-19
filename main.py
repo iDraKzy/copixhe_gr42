@@ -131,7 +131,7 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     if number_of_turn > 200:
         return None
 
-    nbr_clod_pl_1, nbr_clod_pl_2 = check_clod(main_structure)
+    nbr_clod_pl_1, nbr_clod_pl_2 = check_clod(main_structure, anthill_structure)
 
     if nbr_clod_pl_1 == 8 and nbr_clod_pl_2 < 8:
         return 1
@@ -197,12 +197,13 @@ def interpret_order(team, main_structure, ant_structure, orders):
 
     #TODO: Créer un dictionnaire pour les ordres pour ne devoir décoder l'ordre qu'une fois
 
+    print('interpret_order called')
     orders_list = orders.split(" ")
-
+    # print(orders_list)
     seems_valid = [] # Items are [order, type] (type is one of lift, drop, move or attack)
 
     for order in orders_list:
-        order_dict = {}
+        order_dict = {'team': team}
         if ":" in order:
             order_seperated = order.split(":") # Seperate the first part of the order from the second
             if "-" in order_seperated[0]:
@@ -220,7 +221,7 @@ def interpret_order(team, main_structure, ant_structure, orders):
                     elif "-" in order_seperated[1]:
                         action_pos = order_seperated[1][1:].split("-")
                         if (len(action_pos) == 2) and (action_pos[0].isdigit() and action_pos[1].isdigit()):
-                            order_dict['target'] = (int(action_pos[0] - 1), int(action_pos[1] - 1))
+                            order_dict['target'] = (int(action_pos[0]) - 1, int(action_pos[1]) - 1)
                             if order_seperated[1][0] == "@":
                                 order_dict['type'] = 'move'
                                 seems_valid.append(order_dict)
@@ -243,6 +244,8 @@ def interpret_order(team, main_structure, ant_structure, orders):
         elif seems_valid_order['type'] == 'drop':
             if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
                 valid_orders.append(seems_valid_order)
+
+    print(valid_orders)
 
     return valid_orders
 
@@ -371,9 +374,12 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     ant_id = origin_tile['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
     if ant['team'] == team:
+        # print('isgood')
         offset_origin_x = origin[0] - destination[0]
         offset_origin_y = origin[1] - destination[1] 
-        if (offset_origin_x in (-1, 0, 1)) and (offset_origin_y in (-1, 0, 1)) and (not offset_origin_x == 0 and offset_origin_y == 0):
+        print(offset_origin_x, offset_origin_y)
+        if (offset_origin_x in (-1, 0, 1)) and (offset_origin_y in (-1, 0, 1)) and not (offset_origin_x == 0 and offset_origin_y == 0):
+            print('test')
             return True
 
     return False
@@ -403,7 +409,7 @@ def exec_order(order_list, main_structure, ant_structure):
 
     for order in order_list:
         if order['type'] == 'move':
-            move(main_structure, order['origin'], order['target'])
+            move(main_structure, ant_structure, order['team'], order['origin'], order['target'])
         elif order['type'] == 'attack':
             attack(ant_structure, main_structure, order['origin'], order['target'])
         elif order[1] == 'lift':
@@ -493,12 +499,14 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
 
     update_lifepoint_on_display(ant_2, ant_structure)
     
-def move(main_structure, origin, destination):
+def move(main_structure, ant_structure, team, origin, destination):
     """if move valid return the new position of the ant.
 
     Parameters
     ----------
     main_structure: main structure containing the game board (list)
+    ant_structure: structure containing the ants (list)
+    team: number of the team who sent the order (int)
     origin: depart position (list)
     destination: destination position (list)
 
@@ -515,7 +523,9 @@ def move(main_structure, origin, destination):
     main_structure[origin[0]][origin[1]]['ant'] = None
     main_structure[destination[0]][destination[1]]['ant'] = ant_id
 
-    move_ant_on_display(origin, destination)
+    ant = return_ant_by_id(ant_structure, ant_id)
+
+    move_ant_on_display(team, ant['level'],  ant['carrying'], origin, destination)
 
 # New ants functions
 def check_level(main_structure, anthill_structure, anthill):
@@ -712,7 +722,7 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
         possible_underline = ''
 
     print(term.move_yx(old_position[0] * 2 + 2, old_position[1] * 4 + 3) + ' ') # remove previous ant
-    print(term.move_yx(old_position[0] * 2 + 2, new_position[1] * 4 + 3) + bg_color + color + '⚇' + possible_underline + term.normal) # add it back
+    print(term.move_yx(new_position[0] * 2 + 2, new_position[1] * 4 + 3) + bg_color + color + possible_underline + '⚇' + term.normal) # add it back
 
 def remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure):
     """Remove ant on dispay when she died.
@@ -871,7 +881,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
     
     #init the main parameters
-    number_of_turn = 0
+    number_of_turn = 1
     board_size, anthills, clods = parse_map_file(CPX_file)
 
     main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
@@ -885,10 +895,11 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
         
     #run the game
-    
-    while check_victory(number_of_turn, main_structure, anthill_structure) is None:
+    is_won = check_victory(main_structure, anthill_structure, number_of_turn)
+    while is_won is None:
         
         #take the orders
+        print(term.move_yx(len(main_structure) * 2 + 1, 0))
         if type_1 == 'human':
             orders_1 = input("team_1 input")
         #elif type_1 == 'AI':
@@ -907,9 +918,10 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             spawn( ant_structure, main_structure, anthill_structure)
         number_of_turn += 1
     #print the end message
-    if check_victory == 1:
+    is_won = check_victory(main_structure, anthill_structure, number_of_turn)
+    if is_won == 1:
         print('Team 1 win')
-    else:
+    elif is_won == 2:
         print('Team 2 win')
 
 def test():
@@ -922,4 +934,4 @@ def test():
     while i < 100:
         i += 1
         time.sleep(1)
-test()
+play_game('./small.cpx', '1', 'human', '2', 'human')
