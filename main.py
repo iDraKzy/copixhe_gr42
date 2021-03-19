@@ -70,9 +70,9 @@ def create_map(board_size, anthills, clods):
     implementation: Youlan Collard (v.1 26/02/21)
     """
     main_structure = []
-    for y in range(int(board_size[1])):
+    for y in range(int(board_size[0])):
         row = []
-        for x in range(int(board_size[0])):
+        for x in range(int(board_size[1])):
             cell = {
                 'ant': None,
                 'clod': None
@@ -89,13 +89,13 @@ def create_map(board_size, anthills, clods):
     anthill_structure = [
         {
             'team': 1,
-            'pos_x': anthills[0][0],
-            'pos_y': anthills[0][1]
+            'pos_x': anthills[0][1],
+            'pos_y': anthills[0][0]
         },
         {
             'team': 2,
-            'pos_x': anthills[1][0],
-            'pos_y': anthills[1][1]
+            'pos_x': anthills[1][1],
+            'pos_y': anthills[1][0]
         }
     ]
 
@@ -119,8 +119,8 @@ def create_map(board_size, anthills, clods):
         }
     ]
 
-    main_structure[anthill_structure[0]['pos_x']][anthill_structure[0]['pos_y']]['ant'] = 0
-    main_structure[anthill_structure[1]['pos_x']][anthill_structure[1]['pos_y']]['ant'] = 1
+    main_structure[anthill_structure[0]['pos_y']][anthill_structure[0]['pos_x']]['ant'] = 0
+    main_structure[anthill_structure[1]['pos_y']][anthill_structure[1]['pos_x']]['ant'] = 1
 
     return main_structure, ant_structure, anthill_structure
 
@@ -219,45 +219,70 @@ def interpret_order(team, main_structure, ant_structure, orders):
     seems_valid = [] # Items are [order, type] (type is one of lift, drop, move or attack)
 
     for order in orders_list:
-        # order_dict = {}
+        order_dict = {}
         if ":" in order:
             order_seperated = order.split(":") # Seperate the first part of the order from the second
             if "-" in order_seperated[0]:
                 ant_pos = order_seperated[0].split("-")
                 if (len(ant_pos) == 2) and (ant_pos[0].isdigit() and ant_pos[1].isdigit()):
-                    # order_dict['origin'] = (int(ant_pos[0]) - 1, int(ant_pos[1] - 1))
-                    if order_seperated[1] == "lift":
-                        seems_valid.append([order, "lift"])
-                    elif order_seperated[1] == "drop":
-                        seems_valid.append([order, "drop"])
+                    order_dict['origin'] = (int(ant_pos[0]) - 1, int(ant_pos[1]) - 1) # -1 to both because our game board is 0 indexed and the game is 1 indexed
+                    if order_seperated[1] == 'lift':
+                        order_dict['type'] = 'lift'
+                        order_dict['target'] = None
+                        seems_valid.append(order_dict)
+                    elif order_seperated[1] == 'drop':
+                        order_dict['type'] = 'drop'
+                        order_dict['target'] = None
+                        seems_valid.append(order_dict)
                     elif "-" in order_seperated[1]:
                         action_pos = order_seperated[1][1:].split("-")
                         if (len(action_pos) == 2) and (action_pos[0].isdigit() and action_pos[1].isdigit()):
+                            order_dict['target'] = (int(action_pos[0] - 1), int(action_pos[1] - 1))
                             if order_seperated[1][0] == "@":
-                                seems_valid.append([order, "move"])
+                                order_dict['type'] = 'move'
+                                seems_valid.append(order_dict)
                             elif order_seperated[1][0] == "*":
-                                seems_valid.append([order, "attack"])
+                                order_dict['type'] = 'attack'
+                                seems_valid.append(order_dict)
 
     valid_orders = []
 
     for seems_valid_order in seems_valid:
-        order_seperated = seems_valid_order.split(":")
-        ant_pos = order_seperated[0].split("-")
-        if seems_valid_order[1] == "move":
-            move_to = order_seperated[1][1:].split("-")
-            if validation_move(team, ant_pos, move_to, main_structure, ant_structure):
+        if seems_valid_order['type'] == 'move':
+            if validation_move(team, seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure):
                 valid_orders.append(seems_valid_order)
-        elif seems_valid_order[1] == "attack":
-            attack_to = order_seperated[1][1:].split("-")
-            if validation_attack(team, main_structure, ant_structure, ant_pos, attack_to):
+        elif seems_valid_order['type'] == 'attack':
+            if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
                 valid_orders.append(seems_valid_order)
-        elif seems_valid_order[1] == "lift":
-            if validation_lift(team, ant_pos, main_structure, ant_structure):
+        elif seems_valid_order['type'] == 'lift':
+            if validation_lift(team, seems_valid_order['origin'], main_structure, ant_structure):
                 valid_orders.append(seems_valid_order)
-        elif seems_valid_order[1] == "drop":
-            valid_orders.append(seems_valid_order)
+        elif seems_valid_order['type'] == 'drop':
+            if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
+                valid_orders.append(seems_valid_order)
 
     return valid_orders
+
+def validation_drop(main_structure, ant_structure, team, ant_pos):
+    """Check if a drop action is valid
+    
+    Parameters
+    ----------
+    main_structure: main structure of the game board (list)
+    ant_structure: structure containing all the ants (list)
+    team: number of the team who made the order (int)
+    ant_pos: position of the ant executing the action (tuple)
+
+    Returns
+    -------
+    drop_valid: wether the drop action is valid (bool)
+
+    Versions
+    --------
+    specification: Youlan Collard (v.1 19/03/21)
+    
+    """
+    pass
 
 def validation_lift(team, ant_pos, main_structure, ant_structure):
     """Check if an ant has the force to carry clod and if there is clod where it is.
@@ -265,7 +290,7 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     Parameters
     ----------
     team: number of the team who made the order (int)
-    ant_pos: position of the ant executing the action (list)
+    ant_pos: position of the ant executing the action (tuple)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
 
@@ -279,7 +304,7 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     implementation: Martin Buchet (v.1 18/03/21)
     
     """
-
+    #TODO: For All Validation: check if the ant has already done an action this turn
     lift_valid = False
 
     # get ant_id from ant_pos then get the ant dict
@@ -304,8 +329,8 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
     team: number of the team who made the order (int)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
-    attacker_pos: position of attacker (list)
-    target_pos: position of target (list)
+    attacker_pos: position of attacker (tuple)
+    target_pos: position of target (tuple)
     
     Return
     ------
@@ -340,8 +365,8 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     Parameters
     ----------
     team: number of the team who made the order (int)
-    origin: depart position (list)
-    destination: destination position (list)
+    origin: depart position (tuple)
+    destination: destination position (tuple)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
     
@@ -379,8 +404,8 @@ def exec_order(order_list, main_structure, ant_structure):
 
     Notes
     -----
-    order_list has been parsed by interpret order already when it reaches this function
-    the format of the order_list's item is [order, type] 
+    order_list has been parsed by interpret_order and is now a list of dictionnary (containing the attributes:
+    origin, target and type)
 
     Version
     -------
@@ -391,28 +416,18 @@ def exec_order(order_list, main_structure, ant_structure):
     #TODO: Order the list (lift, drop, attack, move)
 
     for order in order_list:
-        if order[1] == "move":
+        if order['type'] == 'move':
+            move(main_structure, order['origin'], order['target'])
+        elif order['type'] == 'attack':
+            attack(ant_structure, main_structure, order['origin'], order['target'])
+        elif order[1] == 'lift':
+            order_seperated = order[0].split(':')
+            ant_pos = order_seperated[0].split('-')
+            lift(main_structure, ant_structure, order['origin'])
+        elif order[1] == 'drop':
             order_seperated = order[0].split(":")
-            origin = order_seperated[0].split("-")
-            destination = order_seperated[1][1:].split("-")
-            destination[0] -= 1 # Substract one from both axis because system structure is 0 indexed and game is 1 indexed
-            destination[1] -= 1
-            move(main_structure, origin, destination)
-        elif order[1] == "attack":
-            order_seperated = order[0].split(":")
-            attacker = order_seperated[0].split("-")
-            attacked = order_seperated[1][1:].split("-")
-            attacked[0] -= 1 # Same as above
-            attacked[1] -= 1
-            attack(ant_structure, main_structure, attacker, attacked)
-        elif order[1] == "lift":
-            order_seperated = order[0].split(":")
-            ant_pos = order_seperated[0].split("-")
-            lift(main_structure, ant_structure, ant_pos)
-        elif order[1] == "drop":
-            order_seperated = order[0].split(":")
-            ant_pos = order_seperated[0].split("-")
-            place(main_structure, ant_structure, ant_pos)
+            ant_pos = order_seperated[0].split('-')
+            place(main_structure, ant_structure, order['origin'])
 
 def lift(main_structure, ant_structure, ant_pos):
     """Lift clod on ants.
