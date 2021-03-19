@@ -197,7 +197,6 @@ def interpret_order(team, main_structure, ant_structure, orders):
 
     #TODO: Créer un dictionnaire pour les ordres pour ne devoir décoder l'ordre qu'une fois
 
-    print('interpret_order called')
     orders_list = orders.split(" ")
     # print(orders_list)
     seems_valid = [] # Items are [order, type] (type is one of lift, drop, move or attack)
@@ -244,8 +243,6 @@ def interpret_order(team, main_structure, ant_structure, orders):
         elif seems_valid_order['type'] == 'drop':
             if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
                 valid_orders.append(seems_valid_order)
-
-    print(valid_orders)
 
     return valid_orders
 
@@ -377,9 +374,7 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
         # print('isgood')
         offset_origin_x = origin[0] - destination[0]
         offset_origin_y = origin[1] - destination[1] 
-        print(offset_origin_x, offset_origin_y)
         if (offset_origin_x in (-1, 0, 1)) and (offset_origin_y in (-1, 0, 1)) and not (offset_origin_x == 0 and offset_origin_y == 0):
-            print('test')
             return True
 
     return False
@@ -631,7 +626,7 @@ def death(ant_pos, main_structure, ant_structure, carrying):
     ant_structure.remove(dead_ant)
 
 # UI Function
-def init_dispay(main_structure, ant_structure, anthills_structure):
+def init_display(main_structure, ant_structure, anthills_structure):
     """Initialize the display of the UI, create the initial game board from scratch.
 
     Parameters
@@ -660,7 +655,7 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     row = len(main_structure)
     col = len(main_structure[0])
 
-    print(term.home + term.clear + term.hide_cursor)
+    print(term.home + term.clear)
     # print grid
     for n in range(len(main_structure[0])):
         nbr_col = ''
@@ -885,7 +880,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     board_size, anthills, clods = parse_map_file(CPX_file)
 
     main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
-    init_dispay(main_structure, ant_structure, anthill_structure)
+    init_display(main_structure, ant_structure, anthill_structure)
     
     #if the game is played with AI, take the AI path to execute them
     if type_1 == 'AI':
@@ -899,13 +894,13 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     while is_won is None:
         
         #take the orders
-        print(term.move_yx(len(main_structure) * 2 + 1, 0))
+        print(term.move_yx(len(main_structure) * 2 + 2, 0) + term.clear_eos)
         if type_1 == 'human':
-            orders_1 = input("team_1 input")
+            orders_1 = input("team_1 input : ")
         #elif type_1 == 'AI':
             #orders = execfile(AI1_code)
         if type_2 == 'human':
-            orders_2 = input("team_2 input")
+            orders_2 = input("team_2 input : ")
         #elif type_2 == 'AI':
             #orders += execfile(AI2_code)
         
@@ -917,8 +912,9 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         if number_of_turn % 5 == 0:
             spawn( ant_structure, main_structure, anthill_structure)
         number_of_turn += 1
+        is_won = check_victory(main_structure, anthill_structure, number_of_turn)
+        print('end of loop')
     #print the end message
-    is_won = check_victory(main_structure, anthill_structure, number_of_turn)
     if is_won == 1:
         print('Team 1 win')
     elif is_won == 2:
@@ -928,7 +924,7 @@ def test():
 
     board_size, anthills, clods = parse_map_file("./small.cpx")
     main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
-    init_dispay(main_structure, ant_structure, anthills_structure)
+    init_display(main_structure, ant_structure, anthills_structure)
 
     i = 0
     while i < 100:
