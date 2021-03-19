@@ -913,7 +913,6 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             spawn( ant_structure, main_structure, anthill_structure)
         number_of_turn += 1
         is_won = check_victory(main_structure, anthill_structure, number_of_turn)
-        print('end of loop')
     #print the end message
     if is_won == 1:
         print('Team 1 win')
