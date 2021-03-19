@@ -314,12 +314,11 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
         ant = return_ant_by_id(ant_structure, ant_id)
 
         # check team and if ant is strong enough and if there is a clod
-        if ant['health'] > 0:
-            if team == ant['team']:
-                if main_structure[ant_pos[0]][ant_pos[1]]['clod']:
-                    if ant_structure['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
+        if team == ant['team']:
+            if main_structure[ant_pos[0]][ant_pos[1]]['clod']:
+                if ant_structure['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
 
-                        lift_valid = True
+                    lift_valid = True
         
         return lift_valid
 
@@ -633,6 +632,7 @@ def death(ant_pos, main_structure, ant_structure, carrying):
     specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
     implementation: Martin Buchet (v.1 18/03/21)
     """
+    #TODO: ne pas remove de ant_structure et passer l'attribut ant de main_structure à None
     # get ant_id from ant_pos then get the ant dict
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     dead_ant = return_ant_by_id(ant_structure, ant_id)
@@ -658,41 +658,52 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     specification: Youlan Collard (v.1 19/02/21)
     implementation: Martin Buchet, Youlan Collard (v.1 04/03/21)
     """
-    llcorner = "└"
-    ulcorner = "┌"
-    lrcorner = "┘"
-    urcorner = "┐"
-    hline = "─"
-    bigplus = "┼"
-    vline = "│"
-    ttee = "┬"
-    btee = "┴"
-    ltee = "├"
-    rtee = "┤"
-    space = " "
+    llcorner = '└'
+    ulcorner = '┌'
+    lrcorner = '┘'
+    urcorner = '┐'
+    hline = '─'
+    bigplus = '┼'
+    vline = '│'
+    ttee = '┬'
+    btee = '┴'
+    ltee = '├'
+    rtee = '┤'
+    space = ' '
     row = len(main_structure)
     col = len(main_structure[0])
 
     print(term.home + term.clear + term.hide_cursor)
     # print grid
-    term.clear
-    print(term.move(0,0) + ulcorner + (3*hline + ttee)*(col - 1) + 3*hline + urcorner)
+    for n in range(len(main_structure[0])):
+        nbr_col = ''
+        if n + 1 < 10:
+            nbr_col = ' ' + str(n + 1)
+        else:
+            nbr_col = str(n + 1)
+        print(term.move_yx(0, n * 4 + 3) + nbr_col)
+    print('  ' + ulcorner + (3 * hline + ttee) * (col - 1) + 3 * hline + urcorner)
     for x in range(row - 1):
-        print((vline + 3*space)*col + vline)
-        print(ltee + (3*hline + bigplus)*(col - 1) + 3*hline + rtee)
-    print((vline + 3*space)*col + vline)
-    print(llcorner + (3*hline + btee)*(col - 1) + 3*hline + lrcorner)
+        if x + 1 < 10:
+            nbr_row = str(x + 1) + ' '
+        else:
+            nbr_row = str(x + 1)
+        print(nbr_row + (vline + 3 * space) * col + vline)
+        print('  ' + ltee + (3 * hline + bigplus) * (col - 1) + 3 * hline + rtee)
+    
+    print(str(row) + (vline + 3 * space) * col + vline)
+    print('  ' + llcorner + (3 * hline + btee) * (col - 1) + 3 * hline + lrcorner)
     # * 4 + 1 for ants
     # print anthills on grid
-    print(term.on_blue + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 3, anthills_structure[0]['pos_y'] * 2 + 1) + '⤊' + term.normal)
-    print(term.on_red + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 3, anthills_structure[1]['pos_y'] * 2 + 1) + '⤊' + term.normal)
+    print(term.on_blue + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 5, anthills_structure[0]['pos_y'] * 2 + 2) + '⤊' + term.normal)
+    print(term.on_red + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 5, anthills_structure[1]['pos_y'] * 2 + 2) + '⤊' + term.normal)
 
     #TODO: Replace this with function call (place_clod_on_display)
     for y in range(len(main_structure)):
         for x in range(len(main_structure[0])):
             if main_structure[y][x]['clod']:
                 color = get_color(main_structure[y][x]['clod'])
-                print(term.move_xy((x * 4 + 3), (y * 2 + 1)) + '∆' + color + term.normal)
+                print(term.move_yx((y * 2 + 2), (x * 4 + 5)) + '∆' + color + term.normal)
 
 def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
@@ -924,7 +935,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
 def test():
 
-    board_size, anthills, clods = parse_map_file("./small.cpx")
+    board_size, anthills, clods = parse_map_file("./basic.cpx")
     main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
     init_dispay(main_structure, ant_structure, anthills_structure)
 
