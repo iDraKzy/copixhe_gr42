@@ -282,19 +282,21 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
 
     lift_valid = False
 
-    # get ant_id from ant_pos then get the ant dict
-    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
-    ant = return_ant_by_id(ant_structure, ant_id)
+    if main_structure[ant_pos[0]][ant_pos[1]]['ant']:
 
-    # check team and if ant is strong enough and if there is a clod
-    if ant['health'] > 0:
-        if team == ant['team']:
-            if main_structure[ant_pos[0]][ant_pos[1]]['clod']:
-                if ant_structure['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
+        # get ant_id from ant_pos then get the ant dict
+        ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+        ant = return_ant_by_id(ant_structure, ant_id)
 
-                    lift_valid = True
-    
-    return lift_valid
+        # check team and if ant is strong enough and if there is a clod
+        if ant['health'] > 0:
+            if team == ant['team']:
+                if main_structure[ant_pos[0]][ant_pos[1]]['clod']:
+                    if ant_structure['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
+
+                        lift_valid = True
+        
+        return lift_valid
 
 def validation_attack(team, main_structure, ant_structure, attacker_pos, target_pos):
     """Check if target is in range of the attacker and return a boolean.
