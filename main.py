@@ -100,24 +100,7 @@ def create_map(board_size, anthills, clods):
     ]
 
     # Maybe replace that with spawn func
-    ant_structure = [
-        {
-            'id': 0,
-            'team': 1,
-            'health': 3,
-            'level': 1,
-            'carrying': False,
-            'clod_force': None
-        },
-        {
-            'id': 1,
-            'team': 2,
-            'health': 3,
-            'level': 1,
-            'carrying': False,
-            'clod_force': None
-        }
-    ]
+    ant_structure = []
 
     main_structure[anthill_structure[0]['pos_y']][anthill_structure[0]['pos_x']]['ant'] = 0
     main_structure[anthill_structure[1]['pos_y']][anthill_structure[1]['pos_x']]['ant'] = 1
@@ -131,7 +114,7 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     Parameters
     ----------
     main_structure: main structure of the game, containing the map (list)
-    anthill_structure: 
+    anthill_structure: list of 2 elements containing the anthills information (list)
     number_of_turn: The number of turn for this game (int)
 
     Return
@@ -163,7 +146,7 @@ def check_clod(main_structure, anthill_structure):
     Parameter
     ----------
     main_structure: main structure of the game, containing the map (list)
-    anthill_structure: (list)
+    anthill_structure: list of 2 elements containing the anthills information (list)
 
     Return
     -------
@@ -184,9 +167,9 @@ def check_clod(main_structure, anthill_structure):
 
     for pos in around:
         for anthill in anthill_structure:
-            pos_x = pos[0] + anthill['pos_x']
-            pos_y = pos[1] + anthill['pos_y']
-            if main_structure[pos_x][pos_y]['clod']:
+            pos_y = pos[0] + anthill['pos_y']
+            pos_x = pos[1] + anthill['pos_x']
+            if main_structure[pos_y][pos_x]['clod']:
                 clod_numbers[anthill['team'] - 1] += 1
     
     return clod_numbers[0], clod_numbers[1]
@@ -535,12 +518,13 @@ def move(main_structure, origin, destination):
     move_ant_on_display(origin, destination)
 
 # New ants functions
-def check_level(main_structure, anthill):
+def check_level(main_structure, anthill_structure, anthill):
     """Check the level of an anthill and returns it.
 
     Parameters
     ----------
     main_structure: main structure of the game, containing the map (list)
+    anthill_structure: list of 2 elements containing the anthills information (list)
     anthill: the anthill to be checked, from the anthill structure (dict)
 
     Returns
@@ -553,7 +537,7 @@ def check_level(main_structure, anthill):
     implementation: Liam Letot (v.1 12/03/2021)
     """
 
-    nbr_clod_pl = check_clod(main_structure)
+    nbr_clod_pl = check_clod(main_structure, anthill_structure)
         
     #check the level
     if nbr_clod_pl[anthill['team'] - 1] <= 2:
@@ -574,11 +558,6 @@ def spawn(main_structure, ant_structure, anthill_structure):
     ant_structure: library of all ants (list)
     anthill_structure: library of all anthills (list)
 
-    Returns
-    -------
-    main_structure: modified main structure (list)
-    ant_structure: modified ant structure (list)
-
     Version
     -------
     specification: Maxime Dufrasne (v.1 18/02/21) (v.2 10/03/21)
@@ -586,7 +565,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
     """
     for anthill in anthill_structure:
         #check the level the next ant will have
-        ant_level = check_level(main_structure, anthill)
+        ant_level = check_level(main_structure, anthill_structure, anthill)
         
         #with the level, take the health and color of the ant
         if ant_level == 1:
@@ -608,13 +587,11 @@ def spawn(main_structure, ant_structure, anthill_structure):
             })
 
         #add the new ant in the board (main_structure) 
-        main_structure[anthill['pos_x']][anthill['pos_y']]['ant'] = len(ant_structure)-1
+        main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] = len(ant_structure)-1
         #take parameters for add_ant on display
-        ant_pos = (anthill['pos_x'],anthill['pos_y'])
+        ant_pos = (anthill['pos_y'],anthill['pos_x'])
         team = anthill['team']
         add_ant_on_display(ant_pos, term_color, team) 
-    #return the structures
-    return main_structure, ant_structure
 
 # Removal of dead ant function
 def death(ant_pos, main_structure, ant_structure, carrying):
@@ -703,6 +680,8 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
             if main_structure[y][x]['clod']:
                 color = get_color(main_structure[y][x]['clod'])
                 print(term.move_yx((y * 2 + 2), (x * 4 + 5)) + '∆' + color + term.normal)
+
+    spawn(main_structure, ant_structure, anthills_structure)
 
 def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
@@ -813,12 +792,13 @@ def add_ant_on_display(ant_pos, term_color, team) :
     specification: Liam Letot (v.1 22/02/21) (v.2 05/03/21) (v.3 12/03/21)
     implementation: Liam Letot (v.1 12/03/21)
     """
+    #TODO: Ajouter barre de vie à droite de la grille
     
     if team == 1:
         bg_color = term.on_blue
     elif team == 2:
-        bg_color = term.on_red 
-    print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 3) + '⚇' + term_color + bg_color + term.normal)
+        bg_color = term.on_red
+    print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 3) + bg_color + term_color + '⚇' + term.normal)
 
 # Util function
 def return_ant_by_id(ant_structure, ant_id):
@@ -934,7 +914,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
 def test():
 
-    board_size, anthills, clods = parse_map_file("./basic.cpx")
+    board_size, anthills, clods = parse_map_file("./small.cpx")
     main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
     init_dispay(main_structure, ant_structure, anthills_structure)
 
