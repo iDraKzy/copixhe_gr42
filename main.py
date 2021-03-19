@@ -695,10 +695,9 @@ def init_dispay(main_structure, ant_structure, anthills_structure):
     print('  ' + llcorner + (3 * hline + btee) * (col - 1) + 3 * hline + lrcorner)
     # * 4 + 1 for ants
     # print anthills on grid
-    print(term.on_blue + term.move_xy(anthills_structure[0]['pos_x'] * 4 + 5, anthills_structure[0]['pos_y'] * 2 + 2) + '⤊' + term.normal)
-    print(term.on_red + term.move_xy(anthills_structure[1]['pos_x'] * 4 + 5, anthills_structure[1]['pos_y'] * 2 + 2) + '⤊' + term.normal)
+    print(term.on_blue + term.move_yx(anthills_structure[0]['pos_y'] * 2 + 2, anthills_structure[0]['pos_x'] * 4 + 5) + '⤊' + term.normal)
+    print(term.on_red + term.move_yx(anthills_structure[1]['pos_y'] * 2 + 2, anthills_structure[1]['pos_x'] * 4 + 5) + '⤊' + term.normal)
 
-    #TODO: Replace this with function call (place_clod_on_display)
     for y in range(len(main_structure)):
         for x in range(len(main_structure[0])):
             if main_structure[y][x]['clod']:
@@ -733,8 +732,8 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
     else:
         possible_underline = ''
 
-    print(term.move_xy(old_position[0] * 4 + 1, old_position[1] * 2 + 1) + ' ') # remove previous ant
-    print(term.move_xy(new_position[0] * 4 + 1, old_position[1] * 2 + 1) + bg_color + color + '⚇' + possible_underline + term.normal) # add it back
+    print(term.move_yx(old_position[0] * 2 + 2, old_position[1] * 4 + 3) + ' ') # remove previous ant
+    print(term.move_yx(old_position[0] * 2 + 2, new_position[1] * 4 + 3) + bg_color + color + '⚇' + possible_underline + term.normal) # add it back
 
 def remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure):
     """Remove ant on dispay when she died.
@@ -751,7 +750,7 @@ def remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure):
     specification: Maxime Dufrasne  (v.1 22/02/21)
     implementation: Martin Buchet (v.1 18/03/21)
     """
-    print(term.move_xy(ant_pos[0] * 4 + 3, ant_pos[1] * 2 + 1) + ' ' + term.normal)
+    print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 5) + ' ')
 
     if carrying:
         # get ant_id from ant_pos then get the ant dict
@@ -759,7 +758,7 @@ def remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure):
         dead_ant = return_ant_by_id(ant_structure, ant_id)
 
         color = get_color(dead_ant['clod_force'])
-        print(term.move_xy((ant_pos[0] * 4 + 3), (ant_pos[1] * 2 + 1)) + '∆' + color + term.normal)
+        print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + '∆' + color + term.normal)
 
 def update_lifepoint_on_display(ant_id, ant_structure):
     """Update the health bar of an ant on display.
@@ -819,7 +818,7 @@ def add_ant_on_display(ant_pos, term_color, team) :
         bg_color = term.on_blue
     elif team == 2:
         bg_color = term.on_red 
-    print(term.move_xy(ant_pos[0] * 4 + 1, ant_pos[1] * 2 + 1) + '⚇'+ term_color + bg_color + term.normal)
+    print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 3) + '⚇' + term_color + bg_color + term.normal)
 
 # Util function
 def return_ant_by_id(ant_structure, ant_id):
