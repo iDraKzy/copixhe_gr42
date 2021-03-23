@@ -306,7 +306,7 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
         # check team and if ant is strong enough and if there is a clod
         if team == ant['team']:
             if main_structure[ant_pos[0]][ant_pos[1]]['clod']:
-                if ant_structure['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
+                if ant['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
 
                     lift_valid = True
         
