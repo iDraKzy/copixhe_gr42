@@ -102,9 +102,6 @@ def create_map(board_size, anthills, clods):
     # Maybe replace that with spawn func
     ant_structure = []
 
-    main_structure[anthill_structure[0]['pos_y']][anthill_structure[0]['pos_x']]['ant'] = 0
-    main_structure[anthill_structure[1]['pos_y']][anthill_structure[1]['pos_x']]['ant'] = 1
-
     return main_structure, ant_structure, anthill_structure
 
 # Victory function
@@ -584,6 +581,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
     """
     for anthill in anthill_structure:
         #check the level the next ant will have
+        print(term.move_yx(len(main_structure) * 2 + 2, 0) + str(main_structure[anthill['pos_y']][anthill['pos_x']]['ant']))
         if main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] is None:
             ant_level = check_level(main_structure, anthill_structure, anthill)
             
