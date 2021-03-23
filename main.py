@@ -83,9 +83,6 @@ def create_map(board_size, anthills, clods):
     for clod in clods:
         main_structure[clod[0]][clod[1]]['clod'] = clod[2]
 
-    # TODO: anthill structure
-    # TODO: Add 2 first ants to ant structure
-
     anthill_structure = [
         {
             'team': 1,
@@ -99,7 +96,6 @@ def create_map(board_size, anthills, clods):
         }
     ]
 
-    # Maybe replace that with spawn func
     ant_structure = []
 
     return main_structure, ant_structure, anthill_structure
