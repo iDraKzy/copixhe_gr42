@@ -269,7 +269,9 @@ def validation_drop(main_structure, ant_structure, team, ant_pos):
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
 
-    if ant['team'] == team:
+    print(term.move_yx(len(main_structure) * 2 + 2, 0) + str(ant))
+
+    if ant['team'] == team and ant['carrying']:
         return True
     
     return False
@@ -297,7 +299,7 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     #TODO: For All Validation: check if the ant has already done an action this turn
     lift_valid = False
 
-    if main_structure[ant_pos[0]][ant_pos[1]]['ant']:
+    if main_structure[ant_pos[0]][ant_pos[1]]['ant'] is not None:
 
         # get ant_id from ant_pos then get the ant dict
         ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
@@ -310,7 +312,8 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
 
                     lift_valid = True
         
-        return lift_valid
+    # print(term.move_yx(len(main_structure) * 2 + 2, 0) + str(lift_valid))
+    return lift_valid
 
 def validation_attack(team, main_structure, ant_structure, attacker_pos, target_pos):
     """Check if target is in range of the attacker and return a boolean.
@@ -381,6 +384,9 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     ant = return_ant_by_id(ant_structure, ant_id)
     
     if not ant:
+        return False
+
+    if ant['carrying'] and main_structure[destination[0]][destination[1]]['clod']:
         return False
 
     if ant['team'] == team:
@@ -470,12 +476,13 @@ def place(main_structure, ant_structure, ant_pos):
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ground
+    clod_force = ant['clod_force']
     main_structure[ant_pos[0]][ant_pos[1]]['clod'] = ant['clod_force']
     ant['carrying'] = False
     #remove the clod from the ant
     ant['clod_force']= None
     #place the clod on the display
-    place_clod_on_display(ant_pos, main_structure, ant_structure)
+    place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure)
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
@@ -785,16 +792,22 @@ def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     ant = return_ant_by_id(ant_structure, ant_id)
 
     color = get_color(ant['level'])
+
+    if ant['team'] == 1:
+        bg_color = term.on_blue
+    elif ant['team'] == 2:
+        bg_color = term.on_red
     
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + ' ')
-    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + color + term.underline + '⚇' + term.normal)
+    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + bg_color + color + term.underline + '⚇' + term.normal)
 
-def place_clod_on_display(ant_pos, main_structure, ant_structure):
+def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure):
     """Make the clod appear and switch the ant with a clod to an ant on display.
 
     Parameter
     ---------
     ant_pos: the position of the ant who lift the clod (list)
+    clod_force: the force needed to lift the clod the ant just dropped (int)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
 
@@ -815,7 +828,7 @@ def place_clod_on_display(ant_pos, main_structure, ant_structure):
     elif team == 2:
         bg_color = term.on_red
 
-    color = get_color(ant['clod_force'])
+    color = get_color(clod_force)
 
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + color + '∆' + term.normal)
 
@@ -886,7 +899,7 @@ def get_color(level):
         return ''
     elif level == 2:
         return term.yellow
-    else:
+    elif level == 3:
         return term.green
 
 # main function
@@ -931,7 +944,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     #run the game
     is_won = check_victory(main_structure, anthill_structure, number_of_turn)
     while is_won is None:
-        
+
         #take the orders
         print(term.move_yx(len(main_structure) * 2 + 2, 0) + term.clear_eos)
         if type_1 == 'human':
