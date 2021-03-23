@@ -169,6 +169,8 @@ def check_clod(main_structure, anthill_structure):
         for anthill in anthill_structure:
             pos_y = pos[0] + anthill['pos_y']
             pos_x = pos[1] + anthill['pos_x']
+            # print(term.clear)
+            # print(term.move_xy(len(main_structure) * 2 + 2, 0) + str(main_structure[6][6]['clod']))
             if main_structure[pos_y][pos_x]['clod']:
                 clod_numbers[anthill['team'] - 1] += 1
     
@@ -268,8 +270,6 @@ def validation_drop(main_structure, ant_structure, team, ant_pos):
     """
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
-
-    print(term.move_yx(len(main_structure) * 2 + 2, 0) + str(ant))
 
     if ant['team'] == team and ant['carrying']:
         return True
@@ -584,33 +584,34 @@ def spawn(main_structure, ant_structure, anthill_structure):
     """
     for anthill in anthill_structure:
         #check the level the next ant will have
-        ant_level = check_level(main_structure, anthill_structure, anthill)
-        
-        #with the level, take the health and color of the ant
-        if ant_level == 1:
-            health = 3
-        elif ant_level == 2:
-            health = 5
-        elif ant_level == 3:
-            health = 7
-        term_color = get_color(ant_level)
+        if main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] is None:
+            ant_level = check_level(main_structure, anthill_structure, anthill)
+            
+            #with the level, take the health and color of the ant
+            if ant_level == 1:
+                health = 3
+            elif ant_level == 2:
+                health = 5
+            elif ant_level == 3:
+                health = 7
+            term_color = get_color(ant_level)
 
-        #add the nex ant in ant_structure
-        ant_structure.append({
-            'id': len(ant_structure),
-            'team': anthill['team'],
-            'health': health,
-            'level': ant_level,
-            'carrying': False,
-            'clod_force': None
-            })
+            #add the nex ant in ant_structure
+            ant_structure.append({
+                'id': len(ant_structure),
+                'team': anthill['team'],
+                'health': health,
+                'level': ant_level,
+                'carrying': False,
+                'clod_force': None
+                })
 
-        #add the new ant in the board (main_structure) 
-        main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] = len(ant_structure)-1
-        #take parameters for add_ant on display
-        ant_pos = (anthill['pos_y'],anthill['pos_x'])
-        team = anthill['team']
-        add_ant_on_display(ant_pos, term_color, team) 
+            #add the new ant in the board (main_structure) 
+            main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] = len(ant_structure)-1
+            #take parameters for add_ant on display
+            ant_pos = (anthill['pos_y'],anthill['pos_x'])
+            team = anthill['team']
+            add_ant_on_display(ant_pos, term_color, team) 
 
 # Removal of dead ant function
 def death(ant_pos, main_structure, ant_structure, carrying):
@@ -962,7 +963,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         exec_order(orders_list, main_structure, ant_structure)
         #check and spawn new ant if it's needed
         if number_of_turn % 5 == 0:
-            spawn( ant_structure, main_structure, anthill_structure)
+            spawn(main_structure, ant_structure, anthill_structure)
         number_of_turn += 1
         is_won = check_victory(main_structure, anthill_structure, number_of_turn)
     #print the end message
