@@ -263,9 +263,16 @@ def validation_drop(main_structure, ant_structure, team, ant_pos):
     Versions
     --------
     specification: Youlan Collard (v.1 19/03/21)
+    implementation: Youlan Collard (v.1 23/03/21)
     
     """
-    pass
+    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+    ant = return_ant_by_id(ant_structure, ant_id)
+
+    if ant['team'] == team:
+        return True
+    
+    return False
 
 def validation_lift(team, ant_pos, main_structure, ant_structure):
     """Check if an ant has the force to carry clod and if there is clod where it is.
