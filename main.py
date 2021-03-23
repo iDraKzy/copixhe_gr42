@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import blessed, math, os, time
+import blessed, math, os, time, random
 term = blessed.Terminal()
 
 # Initialize data structure
@@ -932,10 +932,10 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     init_display(main_structure, ant_structure, anthill_structure)
     
     #if the game is played with AI, take the AI path to execute them
-    if type_1 == 'AI':
-        AI1_code = input("path to the ia code file")
-    if type_2 == 'AI':
-        AI2_code = input("path to the ia code file")
+    #if type_1 == 'AI':
+        #AI1_code = input("path to the ia code file")
+    #if type_2 == 'AI':
+        #AI2_code = input("path to the ia code file")
 
         
     #run the game
@@ -946,16 +946,17 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         print(term.move_yx(len(main_structure) * 2 + 2, 0) + term.clear_eos)
         if type_1 == 'human':
             orders_1 = input("team_1 input : ")
-        #elif type_1 == 'AI':
-            #orders = execfile(AI1_code)
+        elif type_1 == 'AI':
+            orders_1 = First_IA(main_structure, ant_structure)
         if type_2 == 'human':
             orders_2 = input("team_2 input : ")
-        #elif type_2 == 'AI':
-            #orders += execfile(AI2_code)
+        elif type_2 == 'AI':
+            orders_2 = First_IA(main_structure, ant_structure)
         
         #check and execute the orders
         orders_list = interpret_order( 1 ,main_structure, ant_structure, orders_1)
         orders_list += interpret_order(2, main_structure, ant_structure, orders_2)
+        print(orders_list)
         exec_order(orders_list, main_structure, ant_structure)
         #check and spawn new ant if it's needed
         if number_of_turn % 5 == 0:
@@ -968,6 +969,67 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     elif is_won == 2:
         print('Team 2 win')
 
+
+def First_IA(main_structure, ant_structure):
+    """une ia naive qui test les fonctions"""
+    around2 = [(-3, -3),(-2, -3),(-1, -3),(0, -3),(1, -3),(2, -3),(3, -3),
+    (-3, -2),(-2, -2),(-1, -2),(0, -2),(1, -2),(2, -2),(3, -2),
+    (-3, -1),(-2, -1),(-1, -1),(0, -1),(1, -1),(2, -1),(3, -1),
+    (-3,  0),(-2,  0),(-1,  0),(1,  0),(2,  0),(3,  0),
+    (-3,  1),(-2,  1),(-1,  1),(0,  1),(1,  1),(2,  1),(3,  1),
+    (-3,  2),(-2,  2),(-1,  2),(0,  2),(1,  2),(2,  2),(3,  2),
+    (-3,  3),(-2,  3),(-1,  3),(0,  3),(1,  3),(2,  3),(3,  3)]
+    orders = ''
+    
+    for ant in ant_structure:
+        target = False
+        dice_roll = [1]
+        for pos in around2:
+            pos_y = pos[0] + ant['pos_y']
+            pos_x = pos[1] + ant['pos_x']
+            if pos_y <=0 and pos_y >= len(main_structure):
+                if pos_x <=0 and pos_X >= len(main_structure[pos_y]):
+                    if main_structure[pos_y][pos_x]['ant']:
+                        if ant_structure[main_structure[pos_y][pos_x]['ant']]['team'] != ant['team']:
+                            target = True
+                            target_pos_y = pos_y +1
+                            target_pos_x = pos_x +1
+        if main_structure[ant['pos_y']][ant['pos_x']]['clod'] != None and ant['carrying'] == False:
+            dice_roll.append(3)
+        if main_structure[ant['pos_y']][ant['pos_x']]['clod'] == None and ant['carrying'] != False:
+            dice_roll.append(4)
+        if target == True:
+            dice_roll.append(2)
+        choice = random.randint(1,len(dice_roll)) - 1
+        if dice_roll[choice] == 1:
+            direction = random.randint(1,8)
+            orders += str(ant['pos_y']+ 1) + '-' + str(ant['pos_x']+1) + ':@'
+            if direction == 1:
+                orders += str(ant['pos_y']) + '-' + str(ant['pos_x']) + ' '
+            if direction == 2:
+                orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+1) + ' '
+            if direction == 3:
+                orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+2) + ' '
+            if direction == 4:
+                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+2) + ' '
+            if direction == 5:
+                orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+2) + ' '
+            if direction == 6:
+                orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+1) + ' '
+            if direction == 7:
+                orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']) + ' '
+            if direction == 1:
+                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']) + ' '
+            
+        if dice_roll[choice] == 2:
+            orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':*' + str(target_pos_y) + '-' + str(target_pos_x) + ' '
+        if dice_roll[choice] == 3:
+            orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':lift '
+        if dice_roll[choice] == 4:
+            orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':drop '
+    
+    time.sleep(0.5)
+    return orders
 def test():
 
     board_size, anthills, clods = parse_map_file("./small.cpx")
@@ -978,4 +1040,4 @@ def test():
     while i < 100:
         i += 1
         time.sleep(1)
-play_game('./small.cpx', '1', 'human', '2', 'human')
+play_game('./small.cpx', '1', 'AI', '2', 'AI')
