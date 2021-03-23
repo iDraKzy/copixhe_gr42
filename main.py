@@ -448,7 +448,7 @@ def lift(main_structure, ant_structure, ant_pos):
     ant['carrying'] = True
     #remove the clod from the board
     main_structure[ant_pos[0]][ant_pos[1]]['clod'] = None
-    #remove the clod on the display
+    #remove the clod on the display 
     lift_clod_on_display(ant_pos, ant_structure, main_structure)
 
 def place(main_structure, ant_structure, ant_pos):
@@ -787,7 +787,7 @@ def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     color = get_color(ant['level'])
     
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + ' ')
-    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + '⚇' + color + term.underline + term.normal)
+    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + color + term.underline + '⚇' + term.normal)
 
 def place_clod_on_display(ant_pos, main_structure, ant_structure):
     """Make the clod appear and switch the ant with a clod to an ant on display.
