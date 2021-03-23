@@ -817,7 +817,7 @@ def place_clod_on_display(ant_pos, main_structure, ant_structure):
 
     color = get_color(ant['clod_force'])
 
-    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + bg_color + color + '∆' + term.normal)
+    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + color + '∆' + term.normal)
 
     color = get_color(ant['level'])
 
