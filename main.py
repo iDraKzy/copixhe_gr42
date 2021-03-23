@@ -409,13 +409,9 @@ def exec_order(order_list, main_structure, ant_structure):
             move(main_structure, ant_structure, order['team'], order['origin'], order['target'])
         elif order['type'] == 'attack':
             attack(ant_structure, main_structure, order['origin'], order['target'])
-        elif order[1] == 'lift':
-            order_seperated = order[0].split(':')
-            ant_pos = order_seperated[0].split('-')
+        elif order['type'] == 'lift':
             lift(main_structure, ant_structure, order['origin'])
-        elif order[1] == 'drop':
-            order_seperated = order[0].split(":")
-            ant_pos = order_seperated[0].split('-')
+        elif order['type'] == 'drop':
             place(main_structure, ant_structure, order['origin'])
 
 def lift(main_structure, ant_structure, ant_pos):
