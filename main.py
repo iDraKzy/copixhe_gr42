@@ -366,7 +366,7 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     implementation: Youlan Collard (v.1 12/03/21)
     """
 
-    if (destination[0] > len(main_structure) or destination[0] == 0) or (destination[1] > len(main_structure[0]) or destination[1] == 0):
+    if (destination[0] >= len(main_structure) or destination[0] < 0) or (destination[1] >= len(main_structure[0]) or destination[1] < 0): # < 0 because the order has already been converted to 0 index
         return False
 
     origin_tile = main_structure[origin[0]][origin[1]]
