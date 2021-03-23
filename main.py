@@ -433,12 +433,12 @@ def lift(main_structure, ant_structure, ant_pos):
     #take the ant in the ant_structure
     ant = return_ant_by_id(ant_structure, ant_id)
     #place the clod on the ant
-    ant['clod_force'] = clod
+    ant['clod_force'] = main_structure[ant_pos[0]][ant_pos[1]]['clod']
     ant['carrying'] = True
     #remove the clod from the board
     main_structure[ant_pos[0]][ant_pos[1]]['clod'] = None
     #remove the clod on the display
-    lift_clod_on_display(ant_pos)
+    lift_clod_on_display(ant_pos, ant_structure, main_structure)
 
 def place(main_structure, ant_structure, ant_pos):
     """Place clod on a case.
