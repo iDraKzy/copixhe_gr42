@@ -798,14 +798,19 @@ def place_clod_on_display(ant_pos, main_structure, ant_structure):
 
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
+    team = ant['team']
+    if team == 1:
+        bg_color = term.on_blue
+    elif team == 2:
+        bg_color = term.on_red
 
     color = get_color(ant['clod_force'])
 
-    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + color + '∆' + term.normal)
+    print(term.on_bg_color + term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + color + '∆' + term.normal)
 
     color = get_color(ant['level'])
 
-    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + color + '⚇' + term.normal)
+    print(term.on_bg_color + term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + color + '⚇' + term.normal)
 
 def add_ant_on_display(ant_pos, term_color, team) :
     """Add an ant on display (game board and health bar).
