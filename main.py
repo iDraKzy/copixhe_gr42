@@ -365,7 +365,9 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
     implementation: Youlan Collard (v.1 12/03/21)
     """
-    #TODO: Check if ant doesn't leave board
+
+    if (destination[0] > len(main_structure) or destination[0] == 0) or (destination[1] > len(main_structure[0]) or destination[1] == 0):
+        return False
 
     origin_tile = main_structure[origin[0]][origin[1]]
     ant_id = origin_tile['ant']
