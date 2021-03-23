@@ -464,7 +464,7 @@ def place(main_structure, ant_structure, ant_pos):
     #remove the clod from the ant
     ant['clod_force']= None
     #place the clod on the display
-    place_clod_on_display(ant_pos)
+    place_clod_on_display(ant_pos, main_structure, ant_structure)
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
