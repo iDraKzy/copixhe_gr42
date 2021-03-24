@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import blessed, math, os, time, random
+import blessed, math, os, time, random, sys
 term = blessed.Terminal()
 
 # Initialize data structure
@@ -122,7 +122,7 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     
     """
     if number_of_turn > 200:
-        return None
+        return 3
 
     nbr_clod_pl_1, nbr_clod_pl_2 = check_clod(main_structure, anthill_structure)
 
@@ -170,7 +170,7 @@ def check_clod(main_structure, anthill_structure):
     return clod_numbers[0], clod_numbers[1]
 
 # Validation of orders
-def interpret_order(team, main_structure, ant_structure, orders):
+def interpret_order(team, main_structure, ant_structure, anthill_structure, orders):
     """Take an input, check if it's a true fonction and if it's possible, if both conditions are met, return True , if not, return False and send an error to the player.
 
     Parameters
@@ -178,6 +178,7 @@ def interpret_order(team, main_structure, ant_structure, orders):
     team: number of the team who sent the order (int)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
+    anthill_structure: list of 2 elements containing the anthills information (list)
     orders: the input of the user (str)
 
     Returns
@@ -226,18 +227,24 @@ def interpret_order(team, main_structure, ant_structure, orders):
     valid_orders = []
 
     for seems_valid_order in seems_valid:
-        if seems_valid_order['type'] == 'move':
-            if validation_move(team, seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure):
-                valid_orders.append(seems_valid_order)
-        elif seems_valid_order['type'] == 'attack':
-            if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
-                valid_orders.append(seems_valid_order)
-        elif seems_valid_order['type'] == 'lift':
-            if validation_lift(team, seems_valid_order['origin'], main_structure, ant_structure):
-                valid_orders.append(seems_valid_order)
-        elif seems_valid_order['type'] == 'drop':
-            if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
-                valid_orders.append(seems_valid_order)
+        origin = seems_valid_order['origin']
+        ant_id = main_structure[origin[0]][origin[1]]['ant']
+        ant = return_ant_by_id(ant_structure, ant_id)
+        if ant != None:
+            if not ant['played']:
+                ant['played'] = True
+                if seems_valid_order['type'] == 'move':
+                    if validation_move(team, seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure, anthill_structure):
+                        valid_orders.append(seems_valid_order)
+                elif seems_valid_order['type'] == 'attack':
+                    if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
+                        valid_orders.append(seems_valid_order)
+                elif seems_valid_order['type'] == 'lift':
+                    if validation_lift(team, seems_valid_order['origin'], main_structure, ant_structure):
+                        valid_orders.append(seems_valid_order)
+                elif seems_valid_order['type'] == 'drop':
+                    if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
+                        valid_orders.append(seems_valid_order)
 
     return valid_orders
 
@@ -364,7 +371,7 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
 
     return is_in_range
 
-def validation_move(team, origin, destination, main_structure, ant_structure):
+def validation_move(team, origin, destination, main_structure, ant_structure, anthill_structure):
     """Check if deplacement is valid and return a boolean.
     
     Parameters
@@ -374,6 +381,7 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     destination: destination position (tuple)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
+    anthill_structure: list of 2 elements containing the anthills information (list)
     
     Return
     ------
@@ -384,6 +392,7 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
     implementation: Youlan Collard (v.1 12/03/21)
     """
+    #TODO: Plusieurs fourmis allant au même endroit pose problème (s'écrase)
 
     if (destination[0] >= len(main_structure) or destination[0] < 0) or (destination[1] >= len(main_structure[0]) or destination[1] < 0): # < 0 because the order has already been converted to 0 index
         return False
@@ -402,6 +411,11 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     
     if ant['carrying'] and main_structure[destination[0]][destination[1]]['clod']:
         return False
+
+    if ant['carrying']:
+        for anthill in anthill_structure:
+            if destination[0] == anthill['pos_y'] and destination[1] == anthill['pos_x']:
+                return False
 
     if main_structure[destination[0]][destination[1]]['ant'] != None:
         return False
@@ -530,6 +544,8 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
     ant_2["health"] -= ant_1['level']
 
     update_lifepoint_on_display(ant_2, ant_structure)
+    if ant_2['health'] <= 0:
+        death(target_pos, main_structure, ant_structure, ant_2['carrying'])
     
 def move(main_structure, ant_structure, team, origin, destination):
     """if move valid return the new position of the ant.
@@ -550,9 +566,9 @@ def move(main_structure, ant_structure, team, origin, destination):
     # Description should be changed
 
     ant_id = main_structure[origin[0]][origin[1]]['ant']
+    ant = return_ant_by_id(ant_structure, ant_id)
     main_structure[origin[0]][origin[1]]['ant'] = None
     main_structure[destination[0]][destination[1]]['ant'] = ant_id
-    ant = return_ant_by_id(ant_structure, ant_id)
 
     ant['pos_y'] = destination[0]
     ant['pos_x'] = destination[1]
@@ -628,7 +644,8 @@ def spawn(main_structure, ant_structure, anthill_structure):
                 'pos_y': anthill['pos_y'],
                 'pos_x': anthill['pos_x'],
                 'carrying': False,
-                'clod_force': None
+                'clod_force': None,
+                'played': False
                 })
 
             #add the new ant in the board (main_structure) 
@@ -928,6 +945,10 @@ def get_color(level):
     elif level == 3:
         return term.green
 
+def reset_play_all_ants(ant_structure):
+    for ant in ant_structure:
+        ant['played'] = False
+
 # main function
 def play_game(CPX_file, group_1, type_1, group_2, type_2):
     """Play a Copixhe game.
@@ -951,8 +972,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     implementation : Liam Letot (v.1 26/02/21)
     
     """
-
-    
+    global ant_structure
     #init the main parameters
     number_of_turn = 1
     board_size, anthills, clods = parse_map_file(CPX_file)
@@ -969,7 +989,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         
     #run the game
     is_won = check_victory(main_structure, anthill_structure, number_of_turn)
-    while is_won is None:
+    while is_won is None or is_won == 3:
 
         #take the orders
         print(term.move_yx(len(main_structure) * 2 + 2, 0) + term.clear_eos)
@@ -983,11 +1003,12 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             orders_2 = First_IA(main_structure, ant_structure)
         
         #check and execute the orders
-        orders_list = interpret_order( 1 ,main_structure, ant_structure, orders_1)
-        orders_list += interpret_order(2, main_structure, ant_structure, orders_2)
+        orders_list = interpret_order( 1 ,main_structure, ant_structure, anthill_structure, orders_1)
+        orders_list += interpret_order(2, main_structure, ant_structure, anthill_structure, orders_2)
         exec_order(orders_list, main_structure, ant_structure)
+        reset_play_all_ants(ant_structure)
         #check and spawn new ant if it's needed
-        if number_of_turn % 5 == 0:
+        if number_of_turn % 5 == 0 and is_won != 3:
             spawn(main_structure, ant_structure, anthill_structure)
         number_of_turn += 1
         is_won = check_victory(main_structure, anthill_structure, number_of_turn)
@@ -996,10 +1017,13 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         print('Team 1 win')
     elif is_won == 2:
         print('Team 2 win')
+    elif is_won == 3:
+        print('Tied')
 
 
 def First_IA(main_structure, ant_structure):
     """une ia naive qui test les fonctions"""
+    time.sleep(.5)
     around2 = [(-3, -3),(-2, -3),(-1, -3),(0, -3),(1, -3),(2, -3),(3, -3),
     (-3, -2),(-2, -2),(-1, -2),(0, -2),(1, -2),(2, -2),(3, -2),
     (-3, -1),(-2, -1),(-1, -1),(0, -1),(1, -1),(2, -1),(3, -1),
@@ -1068,4 +1092,15 @@ def test():
     while i < 100:
         i += 1
         time.sleep(1)
-play_game('./small.cpx', '1', 'AI', '2', 'AI')
+# play_game('./small.cpx', '1', 'AI', '2', 'AI')
+
+if __name__ == '__main__':
+    try:
+        ant_structure = []
+        play_game('./small.cpx', '1', 'AI', '2', 'AI')
+    except KeyboardInterrupt:
+        print(ant_structure)
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)
