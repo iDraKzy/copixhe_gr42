@@ -226,18 +226,22 @@ def interpret_order(team, main_structure, ant_structure, orders):
     valid_orders = []
 
     for seems_valid_order in seems_valid:
-        if seems_valid_order['type'] == 'move':
-            if validation_move(team, seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure):
-                valid_orders.append(seems_valid_order)
-        elif seems_valid_order['type'] == 'attack':
-            if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
-                valid_orders.append(seems_valid_order)
-        elif seems_valid_order['type'] == 'lift':
-            if validation_lift(team, seems_valid_order['origin'], main_structure, ant_structure):
-                valid_orders.append(seems_valid_order)
-        elif seems_valid_order['type'] == 'drop':
-            if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
-                valid_orders.append(seems_valid_order)
+        origin = seems_valid_order['origin']
+        ant_id = main_structure[origin[0]][origin[1]]
+        ant = return_ant_by_id(ant_structure, ant_id)
+        if ant['health'] > 0:
+            if seems_valid_order['type'] == 'move':
+                if validation_move(team, seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure):
+                    valid_orders.append(seems_valid_order)
+            elif seems_valid_order['type'] == 'attack':
+                if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
+                    valid_orders.append(seems_valid_order)
+            elif seems_valid_order['type'] == 'lift':
+                if validation_lift(team, seems_valid_order['origin'], main_structure, ant_structure):
+                    valid_orders.append(seems_valid_order)
+            elif seems_valid_order['type'] == 'drop':
+                if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
+                    valid_orders.append(seems_valid_order)
 
     return valid_orders
 
