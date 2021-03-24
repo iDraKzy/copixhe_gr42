@@ -264,6 +264,9 @@ def validation_drop(main_structure, ant_structure, team, ant_pos):
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
 
+    if ant['health'] <= 0:
+        return False
+
     if ant['team'] == team and ant['carrying']:
         return True
     
