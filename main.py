@@ -524,9 +524,10 @@ def move(main_structure, ant_structure, team, origin, destination):
     ant_id = main_structure[origin[0]][origin[1]]['ant']
     main_structure[origin[0]][origin[1]]['ant'] = None
     main_structure[destination[0]][destination[1]]['ant'] = ant_id
-    ant_structure[ant_id]['pos_y'] = destination[0]
-    ant_structure[ant_id]['pos_x'] = destination[1]
     ant = return_ant_by_id(ant_structure, ant_id)
+
+    ant['pos_y'] = destination[0]
+    ant['pos_x'] = destination[1]
     move_ant_on_display(team, ant['level'],  ant['carrying'], origin, destination)
 
 # New ants functions
