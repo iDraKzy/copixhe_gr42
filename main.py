@@ -430,6 +430,7 @@ def exec_order(order_list, main_structure, ant_structure):
     #TODO: Order the list (lift, drop, attack, move)
 
     for order in order_list:
+        print(term.move_yx(len(main_structure) *2+2,0)+ str(order))
         if order['type'] == 'move':
             move(main_structure, ant_structure, order['team'], order['origin'], order['target'])
         elif order['type'] == 'attack':
@@ -972,7 +973,6 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         #check and execute the orders
         orders_list = interpret_order( 1 ,main_structure, ant_structure, orders_1)
         orders_list += interpret_order(2, main_structure, ant_structure, orders_2)
-        print(orders_list)
         exec_order(orders_list, main_structure, ant_structure)
         #check and spawn new ant if it's needed
         if number_of_turn % 5 == 0:
