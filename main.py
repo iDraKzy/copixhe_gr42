@@ -640,6 +640,9 @@ def death(ant_pos, main_structure, ant_structure, carrying):
     """
     #TODO: ne pas remove de ant_structure et passer l'attribut ant de main_structure à None
 
+    if carrying:
+        place(main_structure, ant_structure, ant_pos)
+
     main_structure[ant_pos[0]][ant_pos[1]]['ant'] = None
 
     # remove dead ant from grid
