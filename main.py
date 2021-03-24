@@ -384,13 +384,13 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     origin_tile = main_structure[origin[0]][origin[1]]
     ant_id = origin_tile['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
-
-    if ant['health'] <= 0:
-        return False
     
     if not ant:
         return False
 
+    if ant['health'] <= 0:
+        return False
+    
     if ant['carrying'] and main_structure[destination[0]][destination[1]]['clod']:
         return False
 
