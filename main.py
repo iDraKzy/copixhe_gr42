@@ -262,6 +262,8 @@ def validation_drop(main_structure, ant_structure, team, ant_pos):
     
     """
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+    if ant_id is None:
+        return False
     ant = return_ant_by_id(ant_structure, ant_id)
 
     if ant['health'] <= 0:
@@ -295,6 +297,8 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     #TODO: For All Validation: check if the ant has already done an action this turn
     lift_valid = False
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+    if ant_id is None:
+        return False
     ant = return_ant_by_id(ant_structure, ant_id)
 
     if ant['health'] <= 0:
@@ -339,6 +343,9 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
 
     # get ant_id from ant_pos then get the ant dict
     ant_id = main_structure[attacker_pos[0]][attacker_pos[1]]['ant']
+    if ant_id is None:
+        return False
+
     ant = return_ant_by_id(ant_structure, ant_id)
 
     if ant['health'] <= 0:
