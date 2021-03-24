@@ -385,12 +385,13 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     ant_id = origin_tile['ant']
     if ant_id is None:
         return False
-
+    
     ant = return_ant_by_id(ant_structure, ant_id)
-
+    
 
     if ant['health'] <= 0:
         return False
+
     
     if ant['carrying'] and main_structure[destination[0]][destination[1]]['clod']:
         return False
@@ -431,7 +432,10 @@ def exec_order(order_list, main_structure, ant_structure):
     #TODO: Order the list (lift, drop, attack, move)
 
     for order in order_list:
-        print(term.move_yx(len(main_structure) *2+2,0)+ str(order))
+        antid = main_structure[order['origin'][0]][order['origin'][1]]['ant']
+        ant = return_ant_by_id(ant_structure, antid)
+        print(term.move_yx(len(main_structure) *2+2,0)+ str(ant))
+        
         if order['type'] == 'move':
             move(main_structure, ant_structure, order['team'], order['origin'], order['target'])
         elif order['type'] == 'attack':
@@ -1045,7 +1049,7 @@ def First_IA(main_structure, ant_structure):
         if dice_roll[choice] == 4:
             orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':drop '
     
-    time.sleep(0.5)
+
     return orders
 def test():
 
