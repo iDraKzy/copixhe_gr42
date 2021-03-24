@@ -226,22 +226,18 @@ def interpret_order(team, main_structure, ant_structure, orders):
     valid_orders = []
 
     for seems_valid_order in seems_valid:
-        origin = seems_valid_order['origin']
-        ant_id = main_structure[origin[0]][origin[1]]
-        ant = return_ant_by_id(ant_structure, ant_id)
-        if ant['health'] > 0:
-            if seems_valid_order['type'] == 'move':
-                if validation_move(team, seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure):
-                    valid_orders.append(seems_valid_order)
-            elif seems_valid_order['type'] == 'attack':
-                if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
-                    valid_orders.append(seems_valid_order)
-            elif seems_valid_order['type'] == 'lift':
-                if validation_lift(team, seems_valid_order['origin'], main_structure, ant_structure):
-                    valid_orders.append(seems_valid_order)
-            elif seems_valid_order['type'] == 'drop':
-                if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
-                    valid_orders.append(seems_valid_order)
+        if seems_valid_order['type'] == 'move':
+            if validation_move(team, seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure):
+                valid_orders.append(seems_valid_order)
+        elif seems_valid_order['type'] == 'attack':
+            if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
+                valid_orders.append(seems_valid_order)
+        elif seems_valid_order['type'] == 'lift':
+            if validation_lift(team, seems_valid_order['origin'], main_structure, ant_structure):
+                valid_orders.append(seems_valid_order)
+        elif seems_valid_order['type'] == 'drop':
+            if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
+                valid_orders.append(seems_valid_order)
 
     return valid_orders
 
@@ -295,12 +291,15 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     """
     #TODO: For All Validation: check if the ant has already done an action this turn
     lift_valid = False
+    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+    ant = return_ant_by_id(ant_structure, ant_id)
+
+    if ant['health'] <= 0:
+        return False
 
     if main_structure[ant_pos[0]][ant_pos[1]]['ant'] is not None:
 
         # get ant_id from ant_pos then get the ant dict
-        ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
-        ant = return_ant_by_id(ant_structure, ant_id)
 
         # check team and if ant is strong enough and if there is a clod
         if team == ant['team']:
@@ -335,22 +334,25 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
 
     is_in_range = False
 
+    # get ant_id from ant_pos then get the ant dict
+    ant_id = main_structure[attacker_pos[0]][attacker_pos[1]]['ant']
+    ant = return_ant_by_id(ant_structure, ant_id)
+
+    if ant['health'] <= 0:
+        return False
+
     if main_structure[attacker_pos[0]][attacker_pos[1]]['ant'] and main_structure[target_pos[0]][target_pos[1]]['ant']:
 
         # compute distance between ants
         range_x = target_pos[0] - attacker_pos[0]
         range_y = target_pos[1] - attacker_pos[1]
 
-        # get ant_id from ant_pos then get the ant dict
-        ant_id = main_structure[attacker_pos[0]][attacker_pos[1]]['ant']
-        ant = return_ant_by_id(ant_structure, ant_id)
-
         # check if the attacker ant belong to the team giving the order then check range
         if team == ant['team']:
             if (range_x <= 3 and range_x >= -3) and (range_y <= 3 and range_y >= -3):
                 is_in_range = True
 
-        return is_in_range
+    return is_in_range
 
 def validation_move(team, origin, destination, main_structure, ant_structure):
     """Check if deplacement is valid and return a boolean.
@@ -379,6 +381,9 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     origin_tile = main_structure[origin[0]][origin[1]]
     ant_id = origin_tile['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
+
+    if ant['health'] <= 0:
+        return False
     
     if not ant:
         return False
@@ -634,15 +639,12 @@ def death(ant_pos, main_structure, ant_structure, carrying):
     implementation: Martin Buchet (v.1 18/03/21)
     """
     #TODO: ne pas remove de ant_structure et passer l'attribut ant de main_structure à None
-    # get ant_id from ant_pos then get the ant dict
-    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
-    dead_ant = return_ant_by_id(ant_structure, ant_id)
+
+    main_structure[ant_pos[0]][ant_pos[1]]['ant'] = None
 
     # remove dead ant from grid
     remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure)
 
-    # remove ant from ant_structure
-    ant_structure.remove(dead_ant)
 
 # UI Function
 def init_display(main_structure, ant_structure, anthills_structure):
