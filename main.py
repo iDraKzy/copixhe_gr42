@@ -382,6 +382,9 @@ def validation_move(team, origin, destination, main_structure, ant_structure):
     if ant['carrying'] and main_structure[destination[0]][destination[1]]['clod']:
         return False
 
+    if main_structure[destination[0]][destination[1]]['ant'] != None:
+        return False
+
     if ant['team'] == team:
         # print('isgood')
         offset_origin_x = origin[0] - destination[0]
