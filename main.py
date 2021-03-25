@@ -323,7 +323,13 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
                 ant['played'] = True
                 if seems_valid_order['type'] == 'move':
                     if validation_move(seems_valid_order['team'], seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure, anthill_structure):
-                        valid_orders.append(seems_valid_order)
+                        already_used_square = []
+                        for order in valid_orders:
+                            if order['type'] == 'move':
+                                already_used_square.append(order['target'])
+
+                        if not seems_valid_order['target'] in already_used_square:
+                            valid_orders.append(seems_valid_order)
                 elif seems_valid_order['type'] == 'attack':
                     if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
                         valid_orders.append(seems_valid_order)
@@ -1113,7 +1119,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
 def First_IA(main_structure, ant_structure):
     """une ia naive qui test les fonctions"""
-    time.sleep(.1)
+    # time.sleep(.1)
     around2 = [(-3, -3),(-2, -3),(-1, -3),(0, -3),(1, -3),(2, -3),(3, -3),
     (-3, -2),(-2, -2),(-1, -2),(0, -2),(1, -2),(2, -2),(3, -2),
     (-3, -1),(-2, -1),(-1, -1),(0, -1),(1, -1),(2, -1),(3, -1),
@@ -1187,7 +1193,7 @@ def test():
 if __name__ == '__main__':
     try:
         ant_structure = []
-        play_game('./small.cpx', '1', 'human', '2', 'AI')
+        play_game('./small.cpx', '1', 'AI', '2', 'AI')
     except KeyboardInterrupt:
         print(ant_structure)
         try:
