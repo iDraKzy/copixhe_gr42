@@ -169,13 +169,90 @@ def check_clod(main_structure, anthill_structure):
     
     return clod_numbers[0], clod_numbers[1]
 
+def sort_orders(orders):
+    """Sort the orders by priority given by game rules
+
+    Parameters
+    ----------
+    orders: list of unsorted orders (list)
+
+    Returns
+    -------
+    sorted_orders: the sorted list of orders
+    
+    Version
+    -------
+    specification: Youlan Collard (v.1 25/03/21)
+    implementation: Youlan Collard (v.1 25/03/21)
+    """
+    
+    sorted_orders = []
+
+    clods_orders = []
+    attack_orders = []
+    move_orders = []
+
+    for order in orders:
+        if order['type'] == 'lift' or order['type'] == 'drop':
+            clods_orders.append(order)
+        elif order['type'] == 'attack':
+            attack_orders.append(order)
+        elif order['type'] == 'move':
+            move_orders.append(order)
+
+    # ? Pas très joli si vous avez une meilleure idée je suis preneur xD
+    team_1_clod, team_2_clod = seperate_team_orders(clods_orders)
+
+    sorted_orders += team_1_clod
+    sorted_orders += team_2_clod
+
+    team_1_attack, team_2_attack = seperate_team_orders(attack_orders)
+
+    sorted_orders += team_1_attack
+    sorted_orders += team_2_attack
+
+    team_1_move, team_2_move = seperate_team_orders(move_orders)
+
+    sorted_orders += team_1_move
+    sorted_orders += team_2_move
+
+    return sorted_orders
+        
+
+# Util function for sort_orders
+def seperate_team_orders(orders):
+    """Seperate a list of orders into two list for each teams
+
+    Parameters
+    ----------
+    orders: list of orders to be seperated
+
+    Returns
+    -------
+    orders_team_1: the orders specific to team 1
+    orders_team_2: the orders specific to team 2
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 25/03/21)
+    implementaion: Youlan Collard (v.1 25/03/21)
+    """
+    team_1, team_2 = [], []
+
+    for order in orders:
+        if order['team'] == 1:
+            team_1.append(order)
+        else:
+            team_2.append(order)
+    
+    return team_1, team_2
+
 # Validation of orders
-def interpret_order(team, main_structure, ant_structure, anthill_structure, orders):
+def interpret_order(main_structure, ant_structure, anthill_structure, orders):
     """Take an input, check if it's a true fonction and if it's possible, if both conditions are met, return True , if not, return False and send an error to the player.
 
     Parameters
     ----------
-    team: number of the team who sent the order (int)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
     anthill_structure: list of 2 elements containing the anthills information (list)
@@ -184,6 +261,10 @@ def interpret_order(team, main_structure, ant_structure, anthill_structure, orde
     Returns
     -------
     order_list: the orders in a list (list)
+
+    Notes
+    -----
+    All orders should be sent in a single string with the first and second team's orders seperated by a ;
     
     Version
     -------
@@ -193,36 +274,43 @@ def interpret_order(team, main_structure, ant_structure, anthill_structure, orde
 
     #TODO: Créer un dictionnaire pour les ordres pour ne devoir décoder l'ordre qu'une fois
 
-    orders_list = orders.split(" ")
+    orders_list = orders.split(';')
     # print(orders_list)
-    seems_valid = [] # Items are [order, type] (type is one of lift, drop, move or attack)
+    seems_valid = [] 
+    team_number = 0 # initialize the number team to 0
 
-    for order in orders_list:
-        order_dict = {'team': team}
-        if ":" in order:
-            order_seperated = order.split(":") # Seperate the first part of the order from the second
-            if "-" in order_seperated[0]:
-                ant_pos = order_seperated[0].split("-")
-                if (len(ant_pos) == 2) and (ant_pos[0].isdigit() and ant_pos[1].isdigit()):
-                    order_dict['origin'] = (int(ant_pos[0]) - 1, int(ant_pos[1]) - 1) # -1 to both because our game board is 0 indexed and the game is 1 indexed
-                    if order_seperated[1] == 'lift':
-                        order_dict['type'] = 'lift'
-                        order_dict['target'] = None
-                        seems_valid.append(order_dict)
-                    elif order_seperated[1] == 'drop':
-                        order_dict['type'] = 'drop'
-                        order_dict['target'] = None
-                        seems_valid.append(order_dict)
-                    elif "-" in order_seperated[1]:
-                        action_pos = order_seperated[1][1:].split("-")
-                        if (len(action_pos) == 2) and (action_pos[0].isdigit() and action_pos[1].isdigit()):
-                            order_dict['target'] = (int(action_pos[0]) - 1, int(action_pos[1]) - 1)
-                            if order_seperated[1][0] == "@":
-                                order_dict['type'] = 'move'
-                                seems_valid.append(order_dict)
-                            elif order_seperated[1][0] == "*":
-                                order_dict['type'] = 'attack'
-                                seems_valid.append(order_dict)
+    for team in orders_list:
+        team_number += 1 # increment it at the beginning of the loop (so it's 1 for the first iteration and 2 for the second)
+        for order in team.split(' '):
+            order_dict = {}
+            order_dict['team'] = team_number
+            if ":" in order:
+                order_seperated = order.split(":") # Seperate the first part of the order from the second
+                if "-" in order_seperated[0]:
+                    ant_pos = order_seperated[0].split("-")
+                    if (len(ant_pos) == 2) and (ant_pos[0].isdigit() and ant_pos[1].isdigit()):
+                        order_dict['origin'] = (int(ant_pos[0]) - 1, int(ant_pos[1]) - 1) # -1 to both because our game board is 0 indexed and the game is 1 indexed
+                        if order_seperated[1] == 'lift':
+                            order_dict['type'] = 'lift'
+                            order_dict['target'] = None
+                            seems_valid.append(order_dict)
+                        elif order_seperated[1] == 'drop':
+                            order_dict['type'] = 'drop'
+                            order_dict['target'] = None
+                            seems_valid.append(order_dict)
+                        elif "-" in order_seperated[1]:
+                            action_pos = order_seperated[1][1:].split("-")
+                            if (len(action_pos) == 2) and (action_pos[0].isdigit() and action_pos[1].isdigit()):
+                                order_dict['target'] = (int(action_pos[0]) - 1, int(action_pos[1]) - 1)
+                                if order_seperated[1][0] == "@":
+                                    order_dict['type'] = 'move'
+                                    seems_valid.append(order_dict)
+                                elif order_seperated[1][0] == "*":
+                                    order_dict['type'] = 'attack'
+                                    seems_valid.append(order_dict)
+
+
+    seems_valid = sort_orders(seems_valid) # Sorting the orders before the final verification because moves actions are always sensitive to the order
 
     valid_orders = []
 
@@ -234,7 +322,7 @@ def interpret_order(team, main_structure, ant_structure, anthill_structure, orde
             if not ant['played']:
                 ant['played'] = True
                 if seems_valid_order['type'] == 'move':
-                    if validation_move(team, seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure, anthill_structure):
+                    if validation_move(seems_valid_order['team'], seems_valid_order['origin'], seems_valid_order['target'], main_structure, ant_structure, anthill_structure):
                         valid_orders.append(seems_valid_order)
                 elif seems_valid_order['type'] == 'attack':
                     if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
@@ -1003,8 +1091,10 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             orders_2 = First_IA(main_structure, ant_structure)
         
         #check and execute the orders
-        orders_list = interpret_order( 1 ,main_structure, ant_structure, anthill_structure, orders_1)
-        orders_list += interpret_order(2, main_structure, ant_structure, anthill_structure, orders_2)
+        orders = orders_1 + ';' + orders_2 
+        orders_list = interpret_order(main_structure, ant_structure, anthill_structure, orders)
+        # orders_list = interpret_order( 1 ,main_structure, ant_structure, anthill_structure, orders_1)
+        # orders_list += interpret_order(2, main_structure, ant_structure, anthill_structure, orders_2)
         exec_order(orders_list, main_structure, ant_structure)
         reset_play_all_ants(ant_structure)
         #check and spawn new ant if it's needed
@@ -1023,7 +1113,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
 def First_IA(main_structure, ant_structure):
     """une ia naive qui test les fonctions"""
-    time.sleep(.5)
+    time.sleep(.1)
     around2 = [(-3, -3),(-2, -3),(-1, -3),(0, -3),(1, -3),(2, -3),(3, -3),
     (-3, -2),(-2, -2),(-1, -2),(0, -2),(1, -2),(2, -2),(3, -2),
     (-3, -1),(-2, -1),(-1, -1),(0, -1),(1, -1),(2, -1),(3, -1),
@@ -1097,7 +1187,7 @@ def test():
 if __name__ == '__main__':
     try:
         ant_structure = []
-        play_game('./small.cpx', '1', 'AI', '2', 'AI')
+        play_game('./small.cpx', '1', 'human', '2', 'AI')
     except KeyboardInterrupt:
         print(ant_structure)
         try:
