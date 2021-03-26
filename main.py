@@ -549,7 +549,7 @@ def exec_order(order_list, main_structure, ant_structure):
     for order in order_list:
         antid = main_structure[order['origin'][0]][order['origin'][1]]['ant']
         ant = return_ant_by_id(ant_structure, antid)
-        print(term.move_yx(len(main_structure) *2+2,0)+ str(ant))
+
         
         if order['type'] == 'move':
             move(main_structure, ant_structure, order['team'], order['origin'], order['target'])
@@ -1155,8 +1155,8 @@ def First_IA(main_structure, ant_structure, team):
             for pos in around2:
                 pos_y = pos[0] + ant['pos_y']
                 pos_x = pos[1] + ant['pos_x']
-                if pos_y <=0 and pos_y >= len(main_structure):
-                    if pos_x <=0 and pos_X >= len(main_structure[pos_y]):
+                if pos_y >=0 and pos_y <= len(main_structure):
+                    if pos_x >=0 and pos_X <= len(main_structure[pos_y]):
                         if main_structure[pos_y][pos_x]['ant']:
                             if ant_structure[main_structure[pos_y][pos_x]['ant']]['team'] != ant['team']:
                                 target = True
@@ -1168,7 +1168,7 @@ def First_IA(main_structure, ant_structure, team):
                 dice_roll.append(4)
             if target == True:
                 dice_roll.append(2)
-
+            
             #randomly take one of the possible order
             choice = random.randint(1,len(dice_roll)) - 1
 
