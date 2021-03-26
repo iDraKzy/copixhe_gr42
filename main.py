@@ -326,8 +326,8 @@ def get_remote_orders(connection):
 def parse_map_file(path):
     """Parse the information from the cpx file.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     path: path to the cpx file containing the map information (str)
 
     Returns
@@ -429,8 +429,8 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     anthill_structure: list of 2 elements containing the anthills information (list)
     number_of_turn: The number of turn for this game (int)
 
-    Return
-    ------
+    Returns
+    -------
     won: number of the team who has won, None if nobody has (int)
     
 
@@ -455,12 +455,12 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
 def check_clod(main_structure, anthill_structure):
     """Check the number of clod around anthill
 
-    Parameter
+    Parameters
     ----------
     main_structure: main structure of the game, containing the map (list)
     anthill_structure: list of 2 elements containing the anthills information (list)
 
-    Return
+    Returns
     -------
     nbr_clod_pl_1: Number of clod player 1 has around his anthill (int)
     nbr_clod_pl_2: Number of clod player 2 has around his anthill (int)
@@ -704,8 +704,8 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
 
-    Return
-    ------
+    Returns
+    -------
     lift_valid: wether the lifting action is valid or not (bool)
 
     Version
@@ -798,8 +798,8 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
     ant_structure: structure containing all the ants (list)
     anthill_structure: list of 2 elements containing the anthills information (list)
     
-    Return
-    ------
+    Returns
+    -------
     move_valid: wether move is valid or not (bool)
     
     Version
@@ -1249,8 +1249,8 @@ def update_lifepoint_on_display(ant_id, ant_structure):
 def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     """Make the clod disappear and switch the ant to an ant with clod on display.
     
-    Parameter
-    ---------
+    Parameters
+    ----------
     ant_pos: the position of the ant who lift the clod (list)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
@@ -1277,8 +1277,8 @@ def lift_clod_on_display(ant_pos, ant_structure, main_structure):
 def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure):
     """Make the clod appear and switch the ant with a clod to an ant on display.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     ant_pos: the position of the ant who lift the clod (list)
     clod_force: the force needed to lift the clod the ant just dropped (int)
     main_structure: main structure of the game board (list)
@@ -1339,8 +1339,8 @@ def return_ant_by_id(ant_structure, ant_id):
     ant_structure: the structure containing all the ants (list)
     ant_id: id of the desired ant (int)
 
-    Return
-    ------
+    Returns
+    -------
     ant: The desired ant (dict)
 
     Version
@@ -1355,12 +1355,12 @@ def return_ant_by_id(ant_structure, ant_id):
 def get_color(level):
     """Send the color string for the specified level using blessed
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     level: the level to check [1-3] (int)
 
-    Return
-    ------
+    Returns
+    -------
     color: term color escape character or an empty str if level is 1 (str)
 
     Version
