@@ -284,10 +284,10 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
         for order in team.split(' '):
             order_dict = {}
             order_dict['team'] = team_number
-            if ":" in order:
-                order_seperated = order.split(":") # Seperate the first part of the order from the second
-                if "-" in order_seperated[0]:
-                    ant_pos = order_seperated[0].split("-")
+            if ':' in order:
+                order_seperated = order.split(':') # Seperate the first part of the order from the second
+                if '-' in order_seperated[0]:
+                    ant_pos = order_seperated[0].split('-')
                     if (len(ant_pos) == 2) and (ant_pos[0].isdigit() and ant_pos[1].isdigit()):
                         order_dict['origin'] = (int(ant_pos[0]) - 1, int(ant_pos[1]) - 1) # -1 to both because our game board is 0 indexed and the game is 1 indexed
                         if order_seperated[1] == 'lift':
@@ -299,13 +299,13 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
                             order_dict['target'] = None
                             seems_valid.append(order_dict)
                         elif "-" in order_seperated[1]:
-                            action_pos = order_seperated[1][1:].split("-")
+                            action_pos = order_seperated[1][1:].split('-')
                             if (len(action_pos) == 2) and (action_pos[0].isdigit() and action_pos[1].isdigit()):
                                 order_dict['target'] = (int(action_pos[0]) - 1, int(action_pos[1]) - 1)
-                                if order_seperated[1][0] == "@":
+                                if order_seperated[1][0] == '@':
                                     order_dict['type'] = 'move'
                                     seems_valid.append(order_dict)
-                                elif order_seperated[1][0] == "*":
+                                elif order_seperated[1][0] == '*':
                                     order_dict['type'] = 'attack'
                                     seems_valid.append(order_dict)
 
