@@ -1166,9 +1166,11 @@ def First_IA(main_structure, ant_structure, team):
                 dice_roll.append(3)
             if main_structure[ant['pos_y']][ant['pos_x']]['clod'] == None and ant['carrying'] != False:
                 dice_roll.append(4)
-            if target == True:
+            if target:
                 dice_roll.append(2)
             
+            print(term.move_yx(len(main_structure) *2+2,0)+ str(dice_roll))
+            time.sleep(0.1)
             #randomly take one of the possible order
             choice = random.randint(1,len(dice_roll)) - 1
 
