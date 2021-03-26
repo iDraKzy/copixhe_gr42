@@ -1155,8 +1155,8 @@ def First_IA(main_structure, ant_structure, team):
             for pos in around2:
                 pos_y = pos[0] + ant['pos_y']
                 pos_x = pos[1] + ant['pos_x']
-                if pos_y >=0 and pos_y <= len(main_structure):
-                    if pos_x >=0 and pos_x <= len(main_structure[pos_y]):
+                if pos_y >=0 and pos_y < len(main_structure):
+                    if pos_x >=0 and pos_x < len(main_structure[0]):
                         if main_structure[pos_y][pos_x]['ant']:
                             if ant_structure[main_structure[pos_y][pos_x]['ant']]['team'] != ant['team']:
                                 target = True
