@@ -1206,26 +1206,5 @@ def First_IA(main_structure, ant_structure, team):
     return orders
 
 
+play_game('./small.cpx', '1', 'AI', '2', 'AI')
 
-def test():
-
-    board_size, anthills, clods = parse_map_file("./small.cpx")
-    main_structure, ant_structure, anthills_structure = create_map(board_size, anthills, clods)
-    init_display(main_structure, ant_structure, anthills_structure)
-
-    i = 0
-    while i < 100:
-        i += 1
-        time.sleep(1)
-# play_game('./small.cpx', '1', 'AI', '2', 'AI')
-
-if __name__ == '__main__':
-    try:
-        ant_structure = []
-        play_game('./small.cpx', '1', 'AI', '2', 'AI')
-    except KeyboardInterrupt:
-        print(ant_structure)
-        try:
-            sys.exit(0)
-        except SystemExit:
-            os._exit(0)
