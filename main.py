@@ -1223,8 +1223,8 @@ def remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structu
     specification: Maxime Dufrasne  (v.1 22/02/21)
     implementation: Martin Buchet (v.1 18/03/21)
     """
-    print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 5) + ' ')
-
+    print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 3) + ' ')
+    
     if carrying:
         # get ant_id from ant_pos then get the ant dict
         dead_ant = return_ant_by_id(ant_structure, ant_id)
@@ -1445,6 +1445,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         if number_of_turn % 5 == 0 and is_won != 3:
             spawn(main_structure, ant_structure, anthill_structure)
         number_of_turn += 1
+        time.sleep(0.1)
         is_won = check_victory(main_structure, anthill_structure, number_of_turn)
     #print the end message
     if is_won == 1:
@@ -1505,8 +1506,7 @@ def First_IA(main_structure, ant_structure, team):
             if target:
                 dice_roll.append(2)
             
-            print(term.move_yx(len(main_structure) *2+2,0)+ str(dice_roll))
-            time.sleep(0.1)
+            
             #randomly take one of the possible order
             choice = random.randint(0,len(dice_roll) - 1)
 
@@ -1546,3 +1546,4 @@ def First_IA(main_structure, ant_structure, team):
 
 play_game('./small.cpx', '1', 'AI', '2', 'AI')
 
+    
