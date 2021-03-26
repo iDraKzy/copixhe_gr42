@@ -1090,11 +1090,13 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         if type_1 == 'human':
             orders_1 = input("team_1 input : ")
         elif type_1 == 'AI':
-            orders_1 = First_IA(main_structure, ant_structure)
+            team = 1
+            orders_1 = First_IA(main_structure, ant_structure, team)
         if type_2 == 'human':
             orders_2 = input("team_2 input : ")
         elif type_2 == 'AI':
-            orders_2 = First_IA(main_structure, ant_structure)
+            team = 2
+            orders_2 = First_IA(main_structure, ant_structure, team)
         
         #check and execute the orders
         orders = orders_1 + ';' + orders_2 
@@ -1117,14 +1119,14 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         print('Tied')
 
 
-def First_IA(main_structure, ant_structure):
+def First_IA(main_structure, ant_structure, team):
     """a First AI which make an order for each ant on the board
 
     Parameter
     ---------
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
-
+    team: the team which want orders (int)
     return
     ------
     orders: orders for each ant on the board (str)
@@ -1145,58 +1147,60 @@ def First_IA(main_structure, ant_structure):
     orders = ''
     
     for ant in ant_structure:
-        #check which order is possible for each ant
-        target = False
-        dice_roll = [1]
-        for pos in around2:
-            pos_y = pos[0] + ant['pos_y']
-            pos_x = pos[1] + ant['pos_x']
-            if pos_y <=0 and pos_y >= len(main_structure):
-                if pos_x <=0 and pos_X >= len(main_structure[pos_y]):
-                    if main_structure[pos_y][pos_x]['ant']:
-                        if ant_structure[main_structure[pos_y][pos_x]['ant']]['team'] != ant['team']:
-                            target = True
-                            target_pos_y = pos_y +1
-                            target_pos_x = pos_x +1
-        if main_structure[ant['pos_y']][ant['pos_x']]['clod'] != None and ant['carrying'] == False:
-            dice_roll.append(3)
-        if main_structure[ant['pos_y']][ant['pos_x']]['clod'] == None and ant['carrying'] != False:
-            dice_roll.append(4)
-        if target == True:
-            dice_roll.append(2)
+        #check if the ant is on the good team
+        if ant['team'] == team:
+            #check which order is possible for each ant
+            target = False
+            dice_roll = [1]
+            for pos in around2:
+                pos_y = pos[0] + ant['pos_y']
+                pos_x = pos[1] + ant['pos_x']
+                if pos_y <=0 and pos_y >= len(main_structure):
+                    if pos_x <=0 and pos_X >= len(main_structure[pos_y]):
+                        if main_structure[pos_y][pos_x]['ant']:
+                            if ant_structure[main_structure[pos_y][pos_x]['ant']]['team'] != ant['team']:
+                                target = True
+                                target_pos_y = pos_y +1
+                                target_pos_x = pos_x +1
+            if main_structure[ant['pos_y']][ant['pos_x']]['clod'] != None and ant['carrying'] == False:
+                dice_roll.append(3)
+            if main_structure[ant['pos_y']][ant['pos_x']]['clod'] == None and ant['carrying'] != False:
+                dice_roll.append(4)
+            if target == True:
+                dice_roll.append(2)
 
-        #randomly take one of the possible order
-        choice = random.randint(1,len(dice_roll)) - 1
+            #randomly take one of the possible order
+            choice = random.randint(1,len(dice_roll)) - 1
 
-        if dice_roll[choice] == 1:
-            #randomly take a direction for moving
-            direction = random.randint(1,8)
-            orders += str(ant['pos_y']+ 1) + '-' + str(ant['pos_x']+1) + ':@'
-            if direction == 1:
-                orders += str(ant['pos_y']) + '-' + str(ant['pos_x']) + ' '
-            if direction == 2:
-                orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+1) + ' '
-            if direction == 3:
-                orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+2) + ' '
-            if direction == 4:
-                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+2) + ' '
-            if direction == 5:
-                orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+2) + ' '
-            if direction == 6:
-                orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+1) + ' '
-            if direction == 7:
-                orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']) + ' '
-            if direction == 8:
-                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']) + ' '
-            
-        if dice_roll[choice] == 2:
-            orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':*' + str(target_pos_y) + '-' + str(target_pos_x) + ' '
+            if dice_roll[choice] == 1:
+                #randomly take a direction for moving
+                direction = random.randint(1,8)
+                orders += str(ant['pos_y']+ 1) + '-' + str(ant['pos_x']+1) + ':@'
+                if direction == 1:
+                    orders += str(ant['pos_y']) + '-' + str(ant['pos_x']) + ' '
+                if direction == 2:
+                    orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+1) + ' '
+                if direction == 3:
+                    orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+2) + ' '
+                if direction == 4:
+                    orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+2) + ' '
+                if direction == 5:
+                    orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+2) + ' '
+                if direction == 6:
+                    orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+1) + ' '
+                if direction == 7:
+                    orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']) + ' '
+                if direction == 8:
+                    orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']) + ' '
+                
+            if dice_roll[choice] == 2:
+                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':*' + str(target_pos_y) + '-' + str(target_pos_x) + ' '
 
-        if dice_roll[choice] == 3:
-            orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':lift '
+            if dice_roll[choice] == 3:
+                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':lift '
 
-        if dice_roll[choice] == 4:
-            orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':drop '
+            if dice_roll[choice] == 4:
+                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':drop '
     
 
     return orders
