@@ -1166,7 +1166,7 @@ def First_IA(main_structure, ant_structure):
                 orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+1) + ' '
             if direction == 7:
                 orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']) + ' '
-            if direction == 1:
+            if direction == 8:
                 orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']) + ' '
             
         if dice_roll[choice] == 2:
