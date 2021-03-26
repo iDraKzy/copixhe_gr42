@@ -3,6 +3,325 @@
 import blessed, math, os, time, random, sys
 term = blessed.Terminal()
 
+"""Module providing remote play features for UNamur programmation project (INFOB132).
+
+Sockets are used to transmit orders on local or remote machines.
+Firewalls or restrictive networks settings may block them.  
+
+More details on sockets: https://docs.python.org/2/library/socket.html.
+
+Author: Benoit Frenay (benoit.frenay@unamur.be).
+
+"""
+
+
+
+import socket
+# import time
+
+
+def create_server_socket(local_port, verbose):
+    """Creates a server socket.
+    
+    Parameters
+    ----------
+    local_port: port to listen to (int)
+    verbose: True if verbose (bool)
+    
+    Returns
+    -------
+    socket_in: server socket (socket.socket)
+    
+    """
+    
+    socket_in = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    socket_in.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # deal with a socket in TIME_WAIT state
+
+    if verbose:
+        print(' binding on local port %d to accept a remote connection' % local_port)
+    
+    try:
+        socket_in.bind(('', local_port))
+    except:
+        raise IOError('local port %d already in use by your group or the referee' % local_port)
+    socket_in.listen(1)
+    
+    if verbose:
+        print('   done -> can now accept a remote connection on local port %d\n' % local_port)
+        
+    return socket_in
+
+
+def create_client_socket(remote_IP, remote_port, verbose):
+    """Creates a client socket.
+    
+    Parameters
+    ----------
+    remote_IP: IP address to send to (int)
+    remote_port: port to send to (int)
+    verbose: True if verbose (bool)
+    
+    Returns
+    -------
+    socket_out: client socket (socket.socket)
+    
+    """
+
+    socket_out = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    socket_out.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) # deal with a socket in TIME_WAIT state
+    
+    connected = False
+    msg_shown = False
+    
+    while not connected:
+        try:
+            if verbose and not msg_shown:
+                print(' connecting on %s:%d to send orders' % (remote_IP, remote_port))
+                
+            socket_out.connect((remote_IP, remote_port))
+            connected = True
+            
+            if verbose:
+                print('   done -> can now send orders to %s:%d\n' % (remote_IP, remote_port))
+        except:
+            if verbose and not msg_shown:
+                print('   connection failed -> will try again every 100 msec...')
+                
+            time.sleep(.1)
+            msg_shown = True
+            
+    return socket_out
+    
+    
+def wait_for_connection(socket_in, verbose):
+    """Waits for a connection on a server socket.
+    
+    Parameters
+    ----------
+    socket_in: server socket (socket.socket)
+    verbose: True if verbose (bool)
+    
+    Returns
+    -------
+    socket_in: accepted connection (socket.socket)
+    
+    """
+    
+    if verbose:
+        print(' waiting for a remote connection to receive orders')
+        
+    socket_in, remote_address = socket_in.accept()
+    
+    if verbose:
+        print('   done -> can now receive remote orders from %s:%d\n' % remote_address)
+        
+    return socket_in            
+
+
+def create_connection(your_group, other_group=0, other_IP='127.0.0.1', verbose=False):
+    """Creates a connection with a referee or another group.
+    
+    Parameters
+    ----------
+    your_group: id of your group (int)
+    other_group: id of the other group, if there is no referee (int, optional)
+    other_IP: IP address where the referee or the other group is (str, optional)
+    verbose: True only if connection progress must be displayed (bool, optional)
+    
+    Returns
+    -------
+    connection: socket(s) to receive/send orders (dict of socket.socket)
+    
+    Raises
+    ------
+    IOError: if your group fails to create a connection
+    
+    Notes
+    -----
+    Creating a connection can take a few seconds (it must be initialised on both sides).
+    
+    If there is a referee, leave other_group=0, otherwise other_IP is the id of the other group.
+    
+    If the referee or the other group is on the same computer than you, leave other_IP='127.0.0.1',
+    otherwise other_IP is the IP address of the computer where the referee or the other group is.
+    
+    The returned connection can be used directly with other functions in this module.
+            
+    """
+    
+    # init verbose display
+    if verbose:
+        print('\n[--- starts connection -----------------------------------------------------\n')
+        
+    # check whether there is a referee
+    if other_group == 0:
+        if verbose:
+            print('** group %d connecting to referee on %s **\n' % (your_group, other_IP))
+        
+        # create one socket (client only)
+        socket_out = create_client_socket(other_IP, 42000+your_group, verbose)
+        
+        connection = {'in':socket_out, 'out':socket_out}
+        
+        if verbose:
+            print('** group %d successfully connected to referee on %s **\n' % (your_group, other_IP))
+    else:
+        if verbose:
+            print('** group %d connecting to group %d on %s **\n' % (your_group, other_group, other_IP))
+
+        # create two sockets (server and client)
+        socket_in = create_server_socket(42000+your_group, verbose)
+        socket_out = create_client_socket(other_IP, 42000+other_group, verbose)
+        
+        socket_in = wait_for_connection(socket_in, verbose)
+        
+        connection = {'in':socket_in, 'out':socket_out}
+
+        if verbose:
+            print('** group %d successfully connected to group %d on %s **\n' % (your_group, other_group, other_IP))
+        
+    # end verbose display
+    if verbose:
+        print('----------------------------------------------------- connection started ---]\n')
+
+    return connection
+        
+        
+def bind_referee(group_1, group_2, verbose=False):
+    """Put a referee between two groups.
+    
+    Parameters
+    ----------
+    group_1: id of the first group (int)
+    group_2: id of the second group (int)
+    verbose: True only if connection progress must be displayed (bool, optional)
+    
+    Returns
+    -------
+    connections: sockets to receive/send orders from both players (dict)
+    
+    Raises
+    ------
+    IOError: if the referee fails to create a connection
+    
+    Notes
+    -----
+    Putting the referee in place can take a few seconds (it must be connect to both groups).
+        
+    connections contains two connections (dict of socket.socket) which can be used directly
+    with other functions in this module.  connection of first (second) player has key 1 (2).
+            
+    """
+    
+    # init verbose display
+    if verbose:
+        print('\n[--- starts connection -----------------------------------------------------\n')
+
+    # create a server socket (first group)
+    if verbose:
+        print('** referee connecting to first group %d **\n' % group_1)        
+
+    socket_in_1 = create_server_socket(42000+group_1, verbose)
+    socket_in_1 = wait_for_connection(socket_in_1, verbose)
+
+    if verbose:
+        print('** referee succcessfully connected to first group %d **\n' % group_1)        
+        
+    # create a server socket (second group)
+    if verbose:
+        print('** referee connecting to second group %d **\n' % group_2)        
+
+    socket_in_2 = create_server_socket(42000+group_2, verbose)
+    socket_in_2 = wait_for_connection(socket_in_2, verbose)
+
+    if verbose:
+        print('** referee succcessfully connected to second group %d **\n' % group_2)        
+    
+    # end verbose display
+    if verbose:
+        print('----------------------------------------------------- connection started ---]\n')
+
+    return {1:{'in':socket_in_1, 'out':socket_in_1},
+            2:{'in':socket_in_2, 'out':socket_in_2}}
+
+
+def close_connection(connection):
+    """Closes a connection with a referee or another group.
+    
+    Parameters
+    ----------
+    connection: socket(s) to receive/send orders (dict of socket.socket)
+    
+    """
+    
+    # get sockets
+    socket_in = connection['in']
+    socket_out = connection['out']
+    
+    # shutdown sockets
+    socket_in.shutdown(socket.SHUT_RDWR)    
+    socket_out.shutdown(socket.SHUT_RDWR)
+    
+    # close sockets
+    socket_in.close()
+    socket_out.close()
+    
+    
+def notify_remote_orders(connection, orders):
+    """Notifies orders to a remote player.
+    
+    Parameters
+    ----------
+    connection: sockets to receive/send orders (dict of socket.socket)
+    orders: orders to notify (str)
+        
+    Raises
+    ------
+    IOError: if remote player cannot be reached
+    
+    """
+
+    # deal with null orders (empty string)
+    if orders == '':
+        orders = 'null'
+    
+    # send orders
+    try:
+        connection['out'].sendall(orders.encode())
+    except:
+        raise IOError('remote player cannot be reached')
+
+
+def get_remote_orders(connection):
+    """Returns orders from a remote player.
+
+    Parameters
+    ----------
+    connection: sockets to receive/send orders (dict of socket.socket)
+        
+    Returns
+    ----------
+    player_orders: orders given by remote player (str)
+
+    Raises
+    ------
+    IOError: if remote player cannot be reached
+            
+    """
+   
+    # receive orders    
+    try:
+        orders = connection['in'].recv(65536).decode()
+    except:
+        raise IOError('remote player cannot be reached')
+        
+    # deal with null orders
+    if orders == 'null':
+        orders = ''
+        
+    return orders
+
+
 # Initialize data structure
 def parse_map_file(path):
     """Parse the information from the cpx file.
@@ -331,13 +650,13 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
                         if not seems_valid_order['target'] in already_used_square:
                             valid_orders.append(seems_valid_order)
                 elif seems_valid_order['type'] == 'attack':
-                    if validation_attack(team, main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
+                    if validation_attack(seems_valid_order['team'], main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
                         valid_orders.append(seems_valid_order)
                 elif seems_valid_order['type'] == 'lift':
-                    if validation_lift(team, seems_valid_order['origin'], main_structure, ant_structure):
+                    if validation_lift(seems_valid_order['team'], seems_valid_order['origin'], main_structure, ant_structure):
                         valid_orders.append(seems_valid_order)
                 elif seems_valid_order['type'] == 'drop':
-                    if validation_drop(main_structure, ant_structure, team, seems_valid_order['origin']):
+                    if validation_drop(main_structure, ant_structure, seems_valid_order['team'], seems_valid_order['origin']):
                         valid_orders.append(seems_valid_order)
 
     return valid_orders
@@ -452,7 +771,9 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
     if ant['health'] <= 0:
         return False
 
-    if main_structure[attacker_pos[0]][attacker_pos[1]]['ant'] and main_structure[target_pos[0]][target_pos[1]]['ant']:
+    ant_targeted = main_structure[target_pos[0]][target_pos[1]]['ant']
+
+    if main_structure[attacker_pos[0]][attacker_pos[1]]['ant'] and ant_targeted:
 
         # compute distance between ants
         range_x = target_pos[0] - attacker_pos[0]
@@ -545,6 +866,7 @@ def exec_order(order_list, main_structure, ant_structure):
     """
 
     #TODO: Order the list (lift, drop, attack, move)
+    all_dead_ants = []
 
     for order in order_list:
         antid = main_structure[order['origin'][0]][order['origin'][1]]['ant']
@@ -554,11 +876,16 @@ def exec_order(order_list, main_structure, ant_structure):
         if order['type'] == 'move':
             move(main_structure, ant_structure, order['team'], order['origin'], order['target'])
         elif order['type'] == 'attack':
-            attack(ant_structure, main_structure, order['origin'], order['target'])
+            dead = attack(ant_structure, main_structure, order['origin'], order['target'])
+            if dead != None:
+                all_dead_ants.append(dead)
         elif order['type'] == 'lift':
             lift(main_structure, ant_structure, order['origin'])
         elif order['type'] == 'drop':
             place(main_structure, ant_structure, order['origin'])
+
+    for dead_ant in all_dead_ants:
+        death((dead_ant['pos_y'], dead_ant['pos_x']), main_structure, ant_structure, dead_ant['carrying'])
 
 def lift(main_structure, ant_structure, ant_pos):
     """Lift clod on ants.
@@ -634,12 +961,15 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
     #take each ant in the ant_structure
     ant_1 = return_ant_by_id(ant_structure, ant_1_id)
     ant_2 = return_ant_by_id(ant_structure, ant_2_id)
+
+    if ant_2 == None:
+        return
     #do the attack
     ant_2["health"] -= ant_1['level']
 
     update_lifepoint_on_display(ant_2, ant_structure)
     if ant_2['health'] <= 0:
-        death(target_pos, main_structure, ant_structure, ant_2['carrying'])
+        return ant_2
     
 def move(main_structure, ant_structure, team, origin, destination):
     """if move valid return the new position of the ant.
@@ -663,6 +993,9 @@ def move(main_structure, ant_structure, team, origin, destination):
     ant = return_ant_by_id(ant_structure, ant_id)
     main_structure[origin[0]][origin[1]]['ant'] = None
     main_structure[destination[0]][destination[1]]['ant'] = ant_id
+
+    if ant == None:
+        return
 
     ant['pos_y'] = destination[0]
     ant['pos_x'] = destination[1]
@@ -766,14 +1099,17 @@ def death(ant_pos, main_structure, ant_structure, carrying):
     implementation: Martin Buchet (v.1 18/03/21)
     """
     #TODO: ne pas remove de ant_structure et passer l'attribut ant de main_structure à None
+    ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
+
+    remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structure)
 
     if carrying:
         place(main_structure, ant_structure, ant_pos)
 
+
     main_structure[ant_pos[0]][ant_pos[1]]['ant'] = None
 
     # remove dead ant from grid
-    remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure)
 
 
 # UI Function
@@ -871,11 +1207,12 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
     print(term.move_yx(old_position[0] * 2 + 2, old_position[1] * 4 + 3) + ' ') # remove previous ant
     print(term.move_yx(new_position[0] * 2 + 2, new_position[1] * 4 + 3) + bg_color + color + possible_underline + '⚇' + term.normal) # add it back
 
-def remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure):
+def remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structure):
     """Remove ant on dispay when she died.
 
     Parameters
     ----------
+    ant_id: id of the dead ant (int)
     ant_pos: position of an ant (list)
     carrying: if the ant was carrying something (bool)
     main_structure: main structure of the game board (list)
@@ -890,7 +1227,6 @@ def remove_ant_on_display(ant_pos, carrying, main_structure, ant_structure):
 
     if carrying:
         # get ant_id from ant_pos then get the ant dict
-        ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
         dead_ant = return_ant_by_id(ant_structure, ant_id)
 
         color = get_color(dead_ant['clod_force'])
@@ -1170,7 +1506,7 @@ def First_IA(main_structure, ant_structure, team):
                 dice_roll.append(2)
             
             #randomly take one of the possible order
-            choice = random.randint(1,len(dice_roll)) - 1
+            choice = random.randint(0,len(dice_roll) - 1)
 
             if dice_roll[choice] == 1:
                 #randomly take a direction for moving
