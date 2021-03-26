@@ -1118,8 +1118,23 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
 
 def First_IA(main_structure, ant_structure):
-    """une ia naive qui test les fonctions"""
-    # time.sleep(.1)
+    """a First AI which make an order for each ant on the board
+
+    Parameter
+    ---------
+    main_structure: main structure of the game board (list)
+    ant_structure: structure containing all the ants (list)
+
+    return
+    ------
+    orders: orders for each ant on the board (str)
+    
+    Version
+    -------
+    specification: Liam Letot (v.1 26/03/21)   
+    implementation: Liam Letot (v.1 26/03/21) 
+    """
+    
     around2 = [(-3, -3),(-2, -3),(-1, -3),(0, -3),(1, -3),(2, -3),(3, -3),
     (-3, -2),(-2, -2),(-1, -2),(0, -2),(1, -2),(2, -2),(3, -2),
     (-3, -1),(-2, -1),(-1, -1),(0, -1),(1, -1),(2, -1),(3, -1),
@@ -1130,6 +1145,7 @@ def First_IA(main_structure, ant_structure):
     orders = ''
     
     for ant in ant_structure:
+        #check which order is possible for each ant
         target = False
         dice_roll = [1]
         for pos in around2:
@@ -1148,8 +1164,12 @@ def First_IA(main_structure, ant_structure):
             dice_roll.append(4)
         if target == True:
             dice_roll.append(2)
+
+        #randomly take one of the possible order
         choice = random.randint(1,len(dice_roll)) - 1
+
         if dice_roll[choice] == 1:
+            #randomly take a direction for moving
             direction = random.randint(1,8)
             orders += str(ant['pos_y']+ 1) + '-' + str(ant['pos_x']+1) + ':@'
             if direction == 1:
@@ -1171,13 +1191,18 @@ def First_IA(main_structure, ant_structure):
             
         if dice_roll[choice] == 2:
             orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':*' + str(target_pos_y) + '-' + str(target_pos_x) + ' '
+
         if dice_roll[choice] == 3:
             orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':lift '
+
         if dice_roll[choice] == 4:
             orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':drop '
     
 
     return orders
+
+
+
 def test():
 
     board_size, anthills, clods = parse_map_file("./small.cpx")
