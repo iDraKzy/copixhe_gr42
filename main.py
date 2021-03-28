@@ -1630,61 +1630,62 @@ def First_IA(main_structure, ant_structure, team):
     orders = ''
     
     for ant in ant_structure:
-        #check if the ant is on the good team
-        if ant['team'] == team:
-            #check which order is possible for each ant
-            target = False
-            dice_roll = [1]
-            for pos in around2:
-                pos_y = pos[0] + ant['pos_y']
-                pos_x = pos[1] + ant['pos_x']
-                if pos_y >=0 and pos_y < len(main_structure):
-                    if pos_x >=0 and pos_x < len(main_structure[0]):
-                        if main_structure[pos_y][pos_x]['ant']:
-                            if ant_structure[main_structure[pos_y][pos_x]['ant']]['team'] != ant['team']:
-                                target = True
-                                target_pos_y = pos_y +1
-                                target_pos_x = pos_x +1
-            if main_structure[ant['pos_y']][ant['pos_x']]['clod'] != None and ant['carrying'] == False:
-                dice_roll.append(3)
-            if main_structure[ant['pos_y']][ant['pos_x']]['clod'] == None and ant['carrying'] != False:
-                dice_roll.append(4)
-            if target:
-                dice_roll.append(2)
-            
-            
-            #randomly take one of the possible order
-            choice = random.randint(0,len(dice_roll) - 1)
-
-            if dice_roll[choice] == 1:
-                #randomly take a direction for moving
-                direction = random.randint(1,8)
-                orders += str(ant['pos_y']+ 1) + '-' + str(ant['pos_x']+1) + ':@'
-                if direction == 1:
-                    orders += str(ant['pos_y']) + '-' + str(ant['pos_x']) + ' '
-                if direction == 2:
-                    orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+1) + ' '
-                if direction == 3:
-                    orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+2) + ' '
-                if direction == 4:
-                    orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+2) + ' '
-                if direction == 5:
-                    orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+2) + ' '
-                if direction == 6:
-                    orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+1) + ' '
-                if direction == 7:
-                    orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']) + ' '
-                if direction == 8:
-                    orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']) + ' '
+        if ant['health']> 0:
+            #check if the ant is on the good team
+            if ant['team'] == team:
+                #check which order is possible for each ant
+                target = False
+                dice_roll = [1]
+                for pos in around2:
+                    pos_y = pos[0] + ant['pos_y']
+                    pos_x = pos[1] + ant['pos_x']
+                    if pos_y >=0 and pos_y < len(main_structure):
+                        if pos_x >=0 and pos_x < len(main_structure[0]):
+                            if main_structure[pos_y][pos_x]['ant']:
+                                if ant_structure[main_structure[pos_y][pos_x]['ant']]['team'] != ant['team']:
+                                    target = True
+                                    target_pos_y = pos_y +1
+                                    target_pos_x = pos_x +1
+                if main_structure[ant['pos_y']][ant['pos_x']]['clod'] != None and ant['carrying'] == False:
+                    dice_roll.append(3)
+                if main_structure[ant['pos_y']][ant['pos_x']]['clod'] == None and ant['carrying'] != False:
+                    dice_roll.append(4)
+                if target:
+                    dice_roll.append(2)
                 
-            if dice_roll[choice] == 2:
-                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':*' + str(target_pos_y) + '-' + str(target_pos_x) + ' '
+                
+                #randomly take one of the possible order
+                choice = random.randint(0,len(dice_roll) - 1)
 
-            if dice_roll[choice] == 3:
-                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':lift '
+                if dice_roll[choice] == 1:
+                    #randomly take a direction for moving
+                    direction = random.randint(1,8)
+                    orders += str(ant['pos_y']+ 1) + '-' + str(ant['pos_x']+1) + ':@'
+                    if direction == 1:
+                        orders += str(ant['pos_y']) + '-' + str(ant['pos_x']) + ' '
+                    if direction == 2:
+                        orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+1) + ' '
+                    if direction == 3:
+                        orders += str(ant['pos_y']) + '-' + str(ant['pos_x']+2) + ' '
+                    if direction == 4:
+                        orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+2) + ' '
+                    if direction == 5:
+                        orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+2) + ' '
+                    if direction == 6:
+                        orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']+1) + ' '
+                    if direction == 7:
+                        orders += str(ant['pos_y']+2) + '-' + str(ant['pos_x']) + ' '
+                    if direction == 8:
+                        orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']) + ' '
+                    
+                if dice_roll[choice] == 2:
+                    orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':*' + str(target_pos_y) + '-' + str(target_pos_x) + ' '
 
-            if dice_roll[choice] == 4:
-                orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':drop '
+                if dice_roll[choice] == 3:
+                    orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':lift '
+
+                if dice_roll[choice] == 4:
+                    orders += str(ant['pos_y']+1) + '-' + str(ant['pos_x']+1) + ':drop '
     
 
     return orders
