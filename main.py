@@ -981,7 +981,7 @@ def move(main_structure, ant_structure, team, origin, destination):
 
     ant['pos_y'] = destination[0]
     ant['pos_x'] = destination[1]
-    move_ant_on_display(team, ant['level'],  ant['carrying'], origin, destination)
+    move_ant_on_display(main_structure, ant_id, team, ant['level'],  ant['carrying'], origin, destination)
 
 # New ants functions
 def check_level(main_structure, anthill_structure, anthill):
@@ -1158,11 +1158,13 @@ def init_display(main_structure, ant_structure, anthills_structure):
 
     spawn(main_structure, ant_structure, anthills_structure)
 
-def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
+def move_ant_on_display(main_structure, ant_id, team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
 
     Paremeters
     ----------
+    main_structure: main structure of the game board (list)
+    ant_id: id of the ant to move (int)
     team: number of the team owning the ant (int)
     ant_level: level of the ant being moved (int)
     ant_is_carrying: wether the ant is carrying a clods (bool)
@@ -1171,7 +1173,7 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
 
     Version
     -------
-    specification: Maxime Dufrasne (v.1 22/02/21)
+    specification: Maxime Dufrasne (v.1 22/02/21) (v.2 28/03/21)
     implementation: Youlan Collard (v.1 12/03/21)
     """
     if team == 1:
@@ -1188,6 +1190,19 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
 
     print(term.move_yx(old_position[0] * 2 + 2, old_position[1] * 4 + 3) + ' ') # remove previous ant
     print(term.move_yx(new_position[0] * 2 + 2, new_position[1] * 4 + 3) + bg_color + color + possible_underline + '⚇' + term.normal) # add it back
+
+    # Update the lifepoints pos
+    life_point_col, life_point_row = define_col_and_row_for_lifepoint(len(main_structure), ant_id)
+
+    ant_pos_for_lifepoint = ''
+
+    for new_pos in new_position:
+        if new_pos + 1 < 10:
+            ant_pos_for_lifepoint += ' '
+
+    ant_pos_for_lifepoint += str(new_position[0] + 1) + '-' + str(new_position[1] + 1)
+
+    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24)) + ' ' + ant_pos_for_lifepoint)
 
 def remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structure):
     """Remove ant on dispay when she died.
