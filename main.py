@@ -811,15 +811,13 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
     ant_id = origin_tile['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
 
-    if ant_id is None and ant['health'] <= 0:
+    if ant_id is None or ant['health'] <= 0:
         return False
     
     if ant['carrying'] and main_structure[destination[0]][destination[1]]['clod']:
         for anthill in anthill_structure:
             if destination[0] == anthill['pos_y'] and destination[1] == anthill['pos_x']:
-                return False
-        if ant_id is None and ant['health'] <= 0:
-            return False    
+                return False 
         return False
 
     if ant['team'] == team:
