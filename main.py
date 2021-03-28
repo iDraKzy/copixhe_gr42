@@ -1329,8 +1329,7 @@ def define_col_and_row_for_lifepoint(max_row, ant_id, current_col=0):
     specification: Youlan Collard (v.1 28/03/21)
     implementation: Youlan Collard (v.1 28/03/21)
     """
-    max_row_indexed = max_row - 1
-    if ant_id <= max_row_indexed:
+    if ant_id <= max_row - 1:
         return current_col, ant_id
     else:
         return define_col_and_row_for_lifepoint(max_row, ant_id - max_row, current_col + 1)
