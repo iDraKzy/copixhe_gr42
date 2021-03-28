@@ -590,7 +590,6 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
 
 
     orders_list = orders.split(';')
-    # print(orders_list)
     seems_valid = [] 
     team_number = 0 # initialize the number team to 0
 
@@ -731,7 +730,6 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
 
                     lift_valid = True
         
-    # print(term.move_yx(len(main_structure) * 2 + 2, 0) + str(lift_valid))
     return lift_valid
 
 def validation_attack(team, main_structure, ant_structure, attacker_pos, target_pos):
@@ -821,7 +819,6 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
         return False
 
     if ant['team'] == team:
-        # print('isgood')
         offset_origin_x = origin[0] - destination[0]
         offset_origin_y = origin[1] - destination[1] 
         if (offset_origin_x in (-1, 0, 1)) and (offset_origin_y in (-1, 0, 1)) and not (offset_origin_x == 0 and offset_origin_y == 0):
@@ -1034,7 +1031,6 @@ def spawn(main_structure, ant_structure, anthill_structure):
     """
     for anthill in anthill_structure:
         #check the level the next ant will have
-        print(term.move_yx(len(main_structure) * 2 + 2, 0) + str(main_structure[anthill['pos_y']][anthill['pos_x']]['ant']))
         if main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] is None:
             ant_level = check_level(main_structure, anthill_structure, anthill)
             
@@ -1128,7 +1124,7 @@ def init_display(main_structure, ant_structure, anthills_structure):
     row = len(main_structure)
     col = len(main_structure[0])
 
-    print(term.home + term.clear)
+    print(term.home + term.clear + term.hide_cursor)
     # print grid
     for n in range(len(main_structure[0])):
         # numerotation of the columns
@@ -1366,7 +1362,7 @@ def add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) :
     ant_pos_for_lifepoint = ant_pos_for_lifepoint + str(ant_pos[0] + 1) + '-' + str(ant_pos[1] + 1)
     health_display = ' %d/%d' % (health, health)
 
-    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 23)) + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + '          ' + term.normal + health_display )
+    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24)) + ' ' + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + '          ' + term.normal + health_display )
     print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 3) + bg_color + term_color + '⚇' + term.normal)
 
 # Util function
@@ -1461,7 +1457,8 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     while is_won is None or is_won == 3:
 
         #take the orders
-        print(term.move_yx(len(main_structure) * 2 + 2, 0) + term.clear_eos)
+        if type_1 == 'human' or type_2 == 'human':
+            print(term.move_yx(len(main_structure) * 2 + 2, 0) + term.clear_eos)
         if type_1 == 'human':
             orders_1 = input("team_1 input : ")
         elif type_1 == 'AI':
