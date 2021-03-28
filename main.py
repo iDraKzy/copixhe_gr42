@@ -839,7 +839,7 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
     return False
 
 # Execution of orders
-def exec_order(order_list, main_structure, ant_structure):
+def exec_order(order_list, main_structure, ant_structure, anthill_structure):
     """Execute orders and give the structures to each order fonctions.
 
     Parameters
@@ -847,6 +847,7 @@ def exec_order(order_list, main_structure, ant_structure):
     order_list: the list of orders the user imput (list)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
+    anthill_structure: list of 2 elements containing the anthills information (list)
 
     Notes
     -----
@@ -876,10 +877,10 @@ def exec_order(order_list, main_structure, ant_structure):
         elif order['type'] == 'lift':
             lift(main_structure, ant_structure, order['origin'])
         elif order['type'] == 'drop':
-            place(main_structure, ant_structure, order['origin'])
+            place(main_structure, ant_structure, order['origin'], anthill_structure)
 
     for dead_ant in all_dead_ants:
-        death((dead_ant['pos_y'], dead_ant['pos_x']), main_structure, ant_structure, dead_ant['carrying'])
+        death((dead_ant['pos_y'], dead_ant['pos_x']), main_structure, ant_structure, dead_ant['carrying'], anthill_structure)
 
 def lift(main_structure, ant_structure, ant_pos):
     """Lift clod on ants.
@@ -907,7 +908,7 @@ def lift(main_structure, ant_structure, ant_pos):
     #remove the clod on the display 
     lift_clod_on_display(ant_pos, ant_structure, main_structure)
 
-def place(main_structure, ant_structure, ant_pos):
+def place(main_structure, ant_structure, ant_pos, anthill_structure):
     """Place clod on a case.
 
     Parameters
@@ -915,6 +916,7 @@ def place(main_structure, ant_structure, ant_pos):
     main_structure: library of board (list)
     ant_structure: library of all ants (list)
     ant_pos: position of the ant that will place clod (list)
+    anthill_structure: list of 2 elements containing the anthills information (list)
 
     Version
     -------
@@ -932,7 +934,7 @@ def place(main_structure, ant_structure, ant_pos):
     #remove the clod from the ant
     ant['clod_force']= None
     #place the clod on the display
-    place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure)
+    place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure, anthill_structure)
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
@@ -1073,7 +1075,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
             add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) 
 
 # Removal of dead ant function
-def death(ant_pos, main_structure, ant_structure, carrying):
+def death(ant_pos, main_structure, ant_structure, carrying, anthill_structure):
     """Remove the specified ant.
 
     Parameters
@@ -1082,6 +1084,7 @@ def death(ant_pos, main_structure, ant_structure, carrying):
     main_structure: main structure of the board (list)
     ant_structure: structure containing the ants (list)
     carrying: if the ant was carrying something (bool)
+    anthill_structure: list of 2 elements containing the anthills information (list)
 
     Version
     -------
@@ -1094,7 +1097,7 @@ def death(ant_pos, main_structure, ant_structure, carrying):
     remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structure)
 
     if carrying:
-        place(main_structure, ant_structure, ant_pos)
+        place(main_structure, ant_structure, ant_pos, anthill_structure)
 
 
     main_structure[ant_pos[0]][ant_pos[1]]['ant'] = None
@@ -1103,14 +1106,14 @@ def death(ant_pos, main_structure, ant_structure, carrying):
 
 
 # UI Function
-def init_display(main_structure, ant_structure, anthills_structure):
+def init_display(main_structure, ant_structure, anthill_structure):
     """Initialize the display of the UI, create the initial game board from scratch.
 
     Parameters
     ----------
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
-    anthills_structure: structure containing the anthills (list)
+    anthill_structure: structure containing the anthills (list)
 
     Version
     -------
@@ -1155,8 +1158,8 @@ def init_display(main_structure, ant_structure, anthills_structure):
     print(str(row) + (vline + 3 * space) * col + vline)
     print('  ' + llcorner + (3 * hline + btee) * (col - 1) + 3 * hline + lrcorner)
 
-    print(term.on_blue + term.move_yx(anthills_structure[0]['pos_y'] * 2 + 2, anthills_structure[0]['pos_x'] * 4 + 5) + '⤊' + term.normal)
-    print(term.on_red + term.move_yx(anthills_structure[1]['pos_y'] * 2 + 2, anthills_structure[1]['pos_x'] * 4 + 5) + '⤊' + term.normal)
+    print(term.on_blue + term.move_yx(anthill_structure[0]['pos_y'] * 2 + 2, anthill_structure[0]['pos_x'] * 4 + 5) + '⤊' + term.normal)
+    print(term.on_red + term.move_yx(anthill_structure[1]['pos_y'] * 2 + 2, anthill_structure[1]['pos_x'] * 4 + 5) + '⤊' + term.normal)
 
     for y in range(len(main_structure)):
         for x in range(len(main_structure[0])):
@@ -1164,7 +1167,7 @@ def init_display(main_structure, ant_structure, anthills_structure):
                 color = get_color(main_structure[y][x]['clod'])
                 print(term.move_yx((y * 2 + 2), (x * 4 + 5)) + '∆' + color + term.normal)
 
-    spawn(main_structure, ant_structure, anthills_structure)
+    spawn(main_structure, ant_structure, anthill_structure)
 
 def move_ant_on_display(main_structure, ant_id, team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
@@ -1295,7 +1298,7 @@ def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + ' ')
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + bg_color + color + term.underline + '⚇' + term.normal)
 
-def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure):
+def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure, anthill_structure):
     """Make the clod appear and switch the ant with a clod to an ant on display.
 
     Parameters
@@ -1304,6 +1307,7 @@ def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure):
     clod_force: the force needed to lift the clod the ant just dropped (int)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
+    anthill_structure: library of all anthills (list)
 
     Version
     -------
@@ -1322,13 +1326,25 @@ def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure):
     elif team == 2:
         bg_color = term.on_red
 
-    color = get_color(clod_force)
-
-    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + color + '∆' + term.normal)
-
     color = get_color(ant['level'])
 
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + bg_color + color + '⚇' + term.normal)
+        
+    color = get_color(clod_force)
+    bg_color = ''
+    around_ant = [(ant_pos[0], ant_pos[1] + 1), (ant_pos[0], ant_pos[1] - 1), (ant_pos[0] + 1, ant_pos[1]),
+    (ant_pos[0] - 1, ant_pos[1]), (ant_pos[0] + 1, ant_pos[1] + 1), (ant_pos[0] - 1, ant_pos[1] +1),
+    (ant_pos[0] + 1, ant_pos[1] - 1), (ant_pos[0] - 1, ant_pos[1] + 1)]
+
+    for pos in around_ant:
+        for anthill in anthill_structure:
+            if pos == (anthill['pos_x'],anthill['pos_y']):
+                if team == 1:
+                    bg_color = term.on_blue
+                elif team == 2:
+                    bg_color = term.on_red
+
+    print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + bg_color + color + '∆' + term.normal)
 
 def define_col_and_row_for_lifepoint(max_row, ant_id, current_col=0):
     """Returns the row and columns where the health bar should be printed
@@ -1547,7 +1563,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         orders_list = interpret_order(main_structure, ant_structure, anthill_structure, orders)
         # orders_list = interpret_order( 1 ,main_structure, ant_structure, anthill_structure, orders_1)
         # orders_list += interpret_order(2, main_structure, ant_structure, anthill_structure, orders_2)
-        exec_order(orders_list, main_structure, ant_structure)
+        exec_order(orders_list, main_structure, ant_structure, anthill_structure)
         reset_play_all_ants(ant_structure)
         #check and spawn new ant if it's needed
         if number_of_turn % 5 == 0 and is_won != 3:
