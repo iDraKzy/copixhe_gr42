@@ -1266,9 +1266,10 @@ def update_lifepoint_on_display(ant, ant_structure, main_structure):
     health_display = ' %d/%d' % (health, health_tot)
     life_point = int(round(((health / health_tot)*10), 0))
     life_lose = 10 - life_point
+    term_color = get_color(ant['level'])
+    bg_color = get_bg_color(ant['team'])
 
-
-    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24 + 7)) + term.on_green + (life_point *' ') + term.on_red + (life_lose * ' ') + term.normal + health_display )
+    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 23)) + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + (life_point * ' ') + term.on_red + (life_lose * ' ') + term.normal + health_display )
 
 def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     """Make the clod disappear and switch the ant to an ant with clod on display.
@@ -1396,18 +1397,10 @@ def add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) :
     #TODO: Ajouter barre de vie à droite de la grille
     life_point_col, life_point_row = define_col_and_row_for_lifepoint(len(main_structure), ant_id)
 
-    if ant_level == 1:
-        health = 3
-    elif ant_level == 2:
-        health = 5
-    elif ant_level == 3:
-        health = 7
+    health = give_health(ant_level)
 
 
-    if team == 1:
-        bg_color = term.on_blue
-    elif team == 2:
-        bg_color = term.on_red
+    bg_color = get_bg_color(team)
 
     term_color = get_color(ant_level)
 
@@ -1467,6 +1460,30 @@ def get_color(level):
         return term.yellow
     elif level == 3:
         return term.green
+
+def get_bg_color(team):
+    """
+    send the bg color string for the specified team using blessed
+
+    Parameters
+    ----------
+    team: the team of the ant (int)
+    
+    Returns
+    -------
+    bg_color : the bg color for the ant
+
+    Version
+    -------
+    specification: Liam Letot (v.1 28/03/21)
+    implementation: Liam Letot (v.1 28/03/21)
+    """
+    if team == 1:
+        bg_color = term.on_blue
+    elif team == 2:
+        bg_color = term.on_red
+
+    return bg_color
 
 def reset_play_all_ants(ant_structure):
     """reset the ant who played this turn
