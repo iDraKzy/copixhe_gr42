@@ -1251,7 +1251,7 @@ def update_lifepoint_on_display(ant, ant_structure, main_structure):
     Version
     -------
     specification: Martin Buchet (v.1 22/02/21)
-    implementation: Leto Liam (v.1 28/03/21)
+    implementation: Letot Liam (v.1 28/03/21)
     """
     ant_pos_for_lifepoint = ''
 
