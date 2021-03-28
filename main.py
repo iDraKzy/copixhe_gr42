@@ -1315,13 +1315,11 @@ def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure, an
     specification: Liam Letot (v.1 22/02/21)
     implementation: Martin Buchet, Maxime Dufrasne (v.1 21/03/21)
     """
-    # get ant_id from ant_pos then get the ant dict
-
-    # TODO: Add background color (Youlan)
 
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
     team = ant['team']
+    
     if team == 1:
         bg_color = term.on_blue
     elif team == 2:
