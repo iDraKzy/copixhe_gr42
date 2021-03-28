@@ -1255,9 +1255,9 @@ def update_lifepoint_on_display(ant, ant_structure, main_structure):
     """
     ant_pos_for_lifepoint = ''
 
-    if ant['pos_y'] < 10:
+    if ant['pos_y'] + 1 < 10:
         ant_pos_for_lifepoint += ' '
-    if ant['pos_x'] < 10:
+    if ant['pos_x'] + 1 < 10:
         ant_pos_for_lifepoint += ' '
     
     life_point_col, life_point_row = define_col_and_row_for_lifepoint(len(main_structure), ant['id'], 0)
