@@ -1393,7 +1393,7 @@ def add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) :
     #TODO: Ajouter barre de vie à droite de la grille
     life_point_col, life_point_row = define_col_and_row_for_lifepoint(len(main_structure), ant_id)
 
-    health = give_health(ant['level'])
+    health = give_health(ant_level)
 
 
     bg_color = get_bg_color(team)
