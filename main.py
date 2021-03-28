@@ -758,7 +758,8 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
 
     # get ant_id from ant_pos then get the ant dict
     ant_id = main_structure[attacker_pos[0]][attacker_pos[1]]['ant']
-    if ant_id is None:
+    ant_is_none = ant_id == None
+    if ant_id == None:
         return False
 
     ant = return_ant_by_id(ant_structure, ant_id)
@@ -768,7 +769,7 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
 
     ant_targeted = main_structure[target_pos[0]][target_pos[1]]['ant']
 
-    if main_structure[attacker_pos[0]][attacker_pos[1]]['ant'] and ant_targeted:
+    if main_structure[attacker_pos[0]][attacker_pos[1]]['ant'] != None and ant_targeted != None:
 
         # compute distance between ants
         range_x = target_pos[0] - attacker_pos[0]
@@ -1564,7 +1565,6 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     implementation : Liam Letot (v.1 26/02/21)
     
     """
-    global ant_structure
     #init the main parameters
     number_of_turn = 1
     board_size, anthills, clods = parse_map_file(CPX_file)
@@ -1607,7 +1607,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         if number_of_turn % 5 == 0 and is_won != 3:
             spawn(main_structure, ant_structure, anthill_structure)
         number_of_turn += 1
-        time.sleep(0.1)
+        # time.sleep(0.1)
         is_won = check_victory(main_structure, anthill_structure, number_of_turn)
     #print the end message
     if is_won == 1:
@@ -1707,6 +1707,6 @@ def First_IA(main_structure, ant_structure, team):
     return orders
 
 
-play_game('./small.cpx', '1', 'AI', '2', 'AI')
+play_game('./small.cpx', '1', 'human', '2', 'human')
 
     
