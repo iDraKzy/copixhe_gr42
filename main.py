@@ -860,7 +860,6 @@ def exec_order(order_list, main_structure, ant_structure, anthill_structure):
     implementation: Youlan Collard (v.1 12/03/21)
     """
 
-    #TODO: Order the list (lift, drop, attack, move)
     all_dead_ants = []
 
     for order in order_list:
@@ -879,8 +878,13 @@ def exec_order(order_list, main_structure, ant_structure, anthill_structure):
         elif order['type'] == 'drop':
             place(main_structure, ant_structure, order['origin'], anthill_structure)
 
+    # Remove duplicated ants
+    confirmed_dead = []
+
     for dead_ant in all_dead_ants:
-        death((dead_ant['pos_y'], dead_ant['pos_x']), main_structure, ant_structure, dead_ant['carrying'], anthill_structure)
+        if not dead_ant in confirmed_dead:
+            death((dead_ant['pos_y'], dead_ant['pos_x']), main_structure, ant_structure, dead_ant['carrying'], anthill_structure)
+            confirmed_dead.append(dead_ant)
 
 def lift(main_structure, ant_structure, ant_pos):
     """Lift clod on ants.
@@ -945,6 +949,10 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
     main_structure: main structure of the game board (list)
     ant_pos: position of the attacking ant (list)
     target_pos: position of target (list)
+
+    Returns
+    -------
+    dead_ant: return the ant if it's dead (dict)
 
     Version
     -------
@@ -1091,13 +1099,15 @@ def death(ant_pos, main_structure, ant_structure, carrying, anthill_structure):
     specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
     implementation: Martin Buchet (v.1 18/03/21)
     """
-    #TODO: ne pas remove de ant_structure et passer l'attribut ant de main_structure à None
     ant_id = main_structure[ant_pos[0]][ant_pos[1]]['ant']
-
-    remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structure)
+    ant = return_ant_by_id(ant_structure, ant_id)
+    clod_force = ant['clod_force']
 
     if carrying:
         place(main_structure, ant_structure, ant_pos, anthill_structure)
+
+    remove_ant_on_display(ant_id, ant_pos, carrying, clod_force, main_structure, ant_structure)
+
 
 
     main_structure[ant_pos[0]][ant_pos[1]]['ant'] = None
@@ -1215,7 +1225,7 @@ def move_ant_on_display(main_structure, ant_id, team, ant_level, ant_is_carrying
 
     print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24)) + ' ' + ant_pos_for_lifepoint)
 
-def remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structure):
+def remove_ant_on_display(ant_id, ant_pos, carrying, clod_force, main_structure, ant_structure):
     """Remove ant on dispay when she died.
 
     Parameters
@@ -1223,22 +1233,28 @@ def remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structu
     ant_id: id of the dead ant (int)
     ant_pos: position of an ant (list)
     carrying: if the ant was carrying something (bool)
+    clod_force: the necessary force for a ant to lift this clod (int)
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
+
+    Notes
+    -----
+    clod_force is equal to None when carrying is equal to false
     
     Version
     -------
-    specification: Maxime Dufrasne  (v.1 22/02/21)
+    specification: Maxime Dufrasne  (v.1 22/02/21) (v.2 28/03/21)
     implementation: Martin Buchet (v.1 18/03/21)
     """
-    print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 3) + ' ')
-    
     if carrying:
         # get ant_id from ant_pos then get the ant dict
         dead_ant = return_ant_by_id(ant_structure, ant_id)
 
-        color = get_color(dead_ant['clod_force'])
+        color = get_color(clod_force)
         print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + color + '∆' + term.normal)
+
+    print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 3) + ' ')
+    
 
 def update_lifepoint_on_display(ant, ant_structure, main_structure):
     """Update the health bar of an ant on display.
