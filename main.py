@@ -831,7 +831,6 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
         return False
 
     if ant['team'] == team:
-        # print('isgood')
         offset_origin_x = origin[0] - destination[0]
         offset_origin_y = origin[1] - destination[1] 
         if (offset_origin_x in (-1, 0, 1)) and (offset_origin_y in (-1, 0, 1)) and not (offset_origin_x == 0 and offset_origin_y == 0):
@@ -1055,7 +1054,6 @@ def spawn(main_structure, ant_structure, anthill_structure):
     """
     for anthill in anthill_structure:
         #check the level the next ant will have
-        print(term.move_yx(len(main_structure) * 2 + 2, 0) + str(main_structure[anthill['pos_y']][anthill['pos_x']]['ant']))
         if main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] is None:
             ant_level = check_level(main_structure, anthill_structure, anthill)
             
@@ -1146,7 +1144,7 @@ def init_display(main_structure, ant_structure, anthill_structure):
     row = len(main_structure)
     col = len(main_structure[0])
 
-    print(term.home + term.clear)
+    print(term.home + term.clear + term.hide_cursor)
     # print grid
     for n in range(len(main_structure[0])):
         # numerotation of the columns
