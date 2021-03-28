@@ -959,8 +959,9 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
     if ant_2 == None:
         return
     #do the attack
-    ant_2["health"] -= ant_1['level']
-
+    ant_2['health'] -= ant_1['level']
+    if ant_2['health'] <0:
+        ant_2['health'] = 0
     update_lifepoint_on_display(ant_2, ant_structure, main_structure)
     if ant_2['health'] <= 0:
         return ant_2
@@ -1255,16 +1256,16 @@ def update_lifepoint_on_display(ant, ant_structure, main_structure):
         ant_pos_for_lifepoint += ' '
     if ant['pos_x'] < 10:
         ant_pos_for_lifepoint += ' '
-    col, row = define_col_and_row_for_lifepoint(len(main_structure), ant['id'], 0)
+    life_point_col, life_point_row = define_col_and_row_for_lifepoint(len(main_structure), ant['id'], 0)
     ant_pos_for_lifepoint = ant_pos_for_lifepoint + str(ant['pos_y'] + 1) + '-' + str(ant['pos_x'] + 1)
     health = ant['health']
     health_tot = give_health(ant['level'])
     health_display = ' %d/%d' % (health, health_tot)
-    life_point = round(((health / health_tot)*10), 0)
+    life_point = int(round(((health / health_tot)*10), 0))
     life_lose = 10 - life_point
 
 
-    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 23)) + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + (life_point *' ') + term.on_red + (life_lose * ' ') + term.normal + health_display )
+    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24 + 7)) + term.on_green + (life_point *' ') + term.on_red + (life_lose * ' ') + term.normal + health_display )
 
 def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     """Make the clod disappear and switch the ant to an ant with clod on display.
