@@ -640,9 +640,9 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
                         already_used_square = []
                         for order in valid_orders:
                             if order['type'] == 'move':
-                                already_used_square.append(order['target'])
+                                already_used_square.append(order['target']) # Adding all already valid moves to the list
 
-                        if not seems_valid_order['target'] in already_used_square:
+                        if not seems_valid_order['target'] in already_used_square: # Checking if the current move isn't already in the list
                             valid_orders.append(seems_valid_order)
                 elif seems_valid_order['type'] == 'attack':
                     if validation_attack(seems_valid_order['team'], main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
