@@ -1072,7 +1072,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
                 'carrying': False,
                 'clod_force': None,
                 'played': False
-                })
+            })
 
             #add the new ant in the board (main_structure) 
             main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] = ant_id
