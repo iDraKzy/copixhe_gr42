@@ -805,34 +805,25 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
     Version
     -------
     specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
-    implementation: Youlan Collard (v.1 12/03/21)
+    implementation: Youlan Collard, Martin Buchet (v.1 12/03/21)
     """
-    #TODO: Plusieurs fourmis allant au même endroit pose problème (s'écrase)
 
     if (destination[0] >= len(main_structure) or destination[0] < 0) or (destination[1] >= len(main_structure[0]) or destination[1] < 0): # < 0 because the order has already been converted to 0 index
         return False
 
     origin_tile = main_structure[origin[0]][origin[1]]
     ant_id = origin_tile['ant']
-    if ant_id is None:
-        return False
-    
     ant = return_ant_by_id(ant_structure, ant_id)
-    
 
-    if ant['health'] <= 0:
+    if ant_id is None and ant['health'] <= 0:
         return False
-
     
     if ant['carrying'] and main_structure[destination[0]][destination[1]]['clod']:
-        return False
-
-    if ant['carrying']:
         for anthill in anthill_structure:
             if destination[0] == anthill['pos_y'] and destination[1] == anthill['pos_x']:
                 return False
-
-    if main_structure[destination[0]][destination[1]]['ant'] != None:
+        if ant_id is None and ant['health'] <= 0:
+            return False    
         return False
 
     if ant['team'] == team:
@@ -841,8 +832,8 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
         offset_origin_y = origin[1] - destination[1] 
         if (offset_origin_x in (-1, 0, 1)) and (offset_origin_y in (-1, 0, 1)) and not (offset_origin_x == 0 and offset_origin_y == 0):
             return True
-
-    return False
+    elif main_structure[destination[0]][destination[1]]['ant'] != None:
+        return False
 
 # Execution of orders
 def exec_order(order_list, main_structure, ant_structure):
