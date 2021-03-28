@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import blessed, math, os, time, random, sys
+import blessed, math, os, time, random
 term = blessed.Terminal()
 
 """Module providing remote play features for UNamur programmation project (INFOB132).
@@ -590,7 +590,6 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
 
 
     orders_list = orders.split(';')
-    # print(orders_list)
     seems_valid = [] 
     team_number = 0 # initialize the number team to 0
 
@@ -641,9 +640,9 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
                         already_used_square = []
                         for order in valid_orders:
                             if order['type'] == 'move':
-                                already_used_square.append(order['target'])
+                                already_used_square.append(order['target']) # Adding all already valid moves to the list
 
-                        if not seems_valid_order['target'] in already_used_square:
+                        if not seems_valid_order['target'] in already_used_square: # Checking if the current move isn't already in the list
                             valid_orders.append(seems_valid_order)
                 elif seems_valid_order['type'] == 'attack':
                     if validation_attack(seems_valid_order['team'], main_structure, ant_structure, seems_valid_order['origin'], seems_valid_order['target']):
@@ -801,7 +800,7 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
     Version
     -------
     specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
-    implementation: Youlan Collard, Martin Buchet (v.1 12/03/21)
+    implementation: Youlan Collard (v.1 12/03/21)
     """
 
     if (destination[0] >= len(main_structure) or destination[0] < 0) or (destination[1] >= len(main_structure[0]) or destination[1] < 0): # < 0 because the order has already been converted to 0 index
@@ -809,17 +808,25 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
 
     origin_tile = main_structure[origin[0]][origin[1]]
     ant_id = origin_tile['ant']
-    ant = return_ant_by_id(ant_structure, ant_id)
-
-    if ant_id is None and ant['health'] <= 0:
+    if ant_id is None:
         return False
     
+    ant = return_ant_by_id(ant_structure, ant_id)
+    
+
+    if ant['health'] <= 0:
+        return False
+
+    
     if ant['carrying'] and main_structure[destination[0]][destination[1]]['clod']:
+        return False
+
+    if ant['carrying']:
         for anthill in anthill_structure:
             if destination[0] == anthill['pos_y'] and destination[1] == anthill['pos_x']:
                 return False
-        if ant_id is None and ant['health'] <= 0:
-            return False    
+
+    if main_structure[destination[0]][destination[1]]['ant'] != None:
         return False
 
     if ant['team'] == team:
@@ -828,8 +835,8 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
         offset_origin_y = origin[1] - destination[1] 
         if (offset_origin_x in (-1, 0, 1)) and (offset_origin_y in (-1, 0, 1)) and not (offset_origin_x == 0 and offset_origin_y == 0):
             return True
-    elif main_structure[destination[0]][destination[1]]['ant'] != None:
-        return False
+
+    return False
 
 # Execution of orders
 def exec_order(order_list, main_structure, ant_structure, anthill_structure):
@@ -956,7 +963,7 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
     #do the attack
     ant_2["health"] -= ant_1['level']
 
-    update_lifepoint_on_display(ant_2, ant_structure)
+    update_lifepoint_on_display(ant_2, ant_structure, main_structure)
     if ant_2['health'] <= 0:
         return ant_2
     
@@ -988,7 +995,7 @@ def move(main_structure, ant_structure, team, origin, destination):
 
     ant['pos_y'] = destination[0]
     ant['pos_x'] = destination[1]
-    move_ant_on_display(team, ant['level'],  ant['carrying'], origin, destination)
+    move_ant_on_display(main_structure, ant_id, team, ant['level'],  ant['carrying'], origin, destination)
 
 # New ants functions
 def check_level(main_structure, anthill_structure, anthill):
@@ -1042,13 +1049,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
         if main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] is None:
             ant_level = check_level(main_structure, anthill_structure, anthill)
             
-            #with the level, take the health and color of the ant
-            if ant_level == 1:
-                health = 3
-            elif ant_level == 2:
-                health = 5
-            elif ant_level == 3:
-                health = 7
+            health = give_health(ant_level)
 
             ant_id = len(ant_structure)
 
@@ -1167,11 +1168,13 @@ def init_display(main_structure, ant_structure, anthill_structure):
 
     spawn(main_structure, ant_structure, anthill_structure)
 
-def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_position):
+def move_ant_on_display(main_structure, ant_id, team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
 
     Paremeters
     ----------
+    main_structure: main structure of the game board (list)
+    ant_id: id of the ant to move (int)
     team: number of the team owning the ant (int)
     ant_level: level of the ant being moved (int)
     ant_is_carrying: wether the ant is carrying a clods (bool)
@@ -1180,7 +1183,7 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
 
     Version
     -------
-    specification: Maxime Dufrasne (v.1 22/02/21)
+    specification: Maxime Dufrasne (v.1 22/02/21) (v.2 28/03/21)
     implementation: Youlan Collard (v.1 12/03/21)
     """
     if team == 1:
@@ -1197,6 +1200,19 @@ def move_ant_on_display(team, ant_level, ant_is_carrying, old_position, new_posi
 
     print(term.move_yx(old_position[0] * 2 + 2, old_position[1] * 4 + 3) + ' ') # remove previous ant
     print(term.move_yx(new_position[0] * 2 + 2, new_position[1] * 4 + 3) + bg_color + color + possible_underline + '⚇' + term.normal) # add it back
+
+    # Update the lifepoints pos
+    life_point_col, life_point_row = define_col_and_row_for_lifepoint(len(main_structure), ant_id)
+
+    ant_pos_for_lifepoint = ''
+
+    for new_pos in new_position:
+        if new_pos + 1 < 10:
+            ant_pos_for_lifepoint += ' '
+
+    ant_pos_for_lifepoint += str(new_position[0] + 1) + '-' + str(new_position[1] + 1)
+
+    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24)) + ' ' + ant_pos_for_lifepoint)
 
 def remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structure):
     """Remove ant on dispay when she died.
@@ -1223,19 +1239,35 @@ def remove_ant_on_display(ant_id, ant_pos, carrying, main_structure, ant_structu
         color = get_color(dead_ant['clod_force'])
         print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + color + '∆' + term.normal)
 
-def update_lifepoint_on_display(ant_id, ant_structure):
+def update_lifepoint_on_display(ant, ant_structure, main_structure):
     """Update the health bar of an ant on display.
 
     Parameters
     ----------
     ant_structure: structure containing all the ants (list)
-    ant_id: id of the desired ant (int)
-    
+    ant: the ant who take dammage (dict)
+    main_structure: main structure of the game board (list)
     Version
     -------
     specification: Martin Buchet (v.1 22/02/21)
+    implementation: Leto Liam (v.1 28/03/21)
     """
-    pass
+    ant_pos_for_lifepoint = ''
+
+    if ant['pos_y'] < 10:
+        ant_pos_for_lifepoint += ' '
+    if ant['pos_x'] < 10:
+        ant_pos_for_lifepoint += ' '
+    col, row = define_col_and_row_for_lifepoint(len(main_structure), ant['id'], 0)
+    ant_pos_for_lifepoint = ant_pos_for_lifepoint + str(ant['pos_y'] + 1) + '-' + str(ant['pos_x'] + 1)
+    health = ant['health']
+    health_tot = give_health(ant['level'])
+    health_display = ' %d/%d' % (health, health_tot)
+    life_point = round(((health / health_tot)*10), 0)
+    life_lose = 10 - life_point
+
+
+    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 23)) + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + (life_point *' ') + term.on_red + (life_lose * ' ') + term.normal + health_display )
 
 def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     """Make the clod disappear and switch the ant to an ant with clod on display.
@@ -1336,8 +1368,7 @@ def define_col_and_row_for_lifepoint(max_row, ant_id, current_col=0):
     specification: Youlan Collard (v.1 28/03/21)
     implementation: Youlan Collard (v.1 28/03/21)
     """
-    max_row_indexed = max_row - 1
-    if ant_id < max_row_indexed:
+    if ant_id <= max_row - 1:
         return current_col, ant_id
     else:
         return define_col_and_row_for_lifepoint(max_row, ant_id - max_row, current_col + 1)
@@ -1422,7 +1453,7 @@ def get_color(level):
 
     Version
     -------
-    specificaiton: Youlan Collard (v.1 18/03/21)
+    specification: Youlan Collard (v.1 18/03/21)
     implementation: Youlan Collard (v.1 18/03/21)
     """
     if level == 1:
@@ -1433,8 +1464,43 @@ def get_color(level):
         return term.green
 
 def reset_play_all_ants(ant_structure):
+    """reset the ant who played this turn
+    Parameters
+    ----------
+    ant_structure: the structure containing all the ants (list)
+    
+    Version
+    -------
+    specification: Letot Liam (v.1 26/03/21)
+    implementation: Letot Liam (v.1 26/03/21)
+    """
     for ant in ant_structure:
         ant['played'] = False
+
+def give_health(ant_level):
+    """give the ant health with its level
+
+    Parameters
+    ----------
+    ant_level : the level of the ant
+
+    Returns
+    -------
+    health: the health of the ant
+
+    Version
+    -------
+    specification: Letot Liam (v.1 18/03/21)
+    implementation: Letot Liam (v.1 18/03/21)
+    """
+    if ant_level == 1:
+        health = 3
+    elif ant_level == 2:
+        health = 5
+    elif ant_level == 3:
+        health = 7
+
+    return health
 
 # main function
 def play_game(CPX_file, group_1, type_1, group_2, type_2):
