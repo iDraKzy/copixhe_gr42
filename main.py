@@ -1272,7 +1272,7 @@ def update_lifepoint_on_display(ant, ant_structure, main_structure):
     term_color = get_color(ant['level'])
     bg_color = get_bg_color(ant['team'])
 
-    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24)) + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + (life_point * ' ') + term.on_red + (life_lose * ' ') + term.normal + health_display )
+    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24)) + ' ' + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + (life_point * ' ') + term.on_red + (life_lose * ' ') + term.normal + health_display )
 
 def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     """Make the clod disappear and switch the ant to an ant with clod on display.
