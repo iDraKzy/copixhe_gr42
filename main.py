@@ -471,7 +471,6 @@ def check_clod(main_structure, anthill_structure):
     specification: Maxime Dufrasne (v.1 05/02/21)
     implemmentation: Maxime Dufrasne (v.1 09/02/21)
     """
-    # TODO: Faudrait la position des deux anthills je pense
 
     clod_numbers = [0, 0]
 
@@ -481,8 +480,6 @@ def check_clod(main_structure, anthill_structure):
         for anthill in anthill_structure:
             pos_y = pos[0] + anthill['pos_y']
             pos_x = pos[1] + anthill['pos_x']
-            # print(term.clear)
-            # print(term.move_xy(len(main_structure) * 2 + 2, 0) + str(main_structure[6][6]['clod']))
             if main_structure[pos_y][pos_x]['clod']:
                 clod_numbers[anthill['team'] - 1] += 1
     
@@ -591,7 +588,6 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
     implementation: Youlan Collard (v.1 11/03/21)
     """
 
-    #TODO: Créer un dictionnaire pour les ordres pour ne devoir décoder l'ordre qu'une fois
 
     orders_list = orders.split(';')
     # print(orders_list)
@@ -807,7 +803,6 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
     specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21)
     implementation: Youlan Collard (v.1 12/03/21)
     """
-    #TODO: Plusieurs fourmis allant au même endroit pose problème (s'écrase)
 
     if (destination[0] >= len(main_structure) or destination[0] < 0) or (destination[1] >= len(main_structure[0]) or destination[1] < 0): # < 0 because the order has already been converted to 0 index
         return False
@@ -985,7 +980,7 @@ def move(main_structure, ant_structure, team, origin, destination):
     Version
     -------
     specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
-    implementation: Youlan Collard (v.1 12/03/21)
+    implementation: Youlan Collard, Liam Letot (v.1 12/03/21)
     """
     # Description should be changed
 
@@ -1060,11 +1055,12 @@ def spawn(main_structure, ant_structure, anthill_structure):
                 health = 5
             elif ant_level == 3:
                 health = 7
-            term_color = get_color(ant_level)
+
+            ant_id = len(ant_structure)
 
             #add the next ant in ant_structure
             ant_structure.append({
-                'id': len(ant_structure),
+                'id': ant_id,
                 'team': anthill['team'],
                 'health': health,
                 'level': ant_level,
@@ -1076,11 +1072,11 @@ def spawn(main_structure, ant_structure, anthill_structure):
                 })
 
             #add the new ant in the board (main_structure) 
-            main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] = len(ant_structure)-1
+            main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] = ant_id
             #take parameters for add_ant on display
             ant_pos = (anthill['pos_y'],anthill['pos_x'])
             team = anthill['team']
-            add_ant_on_display(ant_pos, term_color, team) 
+            add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) 
 
 # Removal of dead ant function
 def death(ant_pos, main_structure, ant_structure, carrying):
@@ -1309,25 +1305,78 @@ def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure):
 
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + bg_color + color + '⚇' + term.normal)
 
-def add_ant_on_display(ant_pos, term_color, team) :
+def define_col_and_row_for_lifepoint(max_row, ant_id, current_col=0):
+    """Returns the row and columns where the health bar should be printed
+
+    Parameters
+    ----------
+    max_row: the max number of rows per column (int)
+    ant_id: the id of the ant (int)
+    current_col: current column that should be returned (int, optional)
+
+    Returns
+    -------
+    col: the column where the health bar should be displayed
+    row: the row where the health bar should be displayed
+
+    Notes
+    -----
+    Never set current_col to anything else than 0 when you call it yourself, this variable is updated by the function itself
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 28/03/21)
+    implementation: Youlan Collard (v.1 28/03/21)
+    """
+    max_row_indexed = max_row - 1
+    if ant_id < max_row_indexed:
+        return current_col, ant_id
+    else:
+        return define_col_and_row_for_lifepoint(max_row, ant_id - max_row, current_col + 1)
+
+def add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) :
     """Add an ant on display (game board and health bar).
     
     Parameters
     ----------
+    main_structure: main structure of the game board (list)
+    ant_id: id of the added ant (int)
     ant_pos: Position of the ant to add (list)
-    term_color: the color of the ant (str)
+    ant_level: the level of the ant (int)
     team: the team of the ant (int)
     Version
     -------
     specification: Liam Letot (v.1 22/02/21) (v.2 05/03/21) (v.3 12/03/21)
-    implementation: Liam Letot (v.1 12/03/21)
+    implementation: Liam Letot, Youlan Collard (v.1 12/03/21)
     """
     #TODO: Ajouter barre de vie à droite de la grille
-    
+    life_point_col, life_point_row = define_col_and_row_for_lifepoint(len(main_structure), ant_id)
+
+    if ant_level == 1:
+        health = 3
+    elif ant_level == 2:
+        health = 5
+    elif ant_level == 3:
+        health = 7
+
+
     if team == 1:
         bg_color = term.on_blue
     elif team == 2:
         bg_color = term.on_red
+
+    term_color = get_color(ant_level)
+
+    ant_pos_for_lifepoint = ''
+
+    for pos in ant_pos:
+        if pos < 10:
+            ant_pos_for_lifepoint += ' '
+    
+    ant_pos_for_lifepoint = ant_pos_for_lifepoint + str(ant_pos[0] + 1) + '-' + str(ant_pos[1] + 1)
+    health_display = ' %d/%d' % (health, health)
+
+    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 23)) + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + '          ' + term.normal + health_display )
     print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 3) + bg_color + term_color + '⚇' + term.normal)
 
 # Util function
@@ -1506,7 +1555,7 @@ def First_IA(main_structure, ant_structure, team):
                 dice_roll.append(2)
             
             print(term.move_yx(len(main_structure) *2+2,0)+ str(dice_roll))
-            time.sleep(0.1)
+            # time.sleep(0.1)
             #randomly take one of the possible order
             choice = random.randint(0,len(dice_roll) - 1)
 
