@@ -1332,13 +1332,17 @@ def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure, an
         
     color = get_color(clod_force)
     bg_color = ''
-    around_ant = [(ant_pos[0], ant_pos[1] + 1), (ant_pos[0], ant_pos[1] - 1), (ant_pos[0] + 1, ant_pos[1]),
-    (ant_pos[0] - 1, ant_pos[1]), (ant_pos[0] + 1, ant_pos[1] + 1), (ant_pos[0] - 1, ant_pos[1] +1),
-    (ant_pos[0] + 1, ant_pos[1] - 1), (ant_pos[0] - 1, ant_pos[1] + 1)]
+    around = []
 
-    for pos in around_ant:
+    for y in range(-1, 2):
+        for x in range(-1, 2):
+            around.append(y, x)
+
+    for pos in around:
+        ant_pos[0] += pos[0]
+        ant_pos[1] += pos[1]
         for anthill in anthill_structure:
-            if pos == (anthill['pos_x'],anthill['pos_y']):
+            if ant_pos[0] == anthill['pos_y'] and ant_pos[1] == anthill['pos_x']:
                 if team == 1:
                     bg_color = term.on_blue
                 elif team == 2:
