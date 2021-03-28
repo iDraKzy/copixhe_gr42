@@ -1409,7 +1409,7 @@ def add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) :
     ant_pos_for_lifepoint = ant_pos_for_lifepoint + str(ant_pos[0] + 1) + '-' + str(ant_pos[1] + 1)
     health_display = ' %d/%d' % (health, health)
 
-    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 23)) + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + '          ' + term.normal + health_display )
+    print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24)) + ' ' + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + '          ' + term.normal + health_display )
     print(term.move_yx(ant_pos[0] * 2 + 2, ant_pos[1] * 4 + 3) + bg_color + term_color + '⚇' + term.normal)
 
 # Util function
