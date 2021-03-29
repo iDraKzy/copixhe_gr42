@@ -2,7 +2,7 @@
 
 import blessed, math, os, time, random
 term = blessed.Terminal()
-
+create_connection(your_group, other_group=0, other_IP='127.0.0.1', verbose=False)
 """Module providing remote play features for UNamur programmation project (INFOB132).
 
 Sockets are used to transmit orders on local or remote machines.
@@ -17,6 +17,7 @@ Author: Benoit Frenay (benoit.frenay@unamur.be).
 
 
 import socket
+
 
 
 def create_server_socket(local_port, verbose):
@@ -1577,12 +1578,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
     main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
     init_display(main_structure, ant_structure, anthill_structure)
-    
-    #if the game is played with AI, take the AI path to execute them
-    #if type_1 == 'AI':
-        #AI1_code = input("path to the ia code file")
-    #if type_2 == 'AI':
-        #AI2_code = input("path to the ia code file")
+
 
         
     #run the game
@@ -1596,11 +1592,19 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         elif type_1 == 'AI':
             team = 1
             orders_1 = first_IA(main_structure, ant_structure, team)
+        elif type_1 == 'remote':
+            orders_1 = get_remote_orders(connection)
         if type_2 == 'human':
             orders_2 = input("team_2 input : ")
         elif type_2 == 'AI':
             team = 2
             orders_2 = first_IA(main_structure, ant_structure, team)
+        elif type_2 == 'remote':
+            notify_remote_orders(connection, orders_1)
+            orders_2 = get_remote_orders(connection)
+        if type_1 == 'remote':
+            notify_remote_orders(connection, orders_2):
+
         
         #check and execute the orders
         orders = orders_1 + ';' + orders_2 
