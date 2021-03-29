@@ -1322,10 +1322,7 @@ def lift_clod_on_display(ant_pos, ant_structure, main_structure):
 
     color = get_color(ant['level'])
 
-    if ant['team'] == 1:
-        bg_color = term.on_blue
-    elif ant['team'] == 2:
-        bg_color = term.on_red
+    bg_color = get_bg_color(ant['team'])
     
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + ' ')
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + bg_color + color + term.underline + '⚇' + term.normal)
