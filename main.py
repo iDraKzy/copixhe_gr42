@@ -440,12 +440,20 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     implementation: Maxime Dufrasne (v.1 09/03/21)
     
     """
-    if number_of_turn > 200:
-        return 3
-
     nbr_clod_pl_1, nbr_clod_pl_2 = check_clod(main_structure, anthill_structure)
 
-    if nbr_clod_pl_1 == 8 and nbr_clod_pl_2 < 8:
+    if number_of_turn == 200:
+        if nbr_clod_pl_1 == nbr_clod_pl_2:
+            return 3
+        elif nbr_clod_pl_1 > nbr_clod_pl_2:
+            return 1
+        elif nbr_clod_pl_2 > nbr_clod_pl_1:
+            return 2
+
+
+    if nbr_clod_pl_1 == 8 and nbr_clod_pl_2 == 8:
+        return 8
+    elif nbr_clod_pl_1 == 8 and nbr_clod_pl_2 < 8:
         return 1
     elif nbr_clod_pl_1 < 8 and nbr_clod_pl_2 == 8:
         return 2
@@ -474,7 +482,11 @@ def check_clod(main_structure, anthill_structure):
 
     clod_numbers = [0, 0]
 
-    around = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
+    around = []
+
+    for y in range(-1, 2): # Get all the possible offset for a range of 1 around an anthill
+        for x in range(-1, 2):
+            around.append((y, x))
 
     for pos in around:
         for anthill in anthill_structure:
@@ -814,6 +826,10 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
     
     ant = return_ant_by_id(ant_structure, ant_id)
     
+    if ant['team'] == 1 and (destination[0] == anthill_structure[1]['pos_y'] and destination[1] == anthill_structure[1]['pos_x']):
+        return False
+    elif ant['team'] == 2 and (destination[0] == anthill_structure[0]['pos_y'] and destination[1] == anthill_structure[0]['pos_x']):
+        return False
 
     if ant['health'] <= 0:
         return False
@@ -1174,7 +1190,7 @@ def init_display(main_structure, ant_structure, anthill_structure):
         for x in range(len(main_structure[0])):
             if main_structure[y][x]['clod']:
                 color = get_color(main_structure[y][x]['clod'])
-                print(term.move_yx((y * 2 + 2), (x * 4 + 5)) + '∆' + color + term.normal)
+                print(term.move_yx((y * 2 + 2), (x * 4 + 5)) + color + '∆' + term.normal)
 
     spawn(main_structure, ant_structure, anthill_structure)
 
@@ -1704,6 +1720,6 @@ def First_IA(main_structure, ant_structure, team):
     return orders
 
 
-play_game('./small.cpx', '1', 'AI', '2', 'AI')
+play_game('./small.cpx', '1', 'human', '2', 'human')
 
     
