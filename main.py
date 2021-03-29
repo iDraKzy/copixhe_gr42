@@ -2,7 +2,7 @@
 
 import blessed, math, os, time, random
 term = blessed.Terminal()
-create_connection(your_group, other_group=0, other_IP='127.0.0.1', verbose=False)
+connection = create_connection(your_group, other_group=0, other_IP='127.0.0.1', verbose=False)
 """Module providing remote play features for UNamur programmation project (INFOB132).
 
 Sockets are used to transmit orders on local or remote machines.
