@@ -616,24 +616,26 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
                     ant_pos = order_seperated[0].split('-')
                     if (len(ant_pos) == 2) and (ant_pos[0].isdigit() and ant_pos[1].isdigit()):
                         order_dict['origin'] = (int(ant_pos[0]) - 1, int(ant_pos[1]) - 1) # -1 to both because our game board is 0 indexed and the game is 1 indexed
-                        if order_seperated[1] == 'lift':
-                            order_dict['type'] = 'lift'
-                            order_dict['target'] = None
-                            seems_valid.append(order_dict)
-                        elif order_seperated[1] == 'drop':
-                            order_dict['type'] = 'drop'
-                            order_dict['target'] = None
-                            seems_valid.append(order_dict)
-                        elif "-" in order_seperated[1]:
-                            action_pos = order_seperated[1][1:].split('-')
-                            if (len(action_pos) == 2) and (action_pos[0].isdigit() and action_pos[1].isdigit()):
-                                order_dict['target'] = (int(action_pos[0]) - 1, int(action_pos[1]) - 1)
-                                if order_seperated[1][0] == '@':
-                                    order_dict['type'] = 'move'
-                                    seems_valid.append(order_dict)
-                                elif order_seperated[1][0] == '*':
-                                    order_dict['type'] = 'attack'
-                                    seems_valid.append(order_dict)
+                        if order_dict['origin'][0] <= len(main_structure) and order_dict['origin'][1] <= len(main_structure[0]):
+                            if order_seperated[1] == 'lift':
+                                order_dict['type'] = 'lift'
+                                order_dict['target'] = None
+                                seems_valid.append(order_dict)
+                            elif order_seperated[1] == 'drop':
+                                order_dict['type'] = 'drop'
+                                order_dict['target'] = None
+                                seems_valid.append(order_dict)
+                            elif "-" in order_seperated[1]:
+                                action_pos = order_seperated[1][1:].split('-')
+                                if (len(action_pos) == 2) and (action_pos[0].isdigit() and action_pos[1].isdigit()):
+                                    order_dict['target'] = (int(action_pos[0]) - 1, int(action_pos[1]) - 1)
+                                    if order_dict['target'][0] <= len(main_structure) and order_dict['target'][1] <= len(main_structure[0]):
+                                        if order_seperated[1][0] == '@':
+                                            order_dict['type'] = 'move'
+                                            seems_valid.append(order_dict)
+                                        elif order_seperated[1][0] == '*':
+                                            order_dict['type'] = 'attack'
+                                            seems_valid.append(order_dict)
 
 
     seems_valid = sort_orders(seems_valid) # Sorting the orders before the final verification because moves actions are always sensitive to the order
