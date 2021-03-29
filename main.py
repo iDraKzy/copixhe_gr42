@@ -1579,7 +1579,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         
     #run the game
     is_won = check_victory(main_structure, anthill_structure, number_of_turn)
-    while is_won is None or is_won == 3:
+    while is_won is None:
 
         #take the orders
         print(term.move_yx(len(main_structure) * 2 + 2, 0) + term.clear_eos)
@@ -1602,7 +1602,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         exec_order(orders_list, main_structure, ant_structure, anthill_structure)
         reset_play_all_ants(ant_structure)
         #check and spawn new ant if it's needed
-        if number_of_turn % 5 == 0 and is_won != 3:
+        if number_of_turn % 5 == 0:
             spawn(main_structure, ant_structure, anthill_structure)
         number_of_turn += 1
         # time.sleep(0.1)
