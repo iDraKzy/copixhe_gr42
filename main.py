@@ -17,7 +17,6 @@ Author: Benoit Frenay (benoit.frenay@unamur.be).
 
 
 import socket
-# import time
 
 
 def create_server_socket(local_port, verbose):
