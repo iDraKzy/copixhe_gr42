@@ -1212,10 +1212,7 @@ def move_ant_on_display(main_structure, ant_id, team, ant_level, ant_is_carrying
     specification: Maxime Dufrasne (v.1 22/02/21) (v.2 28/03/21)
     implementation: Youlan Collard (v.1 12/03/21)
     """
-    if team == 1:
-        bg_color = term.on_blue
-    elif team == 2:
-        bg_color = term.on_red
+    bg_color = get_bg_color(team)
 
     color = get_color(ant_level)
 
@@ -1354,10 +1351,7 @@ def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure, an
     ant = return_ant_by_id(ant_structure, ant_id)
     team = ant['team']
     
-    if team == 1:
-        bg_color = term.on_blue
-    elif team == 2:
-        bg_color = term.on_red
+    bg_color = get_bg_color(team)
 
     color = get_color(ant['level'])
 
