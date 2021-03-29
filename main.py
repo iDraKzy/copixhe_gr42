@@ -2,7 +2,7 @@
 
 import blessed, math, os, time, random
 term = blessed.Terminal()
-connection = create_connection(your_group, other_group=0, other_IP='127.0.0.1', verbose=False)
+
 """Module providing remote play features for UNamur programmation project (INFOB132).
 
 Sockets are used to transmit orders on local or remote machines.
@@ -1578,7 +1578,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
     main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
     init_display(main_structure, ant_structure, anthill_structure)
-
+    connection = create_connection( 42, other_group=0, other_IP='127.0.0.1', verbose=False)
 
         
     #run the game
@@ -1717,6 +1717,6 @@ def first_IA(main_structure, ant_structure, team):
     return orders
 
 
-play_game('./basic.cpx', '1', 'human', '2', 'AI')
+play_game('./basic.cpx', '1', 'AI', '2', 'AI')
 
     
