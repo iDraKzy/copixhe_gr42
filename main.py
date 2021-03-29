@@ -1180,12 +1180,15 @@ def init_display(main_structure, ant_structure, anthill_structure):
         print(nbr_row + (vline + 3 * space) * col + vline)
         print('  ' + ltee + (3 * hline + bigplus) * (col - 1) + 3 * hline + rtee)
     
+    # Last 2 lines
     print(str(row) + (vline + 3 * space) * col + vline)
     print('  ' + llcorner + (3 * hline + btee) * (col - 1) + 3 * hline + lrcorner)
 
+    # Print the anthills
     print(term.on_blue + term.move_yx(anthill_structure[0]['pos_y'] * 2 + 2, anthill_structure[0]['pos_x'] * 4 + 5) + '⤊' + term.normal)
     print(term.on_red + term.move_yx(anthill_structure[1]['pos_y'] * 2 + 2, anthill_structure[1]['pos_x'] * 4 + 5) + '⤊' + term.normal)
 
+    # Print the clods
     for y in range(len(main_structure)):
         for x in range(len(main_structure[0])):
             if main_structure[y][x]['clod']:
