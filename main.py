@@ -1370,10 +1370,7 @@ def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure, an
         pos_x = ant_pos[1] + pos[1]
         for anthill in anthill_structure:
             if pos_y == anthill['pos_y'] and pos_x == anthill['pos_x']:
-                if anthill['team'] == 1:
-                    bg_color = term.on_blue
-                elif anthill['team'] == 2:
-                    bg_color = term.on_red
+                bg_color = get_bg_color(anthill['team'])
 
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + bg_color + color + '∆' + term.normal)
 
