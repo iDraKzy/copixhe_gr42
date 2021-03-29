@@ -452,7 +452,7 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
 
 
     if nbr_clod_pl_1 == 8 and nbr_clod_pl_2 == 8:
-        return 8
+        return 3
     elif nbr_clod_pl_1 == 8 and nbr_clod_pl_2 < 8:
         return 1
     elif nbr_clod_pl_1 < 8 and nbr_clod_pl_2 == 8:
