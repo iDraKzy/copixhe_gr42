@@ -1603,12 +1603,12 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             orders_1 = input("team_1 input : ")
         elif type_1 == 'AI':
             team = 1
-            orders_1 = First_IA(main_structure, ant_structure, team)
+            orders_1 = first_IA(main_structure, ant_structure, team)
         if type_2 == 'human':
             orders_2 = input("team_2 input : ")
         elif type_2 == 'AI':
             team = 2
-            orders_2 = First_IA(main_structure, ant_structure, team)
+            orders_2 = first_IA(main_structure, ant_structure, team)
         
         #check and execute the orders
         orders = orders_1 + ';' + orders_2 
@@ -1632,16 +1632,17 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         print('Tied')
 
 
-def First_IA(main_structure, ant_structure, team):
+def first_IA(main_structure, ant_structure, team):
     """a First AI which make an order for each ant on the board
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     main_structure: main structure of the game board (list)
     ant_structure: structure containing all the ants (list)
     team: the team which want orders (int)
-    return
-    ------
+
+    Returns
+    -------
     orders: orders for each ant on the board (str)
     
     Version
