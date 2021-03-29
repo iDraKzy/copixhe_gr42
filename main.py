@@ -1073,7 +1073,7 @@ def spawn(main_structure, ant_structure, anthill_structure):
         if main_structure[anthill['pos_y']][anthill['pos_x']]['ant'] is None:
             ant_level = check_level(main_structure, anthill_structure, anthill)
             
-            health = give_health(ant_level)
+            health = get_health(ant_level)
 
             ant_id = len(ant_structure)
 
@@ -1295,7 +1295,7 @@ def update_lifepoint_on_display(ant, ant_structure, main_structure):
     ant_pos_for_lifepoint = ant_pos_for_lifepoint + str(ant['pos_y'] + 1) + '-' + str(ant['pos_x'] + 1)
 
     health = ant['health']
-    health_tot = give_health(ant['level'])
+    health_tot = get_health(ant['level'])
     health_display = ' %d/%d' % (health, health_tot)
     life_point = int(round(((health / health_tot)*10), 0))
     life_lose = 10 - life_point
@@ -1429,7 +1429,7 @@ def add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) :
     #TODO: Ajouter barre de vie à droite de la grille
     life_point_col, life_point_row = define_col_and_row_for_lifepoint(len(main_structure), ant_id)
 
-    health = give_health(ant_level)
+    health = get_health(ant_level)
 
 
     bg_color = get_bg_color(team)
@@ -1531,7 +1531,7 @@ def reset_play_all_ants(ant_structure):
     for ant in ant_structure:
         ant['played'] = False
 
-def give_health(ant_level):
+def get_health(ant_level):
     """give the ant health with its level
 
     Parameters
