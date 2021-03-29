@@ -321,7 +321,6 @@ def get_remote_orders(connection):
         
     return orders
 
-
 # Initialize data structure
 def parse_map_file(path):
     """Parse the information from the cpx file.
@@ -367,6 +366,7 @@ def parse_map_file(path):
         clods_info.append(clod_info)
 
     return board_size, anthills_pos, clods_info
+
 
 def create_map(board_size, anthills, clods):
     """Create the data structure for the map and returns it.
@@ -460,6 +460,7 @@ def check_victory(main_structure, anthill_structure, number_of_turn):
     else:
         return None
 
+
 def check_clod(main_structure, anthill_structure):
     """Check the number of clod around anthill
 
@@ -496,6 +497,7 @@ def check_clod(main_structure, anthill_structure):
                 clod_numbers[anthill['team'] - 1] += 1
     
     return clod_numbers[0], clod_numbers[1]
+
 
 def sort_orders(orders):
     """Sort the orders by priority given by game rules
@@ -546,7 +548,6 @@ def sort_orders(orders):
 
     return sorted_orders
         
-
 # Util function for sort_orders
 def seperate_team_orders(orders):
     """Seperate a list of orders into two list for each teams
@@ -670,6 +671,7 @@ def interpret_order(main_structure, ant_structure, anthill_structure, orders):
 
     return valid_orders
 
+
 def validation_drop(main_structure, ant_structure, team, ant_pos):
     """Check if a drop action is valid
     
@@ -695,13 +697,12 @@ def validation_drop(main_structure, ant_structure, team, ant_pos):
         return False
     ant = return_ant_by_id(ant_structure, ant_id)
 
-    if ant['health'] <= 0:
-        return False
-
-    if ant['team'] == team and ant['carrying']:
-        return True
+    if ant['health'] > 0:
+        if ant['team'] == team and ant['carrying']:
+            return True
     
     return False
+
 
 def validation_lift(team, ant_pos, main_structure, ant_structure):
     """Check if an ant has the force to carry clod and if there is clod where it is.
@@ -730,22 +731,18 @@ def validation_lift(team, ant_pos, main_structure, ant_structure):
         return False
     ant = return_ant_by_id(ant_structure, ant_id)
 
-    if ant['health'] <= 0:
-        return False
+    if ant['health'] > 0:
 
-    if main_structure[ant_pos[0]][ant_pos[1]]['ant'] is not None:
+        if main_structure[ant_pos[0]][ant_pos[1]]['ant'] is not None:
+            # check team and if ant is strong enough and if there is a clod
+            if team == ant['team']:
+                if main_structure[ant_pos[0]][ant_pos[1]]['clod']:
+                    if ant['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
 
-        # get ant_id from ant_pos then get the ant dict
-
-        # check team and if ant is strong enough and if there is a clod
-        if team == ant['team']:
-            if main_structure[ant_pos[0]][ant_pos[1]]['clod']:
-                if ant['level'] >= main_structure[ant_pos[0]][ant_pos[1]]['clod']:
-
-                    lift_valid = True
+                        lift_valid = True
         
-    # print(term.move_yx(len(main_structure) * 2 + 2, 0) + str(lift_valid))
     return lift_valid
+
 
 def validation_attack(team, main_structure, ant_structure, attacker_pos, target_pos):
     """Check if target is in range of the attacker and return a boolean.
@@ -767,8 +764,6 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
     specification: Martin Buchet (v.1 21/02/21) (v.2 11/03/21) (v.3 12/03/21)
     implementation: Martin Buchet (v.1 18/03/21)
     """
-
-    is_in_range = False
 
     # get ant_id from ant_pos then get the ant dict
     ant_id = main_structure[attacker_pos[0]][attacker_pos[1]]['ant']
@@ -792,9 +787,10 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
         # check if the attacker ant belong to the team giving the order then check range
         if team == ant['team']:
             if (range_x <= 3 and range_x >= -3) and (range_y <= 3 and range_y >= -3):
-                is_in_range = True
+                return True
 
-    return is_in_range
+    return False
+
 
 def validation_move(team, origin, destination, main_structure, ant_structure, anthill_structure):
     """Check if deplacement is valid and return a boolean.
@@ -856,6 +852,7 @@ def validation_move(team, origin, destination, main_structure, ant_structure, an
 
     return False
 
+
 # Execution of orders
 def exec_order(order_list, main_structure, ant_structure, anthill_structure):
     """Execute orders and give the structures to each order fonctions.
@@ -904,6 +901,7 @@ def exec_order(order_list, main_structure, ant_structure, anthill_structure):
             death((dead_ant['pos_y'], dead_ant['pos_x']), main_structure, ant_structure, dead_ant['carrying'], anthill_structure)
             confirmed_dead.append(dead_ant)
 
+
 def lift(main_structure, ant_structure, ant_pos):
     """Lift clod on ants.
 
@@ -929,6 +927,7 @@ def lift(main_structure, ant_structure, ant_pos):
     main_structure[ant_pos[0]][ant_pos[1]]['clod'] = None
     #remove the clod on the display 
     lift_clod_on_display(ant_pos, ant_structure, main_structure)
+
 
 def place(main_structure, ant_structure, ant_pos, anthill_structure):
     """Place clod on a case.
@@ -957,6 +956,7 @@ def place(main_structure, ant_structure, ant_pos, anthill_structure):
     ant['clod_force']= None
     #place the clod on the display
     place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure, anthill_structure)
+
 
 def attack(ant_structure, main_structure, ant_pos, target_pos):
     """Compute damage done.
@@ -993,9 +993,10 @@ def attack(ant_structure, main_structure, ant_pos, target_pos):
     update_lifepoint_on_display(ant_2, ant_structure, main_structure)
     if ant_2['health'] <= 0:
         return ant_2
-    
+
+
 def move(main_structure, ant_structure, team, origin, destination):
-    """if move valid return the new position of the ant.
+    """Move the ant in main_structure and call the update of the ui
 
     Parameters
     ----------
@@ -1010,7 +1011,6 @@ def move(main_structure, ant_structure, team, origin, destination):
     specification: Martin Buchet (v.1 18/02/21) (v.2 26/02/21)
     implementation: Youlan Collard, Liam Letot (v.1 12/03/21)
     """
-    # Description should be changed
 
     ant_id = main_structure[origin[0]][origin[1]]['ant']
     ant = return_ant_by_id(ant_structure, ant_id)
@@ -1055,6 +1055,7 @@ def check_level(main_structure, anthill_structure, anthill):
         level = 3
 
     return level
+
 
 def spawn(main_structure, ant_structure, anthill_structure):
     """Spawn ant.
@@ -1123,13 +1124,9 @@ def death(ant_pos, main_structure, ant_structure, carrying, anthill_structure):
     if carrying:
         place(main_structure, ant_structure, ant_pos, anthill_structure)
 
-    remove_ant_on_display(ant_id, ant_pos, carrying, clod_force, main_structure, ant_structure)
-
-
+    remove_ant_on_display(main_structure, ant_structure, ant_pos, carrying, clod_force)
 
     main_structure[ant_pos[0]][ant_pos[1]]['ant'] = None
-
-    # remove dead ant from grid
 
 
 # UI Function
@@ -1199,6 +1196,7 @@ def init_display(main_structure, ant_structure, anthill_structure):
 
     spawn(main_structure, ant_structure, anthill_structure)
 
+
 def move_ant_on_display(main_structure, ant_id, team, ant_level, ant_is_carrying, old_position, new_position):
     """Change the position of an ant on the dispay.
 
@@ -1242,17 +1240,17 @@ def move_ant_on_display(main_structure, ant_id, team, ant_level, ant_is_carrying
 
     print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24)) + ' ' + ant_pos_for_lifepoint)
 
-def remove_ant_on_display(ant_id, ant_pos, carrying, clod_force, main_structure, ant_structure):
+
+def remove_ant_on_display(main_structure, ant_structure, ant_pos, carrying, clod_force):
     """Remove ant on dispay when she died.
 
     Parameters
     ----------
-    ant_id: id of the dead ant (int)
+    main_structure: main structure of the game board (list)
+    ant_structure: structure containing all the ants (list)
     ant_pos: position of an ant (list)
     carrying: if the ant was carrying something (bool)
     clod_force: the necessary force for a ant to lift this clod (int)
-    main_structure: main structure of the game board (list)
-    ant_structure: structure containing all the ants (list)
 
     Notes
     -----
@@ -1264,8 +1262,6 @@ def remove_ant_on_display(ant_id, ant_pos, carrying, clod_force, main_structure,
     implementation: Martin Buchet (v.1 18/03/21)
     """
     if carrying:
-        # get ant_id from ant_pos then get the ant dict
-        dead_ant = return_ant_by_id(ant_structure, ant_id)
 
         color = get_color(clod_force)
         print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + color + '∆' + term.normal)
@@ -1281,6 +1277,7 @@ def update_lifepoint_on_display(ant, ant_structure, main_structure):
     ant_structure: structure containing all the ants (list)
     ant: the ant who take dammage (dict)
     main_structure: main structure of the game board (list)
+
     Version
     -------
     specification: Martin Buchet (v.1 22/02/21)
@@ -1307,6 +1304,7 @@ def update_lifepoint_on_display(ant, ant_structure, main_structure):
 
     print(term.move_yx(life_point_row * 2 + 2, (len(main_structure[0]) * 4 + 3) + (life_point_col * 24)) + ' ' + ant_pos_for_lifepoint + ' ' + term_color + bg_color + '⚇' + term.normal + ' ' + term.on_green + (life_point * ' ') + term.on_red + (life_lose * ' ') + term.normal + health_display )
 
+
 def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     """Make the clod disappear and switch the ant to an ant with clod on display.
     
@@ -1331,6 +1329,7 @@ def lift_clod_on_display(ant_pos, ant_structure, main_structure):
     
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + ' ')
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 3)) + bg_color + color + term.underline + '⚇' + term.normal)
+
 
 def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure, anthill_structure):
     """Make the clod appear and switch the ant with a clod to an ant on display.
@@ -1376,6 +1375,7 @@ def place_clod_on_display(ant_pos, clod_force, main_structure, ant_structure, an
 
     print(term.move_yx((ant_pos[0] * 2 + 2), (ant_pos[1] * 4 + 5)) + bg_color + color + '∆' + term.normal)
 
+
 def define_col_and_row_for_lifepoint(max_row, ant_id, current_col=0):
     """Returns the row and columns where the health bar should be printed
 
@@ -1404,6 +1404,7 @@ def define_col_and_row_for_lifepoint(max_row, ant_id, current_col=0):
     else:
         return define_col_and_row_for_lifepoint(max_row, ant_id - max_row, current_col + 1)
 
+
 def add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) :
     """Add an ant on display (game board and health bar).
     
@@ -1419,7 +1420,6 @@ def add_ant_on_display(main_structure, ant_id, ant_pos, ant_level, team) :
     specification: Liam Letot (v.1 22/02/21) (v.2 05/03/21) (v.3 12/03/21)
     implementation: Liam Letot, Youlan Collard (v.1 12/03/21)
     """
-    #TODO: Ajouter barre de vie à droite de la grille
     life_point_col, life_point_row = define_col_and_row_for_lifepoint(len(main_structure), ant_id)
 
     health = get_health(ant_level)
@@ -1463,6 +1463,7 @@ def return_ant_by_id(ant_structure, ant_id):
         if ant['id'] == ant_id:
             return ant
 
+
 def get_color(level):
     """Send the color string for the specified level using blessed
 
@@ -1485,6 +1486,7 @@ def get_color(level):
         return term.yellow
     elif level == 3:
         return term.green
+
 
 def get_bg_color(team):
     """
@@ -1510,6 +1512,7 @@ def get_bg_color(team):
 
     return bg_color
 
+
 def reset_play_all_ants(ant_structure):
     """reset the ant who played this turn
     Parameters
@@ -1523,6 +1526,7 @@ def reset_play_all_ants(ant_structure):
     """
     for ant in ant_structure:
         ant['played'] = False
+
 
 def get_health(ant_level):
     """get the ant health with its level
@@ -1717,8 +1721,3 @@ def first_IA(main_structure, ant_structure, team):
     
 
     return orders
-
-
-play_game('./basic.cpx', '1', 'AI', '2', 'AI')
-
-    
