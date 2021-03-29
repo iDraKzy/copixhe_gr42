@@ -1626,6 +1626,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         # time.sleep(0.1)
         is_won = check_victory(main_structure, anthill_structure, number_of_turn)
     #print the end message
+    print(term.move_yx(len(main_structure) * 2 + 2, 0) + term.clear_eos)
     if is_won == 1:
         print('Team 1 win')
     elif is_won == 2:
@@ -1721,3 +1722,5 @@ def first_IA(main_structure, ant_structure, team):
     
 
     return orders
+
+play_game('./small.cpx', '1', 'AI', '2', 'AI')
