@@ -1603,7 +1603,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             notify_remote_orders(connection, orders_1)
             orders_2 = get_remote_orders(connection)
         if type_1 == 'remote':
-            notify_remote_orders(connection, orders_2):
+            notify_remote_orders(connection, orders_2)
 
         
         #check and execute the orders
