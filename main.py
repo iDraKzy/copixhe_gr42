@@ -1712,6 +1712,6 @@ def first_IA(main_structure, ant_structure, team):
     return orders
 
 
-play_game('./small.cpx', '1', 'human', '2', 'human')
+play_game('./basic.cpx', '1', 'human', '2', 'AI')
 
     
