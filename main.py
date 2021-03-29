@@ -1532,7 +1532,7 @@ def reset_play_all_ants(ant_structure):
         ant['played'] = False
 
 def get_health(ant_level):
-    """give the ant health with its level
+    """get the ant health with its level
 
     Parameters
     ----------
