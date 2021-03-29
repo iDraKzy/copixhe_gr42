@@ -1578,7 +1578,9 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
 
     main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
     init_display(main_structure, ant_structure, anthill_structure)
-    connection = create_connection( 42, other_group=0, other_IP='127.0.0.1', verbose=False)
+
+    if type_1 == 'remote'  or type_2 == 'remote':
+        connection = create_connection( 42, other_group=0, other_IP='127.0.0.1', verbose=False)
 
         
     #run the game
