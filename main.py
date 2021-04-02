@@ -1583,9 +1583,9 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     init_display(main_structure, ant_structure, anthill_structure)
 
     if type_1 == 'remote':
-        connection = remote_play.create_connection(group_2, group_1, verbose=True)
+        connection = create_connection(group_2, group_1, verbose=True)
     if type_2 == 'remote':
-        connection = remote_play.create_connection(group_1, group_2, verbose=True)
+        connection = create_connection(group_1, group_2, verbose=True)
         
     #run the game
     is_won = check_victory(main_structure, anthill_structure, number_of_turn)
