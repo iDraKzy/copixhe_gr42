@@ -2,7 +2,7 @@
 
 import math
 
-str(ant['pos_y']+ 1) + '-' + str(ant['pos_x']+1) + ':'
+
 
 # other functions
 ...
