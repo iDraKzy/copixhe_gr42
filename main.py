@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import blessed, math, os, time, random
+import blessed, math, os, time, random, ai
 term = blessed.Terminal()
 
 """Module providing remote play features for UNamur programmation project (INFOB132).
@@ -13,7 +13,6 @@ More details on sockets: https://docs.python.org/2/library/socket.html.
 Author: Benoit Frenay (benoit.frenay@unamur.be).
 
 """
-
 
 
 import socket
