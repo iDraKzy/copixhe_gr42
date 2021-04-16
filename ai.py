@@ -53,8 +53,8 @@ def compute_muds_steal_time():
     """
     pass
 
-def get_closest_mud_to_collector_ants():
-    """Get the position of the closest mud from an ally collector ant.
+def get_closest_mud():
+    """Get the position of the closest mud from an ally ant.
     
     """
     pass
