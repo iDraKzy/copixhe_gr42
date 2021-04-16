@@ -57,6 +57,7 @@ def get_closest_mud_to_collector_ants():
     """Get the position of the closest mud from an ally collector ant.
     
     """
+    pass
 
 def generate_order():
     """Generate a valid order in the form of a string.
