@@ -5,10 +5,64 @@ import math
 
 
 # other functions
-...
-...
-...
+def check_ennemy_ants_near_allies():
+    """Check if an ennemy ants is a specified ally. (return number)
+    
+    """
+    pass
 
+def compute_danger():
+    """Compute the current level of danger.
+    
+    """
+    pass
+
+def compute_ally_defense_ants():
+    """Compute the number of ants in defense.
+    
+    """
+    pass
+
+def compute_fight_worth():
+    """Calculate the rentability of a particular fight.
+    
+    """
+    pass
+
+def define_ants_type():
+    """Define the type of each ally ants (attack, collect, defense).
+    
+    """
+    pass
+
+def generate_ants_group():
+    """Genreate a list of ants close to each other. (ennemies)
+    
+    """
+    pass
+
+def get_distance_from_ebase_to_closest_mud():
+    """Get the distance from the ennemies base to the closest mud.
+    
+    """
+    pass
+
+def compute_muds_steal_time():
+    """Compute how long it will take to steal an ennemy's mud.
+    
+    """
+    pass
+
+def get_closest_mud_to_collector_ants():
+    """Get the position of the closest mud from an ally collector ant.
+    
+    """
+
+def generate_order():
+    """Generate a valid order in the form of a string.
+    
+    """
+    pass
 
 
 # main function
