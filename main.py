@@ -1582,9 +1582,10 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
     main_structure, ant_structure, anthill_structure = create_map(board_size, anthills, clods)
     init_display(main_structure, ant_structure, anthill_structure)
 
-    if type_1 == 'remote'  or type_2 == 'remote':
-        connection = create_connection( 42, other_group=0, other_IP='127.0.0.1', verbose=False)
-
+    if type_1 == 'remote':
+        connection = create_connection(group_2, group_1, verbose=True)
+    if type_2 == 'remote':
+        connection = create_connection(group_1, group_2, verbose=True)
         
     #run the game
     is_won = check_victory(main_structure, anthill_structure, number_of_turn)
@@ -1614,8 +1615,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
         #check and execute the orders
         orders = orders_1 + ';' + orders_2 
         orders_list = interpret_order(main_structure, ant_structure, anthill_structure, orders)
-        # orders_list = interpret_order( 1 ,main_structure, ant_structure, anthill_structure, orders_1)
-        # orders_list += interpret_order(2, main_structure, ant_structure, anthill_structure, orders_2)
+        
         exec_order(orders_list, main_structure, ant_structure, anthill_structure)
         reset_play_all_ants(ant_structure)
         #check and spawn new ant if it's needed
