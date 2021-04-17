@@ -58,6 +58,11 @@ def seperate_ally_and_ennemy_ants(ant_structure):
     
     """
 
+def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
+    """Returns the 8 closest clods from the ally anthill
+    
+    """
+
 def define_ants_type():
     """Define the type of each ally ants (attack, collect, defense).
     
