@@ -29,12 +29,6 @@ def compute_fight_worth():
     """
     pass
 
-def define_ants_type():
-    """Define the type of each ally ants (attack, collect, defense).
-    
-    """
-    pass
-
 def generate_ants_group():
     """Genreate a list of ants close to each other. (ennemies)
     
@@ -55,6 +49,18 @@ def compute_muds_steal_time():
 
 def get_closest_mud():
     """Get the position of the closest mud from an ally ant.
+    
+    """
+    pass
+
+def define_ants_type():
+    """Define the type of each ally ants (attack, collect, defense).
+    
+    """
+    pass
+
+def define_action_for_ant(ant, type):
+    """Define the action a particular ant will do this turn.
     
     """
     pass
