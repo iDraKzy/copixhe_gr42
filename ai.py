@@ -53,6 +53,11 @@ def get_closest_mud():
     """
     pass
 
+def seperate_ally_and_ennemy_ants(ant_structure):
+    """Creates two list with the allies and ennemies ants.
+    
+    """
+
 def define_ants_type():
     """Define the type of each ally ants (attack, collect, defense).
     
@@ -73,7 +78,7 @@ def generate_order():
 
 
 # main function
-def get_AI_orders(game, player_id):
+def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
     """Return orders of AI.
     
     Parameters
