@@ -5,22 +5,51 @@ import math
 
 
 # other functions
-def check_ennemy_ants_near_allies():
+def check_ennemy_ants_near_allies(ant_structure):
     """Check if an ennemy ants is a specified ally. (return number)
     
+    Parameter
+    ----------
+    ant_structure: structure containing all the ants (list)
+
+    Return
+    -------
+    close_e_ant: Number of ennemy ants close for each ally ant
+
     """
+    specification: Maxime Dufrasne v1 (18/4/21)
     pass
 
-def compute_danger():
+def compute_danger(anthill_structure, ant_structure):
     """Compute the current level of danger.
     
+    Parameters
+    -----------
+    anthill_structure: list of 2 elements containing the anthills information (list)
+    ant_structure: structure containing all the ants (list)
+
+    Return
+    ------
+    danger: A number who determine the danger level (int)
     """
+    specification: Maxime Dufrasne v1 (18/4/21)
     pass
 
-def compute_ally_defense_ants():
+#On a une fonction pour définir le danger, mais faudrait une fonction pour gérer nos strats en fonction de cette valeur danger
+
+def compute_ally_defense_ants(anthill_structure, ant_structure):
     """Compute the number of ants in defense.
     
+    Parameters
+    -----------
+    anthill_structure: list of 2 elements containing the anthills information (list)
+    ant_structure: structure containing all the ants (list)
+
+    Return
+    ------
+    defense_ants: Number of ants considered in defense
     """
+    specification: Maxime Dufrasne v1 (18/4/21)
     pass
 
 def compute_fight_worth():
