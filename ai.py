@@ -12,9 +12,9 @@ def check_ennemy_ants_near_allies(ant_structure):
     ----------
     ant_structure: structure containing all the ants (list)
 
-    Return
-    -------
-    close_e_ant: Number of ennemy ants close for each ally ant
+    #Return
+    #-------
+    #close_e_ant: Number of ennemy ants close for each ally ant (int)
 
     """
     specification: Maxime Dufrasne v1 (18/4/21)
@@ -47,7 +47,7 @@ def compute_ally_defense_ants(anthill_structure, ant_structure):
 
     Return
     ------
-    defense_ants: Number of ants considered in defense
+    defense_ants: Number of ants considered in defense (int)
     """
     specification: Maxime Dufrasne v1 (18/4/21)
     pass
@@ -76,10 +76,16 @@ def compute_muds_steal_time():
     """
     pass
 
-def get_closest_mud():
+def get_closest_mud(ant_structure, main_structure):
     """Get the position of the closest mud from an ally ant.
     
+    Parameters
+    ----------
+    ant_structure: structure containing all the ants (list)
+    main_structure: main structure of the game board (list)
+
     """
+    specification: Maxime Dufrasne v1 (18/4/21)
     pass
 
 def seperate_ally_and_ennemy_ants(ant_structure):
