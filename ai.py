@@ -70,21 +70,56 @@ def compute_fight_worth(ant_structure):
     """
     pass
 
-def generate_ants_group():
+def generate_ants_group(ant_structure, team):
     """Genreate a list of ants close to each other. (ennemies)
-    
+    Parameters
+    ----------
+    ant_structure: the structure containing the ants (list)
+    team : your team number (int)
+
+    Return
+    ------
+    close_ant: a list which contain group of ennemies ants (list)
+
+    Version
+    -------
+    specification: Liam Letot (19/04/21)
     """
     pass
 
-def get_distance_from_ebase_to_closest_mud():
+def get_distance_from_base_to_closest_mud(main_structure, team):
     """Get the distance from the ennemies base to the closest mud.
     
+    parameters
+    ----------
+    main_structure: main structure of the game board (list)
+    team: your team number (int)
+
+    returns
+    -------
+    distance: the distance from ennemies base to the closest mud [x,y] (list)
+
+    Version
+    -------
+    specification: Liam Letot (19/04/21)
     """
     pass
 
-def compute_muds_steal_time():
+def compute_muds_steal_time(ant_structure, main_structure, ant_id):
     """Compute how long it will take to steal an ennemy's mud.
-    
+    parameter
+    ---------
+    ant_structure : structure containing all the ants (list)
+    main_structure: main structure of the game board (list)
+    ant_id: the id of the ant who want to steal
+
+    return
+    ------
+    steal_time: the number of turn to steal a mud (int)
+
+    Version
+    -------
+    specification: Liam Letot (19/04/21)
     """
     pass
 
@@ -118,8 +153,20 @@ def seperate_ally_and_ennemy_ants(ant_structure):
     pass
 
 def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
-    """Returns the 8 closest clods from the ally anthill
+    """Returns the remaining closest clods from the ally anthill needed to win
     
+    Parameters
+    ----------
+    main_structure: main_structure of the game board (list)
+    anthill_structure: structure containing the anthills (list)
+
+    Returns
+    -------
+    closest_clods: the remaining closest clods needed to win the game (list)
+    
+    Version
+    -------
+    specification: Liam Letot (19/04/21)
     """
     pass
 
