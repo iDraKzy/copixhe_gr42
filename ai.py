@@ -52,8 +52,20 @@ def compute_ally_defense_ants(anthill_structure, ant_structure):
     specification: Maxime Dufrasne v1 (18/4/21)
     pass
 
-def compute_fight_worth():
+def compute_fight_worth(ant_structure):
     """Calculate the rentability of a particular fight.
+
+    Parameters
+    ----------
+    ant_structure: (list) structure containing the ants
+
+    Return
+    ------
+    fight_valid: (bool) wether the fight is worth or not
+
+    Version
+    -------
+    specification: Martin Buchet (v.1 19/04/21)
     
     """
     pass
@@ -114,6 +126,14 @@ def define_action_for_ant(ant, type):
 
 def generate_order():
     """Generate a valid order in the form of a string.
+
+    Return
+    ------
+    valid_order: (str) valid order
+
+    Version
+    -------
+    spécification: Martin Buchet (v.1 19/04/21)
     
     """
     pass
