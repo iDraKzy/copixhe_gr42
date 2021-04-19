@@ -192,6 +192,19 @@ def define_ants_type(ally_ants, enemy_ants, main_structure):
 
 def define_action_for_ant(ant, type):
     """Define the action a particular ant will do this turn.
+
+    Parameters
+    ----------
+    ant: specified ant (dict)
+    type: type of the specified ant (str)
+
+    Returns
+    -------
+    order: order to execute (dict)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 19/04/21)
     
     """
     pass
