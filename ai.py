@@ -57,11 +57,11 @@ def compute_fight_worth(ant_structure):
 
     Parameters
     ----------
-    ant_structure: (list) structure containing the ants
+    ant_structure: structure containing the ants (list) 
 
     Return
     ------
-    fight_valid: (bool) wether the fight is worth or not
+    fight_valid: wether the fight is worth or not (bool) 
 
     Version
     -------
@@ -102,7 +102,18 @@ def get_closest_mud(ant_structure, main_structure):
 
 def seperate_ally_and_ennemy_ants(ant_structure):
     """Creates two list with the allies and ennemies ants.
-    
+    Parameters
+    ----------
+    ant_structure: list of all the ants (list) 
+
+    Returns
+    -------
+    enemy_ants: list of all the enemy ants (list) 
+    ally_ants: list of all allied ants (list) 
+
+    Version
+    -------
+    specification: Martin Buchet (v.1 19/04/21)   
     """
     pass
 
@@ -112,9 +123,23 @@ def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
     """
     pass
 
-def define_ants_type():
+def define_ants_type(ally_ants, enemy_ants, main_structure):
     """Define the type of each ally ants (attack, collect, defense).
     
+    Parameters
+    ----------
+    ally_ants: list of all allied ants (list) 
+    enemy_ants: list of all enemy ants (list)
+    main_structure: main structure of the game board (list)
+
+    Returns
+    -------
+    updated_aliied_ants: list of all allied ants with their defined types (list) 
+
+    Version
+    -------
+    specification: Martin Buchet (v.1 19/04/21)
+
     """
     pass
 
@@ -129,7 +154,7 @@ def generate_order():
 
     Return
     ------
-    valid_order: (str) valid order
+    valid_order: valid order (str) 
 
     Version
     -------
