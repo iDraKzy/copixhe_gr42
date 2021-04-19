@@ -230,12 +230,18 @@ def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
     
     Parameters
     ----------
-    game: game data structure (dict)
+    main_structure: main data structure of the game board (list)
+    ant_structure: structure containing all ants (list)
+    anthill_structure: structure containing both anthills (list)
     player_id: player id of AI (int)
 
     Returns
     -------
     orders: orders of AI (str)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 19/04/21)
     
     """
 
