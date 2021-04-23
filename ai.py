@@ -172,7 +172,17 @@ def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
     -------
     specification: Liam Letot (19/04/21)
     """
-    pass
+    
+    closest_clods = []
+
+    for y in range(-7, 8):
+        for x in range(-7, 8):
+            if main_structure[y][x]['clod']:
+                closest_clods.append(y, x)
+
+
+
+    return closest_clods
 
 def define_ants_type(ally_ants, enemy_ants, main_structure):
     """Define the type of each ally ants (attack, collect, defense).
