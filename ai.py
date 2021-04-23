@@ -6,7 +6,7 @@ import math
 
 # other functions
 def check_ennemy_ants_near_allies(ant_structure):
-    """Check if an ennemy ants is a specified ally. (return number)
+    """Check if an ennemy ants is near a specified ally. (return number)
     
     Parameter
     ----------
