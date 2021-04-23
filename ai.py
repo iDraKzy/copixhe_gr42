@@ -16,8 +16,8 @@ def check_ennemy_ants_near_allies(ant_structure):
     #-------
     #close_e_ant: Number of ennemy ants close for each ally ant (int)
 
+    specification: Maxime Dufrasne (v.1 18/4/21)
     """
-    specification: Maxime Dufrasne v1 (18/4/21)
     pass
 
 def compute_danger(anthill_structure, ant_structure):
@@ -31,8 +31,10 @@ def compute_danger(anthill_structure, ant_structure):
     Return
     ------
     danger: A number who determine the danger level (int)
+
+    specification: Maxime Dufrasne (v.1 18/4/21)
+
     """
-    specification: Maxime Dufrasne v1 (18/4/21)
     pass
 
 #On a une fonction pour définir le danger, mais faudrait une fonction pour gérer nos strats en fonction de cette valeur danger
@@ -48,8 +50,10 @@ def compute_ally_defense_ants(anthill_structure, ant_structure):
     Return
     ------
     defense_ants: Number of ants considered in defense (int)
+    
+    specification: Maxime Dufrasne (v.1 18/4/21)
+
     """
-    specification: Maxime Dufrasne v1 (18/4/21)
     pass
 
 def compute_fight_worth(ant_structure):
@@ -131,8 +135,8 @@ def get_closest_mud(ant_structure, main_structure):
     ant_structure: structure containing all the ants (list)
     main_structure: main structure of the game board (list)
 
+    specification: Maxime Dufrasne (v.1 18/4/21)
     """
-    specification: Maxime Dufrasne v1 (18/4/21)
     pass
 
 def seperate_ally_and_ennemy_ants(ant_structure):
