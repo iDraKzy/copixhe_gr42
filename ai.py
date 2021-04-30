@@ -208,6 +208,24 @@ def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
 
     return closest_clods
 
+def get_distance_between_anthills(anthill_structure):
+    """Returns the distance between both anthills
+
+    Parameters
+    ----------
+    anthill_structure: structure containing both anthills (dict)
+
+    Returns
+    -------
+    distance: distance in cells (int)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 30/04/21)
+    
+    """
+    pass
+
 def define_ants_type(ally_ants, enemy_ants, main_structure):
     """Define the type of each ally ants (attack, collect, defense).
     
