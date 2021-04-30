@@ -151,22 +151,34 @@ def get_closest_mud(ant_structure, main_structure):
     """
     pass
 
-def seperate_ally_and_ennemy_ants(ant_structure):
+def seperate_ally_and_ennemy_ants(ant_structure, player_id):
     """Creates two list with the allies and ennemies ants.
+
     Parameters
     ----------
     ant_structure: list of all the ants (list) 
+    player_id: which team are we, 1 or 2 (int)
 
     Returns
     -------
-    enemy_ants: list of all the enemy ants (list) 
     ally_ants: list of all allied ants (list) 
+    enemy_ants: list of all the enemy ants (list) 
 
     Version
     -------
-    specification: Martin Buchet (v.1 19/04/21)   
+    specification: Martin Buchet (v.1 19/04/21)  
+    implementation: Youlan Collard 
     """
-    pass
+    allies = []
+    enemies = []
+
+    for ant in ant_structure:
+        if ant['team'] == player_id:
+            allies.append(ant)
+        else:
+            enemies.append(ant)
+    
+    return enemies, allies
 
 def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
     """Returns the remaining closest clods from the ally anthill needed to win
