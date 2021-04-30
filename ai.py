@@ -6,7 +6,7 @@ import math
 
 # other functions
 def check_ennemy_ants_near_allies(ant_structure):
-    """Check if an ennemy ants is near a specified ally. (return number)
+    """Check if an ennemy ants is near a specified ally. Close means less than 5 cells away (return number)
     
     Parameter
     ----------
@@ -107,17 +107,18 @@ def get_distance_from_base_to_closest_mud(main_structure, anthill_structure, tea
     Version
     -------
     specification: Liam Letot (19/04/21)
+    implementation: Liam Letot (19/04/21)
     """
-    anthill_pos = (anthill_structure[(team - 1) ]['pos_y'], anthill_structure[(team - 1 ]['pos_x'])
+    anthill_pos = (anthill_structure[team - 1]['pos_y'], anthill_structure[team - 1]['pos_x'])
     distance = 100
     for y in main_structure:
         for x in main_structure[y]:
             if main_structure[y][x]['clod'] != None:
                 clod= (y,x)
-               dist = math.dist(anthill_pos, clod)
-               if dist < distance:
-                   distance = dist
-                   closest_mud = clod
+                dist = math.dist(anthill_pos, clod)
+                if dist < distance:
+                    distance = dist
+                    closest_mud = clod
     return distance, closest_mud
 
 def compute_muds_steal_time(ant_structure, main_structure, ant_id):
@@ -150,22 +151,34 @@ def get_closest_mud(ant_structure, main_structure):
     """
     pass
 
-def seperate_ally_and_ennemy_ants(ant_structure):
+def seperate_ally_and_ennemy_ants(ant_structure, player_id):
     """Creates two list with the allies and ennemies ants.
+
     Parameters
     ----------
     ant_structure: list of all the ants (list) 
+    player_id: which team are we, 1 or 2 (int)
 
     Returns
     -------
-    enemy_ants: list of all the enemy ants (list) 
     ally_ants: list of all allied ants (list) 
+    enemy_ants: list of all the enemy ants (list) 
 
     Version
     -------
-    specification: Martin Buchet (v.1 19/04/21)   
+    specification: Martin Buchet (v.1 19/04/21)  
+    implementation: Youlan Collard 
     """
-    pass
+    allies = []
+    enemies = []
+
+    for ant in ant_structure:
+        if ant['team'] == player_id:
+            allies.append(ant)
+        else:
+            enemies.append(ant)
+    
+    return enemies, allies
 
 def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
     """Returns the remaining closest clods from the ally anthill needed to win
