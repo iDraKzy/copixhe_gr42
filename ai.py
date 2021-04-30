@@ -56,16 +56,18 @@ def compute_ally_defense_ants(anthill_structure, ant_structure):
     """
     pass
 
-def compute_fight_worth(ant_structure):
+def compute_fight_worth(ant_structure, ally_ant):
     """Calculate the rentability of a particular fight.
 
     Parameters
     ----------
-    ant_structure: structure containing the ants (list) 
+    ennemy_ants: list of all ennemy ants (list)
+    ally_ants: list of all ally ants (list)
+    ally_ant_id: id of our ant who participates in this fight (int)
 
     Return
     ------
-    fight_valid: wether the fight is worth or not (bool) 
+    fight_point: worth point of the combat (int) 
 
     Version
     -------
