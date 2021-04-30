@@ -250,7 +250,7 @@ def get_distance_between_anthills(anthill_structure):
     return int(math.dist(pos[0], pos[1]))
 
 def define_ants_type(ally_ants, enemy_ants, main_structure, danger):
-    """Define the type of each ally ants (attack, collect, defense).
+    """Define the type of each ally ants (attack, collect, stealer, defense).
     
     Parameters
     ----------
