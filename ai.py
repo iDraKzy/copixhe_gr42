@@ -12,9 +12,9 @@ def check_ennemy_ants_near_allies(ant_structure):
     ----------
     ant_structure: structure containing all the ants (list)
 
-    #Return
-    #-------
-    #close_e_ant: Number of ennemy ants close for each ally ant (int)
+    Return
+    -------
+    close_e_ant: Number of ennemy ants close for each ally ant (list)
 
     specification: Maxime Dufrasne (v.1 18/4/21)
     """
