@@ -189,7 +189,7 @@ def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
     for y in range(-7, 8):
         for x in range(-7, 8):
             if main_structure[y][x]['clod']:
-                closest_clods.append(y, x)
+                closest_clods.append((y, x))
 
 
 
