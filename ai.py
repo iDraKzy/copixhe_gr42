@@ -107,6 +107,7 @@ def get_distance_from_base_to_closest_mud(main_structure, anthill_structure, tea
     Version
     -------
     specification: Liam Letot (19/04/21)
+    implementation: Liam Letot (19/04/21)
     """
     anthill_pos = (anthill_structure[team - 1]['pos_y'], anthill_structure[team - 1]['pos_x'])
     distance = 100
