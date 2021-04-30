@@ -60,16 +60,18 @@ def compute_ally_defense_ants(anthill_structure, ant_structure):
     """
     pass
 
-def compute_fight_worth(ant_structure):
+def compute_fight_worth(ant_structure, ally_ant):
     """Calculate the rentability of a particular fight.
 
     Parameters
     ----------
-    ant_structure: structure containing the ants (list) 
+    ennemy_ants: list of all ennemy ants (list)
+    ally_ants: list of all ally ants (list)
+    ally_ant_id: id of our ant who participates in this fight (int)
 
     Return
     ------
-    fight_valid: wether the fight is worth or not (bool) 
+    fight_point: worth point of the combat (int) 
 
     Version
     -------
@@ -91,7 +93,7 @@ def generate_ants_group(ant_structure, team):
 
     Version
     -------
-    specification: Liam Letot (19/04/21)
+    specification: Liam Letot (v.1 19/04/21)
     """
     pass
 
@@ -110,8 +112,8 @@ def get_distance_from_base_to_closest_mud(main_structure, anthill_structure, tea
     closest_mud: coordinate of the closest mud (list)
     Version
     -------
-    specification: Liam Letot (19/04/21)
-    implementation: Liam Letot (19/04/21)
+    specification: Liam Letot (v.1 19/04/21)
+    implementation: Liam Letot (v.1 19/04/21)
     """
     anthill_pos = (anthill_structure[team - 1]['pos_y'], anthill_structure[team - 1]['pos_x'])
     distance = 100
@@ -139,11 +141,11 @@ def compute_muds_steal_time(ant_structure, main_structure, ant_id):
 
     Version
     -------
-    specification: Liam Letot (19/04/21)
+    specification: Liam Letot (v.1 19/04/21)
     """
     pass
 
-def get_closest_mud(ant_structure, main_structure):
+def get_closest_mud(ant_structure, main_structure, ant_id):
     """Get the position of the closest mud from an ally ant.
     
     Parameters
@@ -152,8 +154,20 @@ def get_closest_mud(ant_structure, main_structure):
     main_structure: main structure of the game board (list)
 
     specification: Maxime Dufrasne (v.1 18/4/21)
+    implementation: Liam Leto (v.1 20/04/21)
     """
-    pass
+    ant_pos = (ant_structure[ant_id]['pos_y'],ant_structure[ant_id]['pos_x'])
+    distance =100
+    for y in main_structure:
+        for x in main_structure[y]:
+            if main_structure[y][x]['clod'] != None:
+                clod= (y,x)
+                dist = math.dist(ant_pos, clod)
+                if dist < distance:
+                    distance = dist
+                    closest_mud = clod
+    return closest_mud
+
 
 def seperate_ally_and_ennemy_ants(ant_structure, player_id):
     """Creates two list with the allies and ennemies ants.
@@ -198,7 +212,7 @@ def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
     
     Version
     -------
-    specification: Liam Letot (19/04/21)
+    specification: Liam Letot (v.1 19/04/21)
     """
     
     closest_clods = []
@@ -226,11 +240,14 @@ def get_distance_between_anthills(anthill_structure):
     Version
     -------
     specification: Youlan Collard (v.1 30/04/21)
+    implementation: Youlan Collard
     
     """
-    pass
+    anthill_1_pos = (anthill_structure[0]['pos_y'], anthill_structure[0]['pos_x'])
+    anthill_2_pos = (anthill_structure[1]['pos_y'], anthill_structure[1]['pos_x'])
+    return int(math.dist(anthill_1_pos, anthill_2_pos))
 
-def define_ants_type(ally_ants, enemy_ants, main_structure):
+def define_ants_type(ally_ants, enemy_ants, main_structure, danger):
     """Define the type of each ally ants (attack, collect, defense).
     
     Parameters
@@ -238,6 +255,7 @@ def define_ants_type(ally_ants, enemy_ants, main_structure):
     ally_ants: list of all allied ants (list) 
     enemy_ants: list of all enemy ants (list)
     main_structure: main structure of the game board (list)
+    danger: current danger value of the game (int)
 
     Returns
     -------
@@ -250,13 +268,14 @@ def define_ants_type(ally_ants, enemy_ants, main_structure):
     """
     pass
 
-def define_action_for_ant(ant, type):
+def define_action_for_ant(ant, type, danger):
     """Define the action a particular ant will do this turn.
 
     Parameters
     ----------
     ant: specified ant (dict)
     type: type of the specified ant (str)
+    danger: current danger value of the game
 
     Returns
     -------
