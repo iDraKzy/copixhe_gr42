@@ -141,7 +141,7 @@ def compute_muds_steal_time(ant_structure, main_structure, ant_id):
     """
     pass
 
-def get_closest_mud(ant_structure, main_structure):
+def get_closest_mud(ant_structure, main_structure, ant_id):
     """Get the position of the closest mud from an ally ant.
     
     Parameters
@@ -151,7 +151,18 @@ def get_closest_mud(ant_structure, main_structure):
 
     specification: Maxime Dufrasne (v.1 18/4/21)
     """
-    pass
+    ant_pos = (ant_structure[ant_id]['pos_y'],ant_structure[ant_id]['pos_x'])
+    distance =100
+    for y in main_structure:
+        for x in main_structure[y]:
+            if main_structure[y][x]['clod'] != None:
+                clod= (y,x)
+                dist = math.dist(ant_pos, clod)
+                if dist < distance:
+                    distance = dist
+                    closest_mud = clod
+    return closest_mud
+
 
 def seperate_ally_and_ennemy_ants(ant_structure, player_id):
     """Creates two list with the allies and ennemies ants.
