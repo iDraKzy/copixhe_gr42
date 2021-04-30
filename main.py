@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import blessed, math, os, time, random, ai
+imporbt blessed, math, os, time, random, ai
 term = blessed.Terminal()
 
 """Module providing remote play features for UNamur programmation project (INFOB132).
