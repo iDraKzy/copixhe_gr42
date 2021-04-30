@@ -89,7 +89,7 @@ def generate_ants_group(ant_structure, team):
 
     Version
     -------
-    specification: Liam Letot (19/04/21)
+    specification: Liam Letot (v.1 19/04/21)
     """
     pass
 
@@ -108,8 +108,8 @@ def get_distance_from_base_to_closest_mud(main_structure, anthill_structure, tea
     closest_mud: coordinate of the closest mud (list)
     Version
     -------
-    specification: Liam Letot (19/04/21)
-    implementation: Liam Letot (19/04/21)
+    specification: Liam Letot (v.1 19/04/21)
+    implementation: Liam Letot (v.1 19/04/21)
     """
     anthill_pos = (anthill_structure[team - 1]['pos_y'], anthill_structure[team - 1]['pos_x'])
     distance = 100
@@ -137,7 +137,7 @@ def compute_muds_steal_time(ant_structure, main_structure, ant_id):
 
     Version
     -------
-    specification: Liam Letot (19/04/21)
+    specification: Liam Letot (v.1 19/04/21)
     """
     pass
 
@@ -150,6 +150,7 @@ def get_closest_mud(ant_structure, main_structure, ant_id):
     main_structure: main structure of the game board (list)
 
     specification: Maxime Dufrasne (v.1 18/4/21)
+    implementation: Liam Leto (v.1 20/04/21)
     """
     ant_pos = (ant_structure[ant_id]['pos_y'],ant_structure[ant_id]['pos_x'])
     distance =100
@@ -207,7 +208,7 @@ def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
     
     Version
     -------
-    specification: Liam Letot (19/04/21)
+    specification: Liam Letot (v.1 19/04/21)
     """
     
     closest_clods = []
