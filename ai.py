@@ -222,9 +222,12 @@ def get_distance_between_anthills(anthill_structure):
     Version
     -------
     specification: Youlan Collard (v.1 30/04/21)
+    implementation: Youlan Collard
     
     """
-    pass
+    anthill_1_pos = (anthill_structure[0]['pos_y'], anthill_structure[0]['pos_x'])
+    anthill_2_pos = (anthill_structure[1]['pos_y'], anthill_structure[1]['pos_x'])
+    return int(math.dist(anthill_1_pos, anthill_2_pos))
 
 def define_ants_type(ally_ants, enemy_ants, main_structure):
     """Define the type of each ally ants (attack, collect, defense).
