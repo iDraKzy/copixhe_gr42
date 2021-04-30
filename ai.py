@@ -18,7 +18,11 @@ def check_ennemy_ants_near_allies(ant_structure):
 
     specification: Maxime Dufrasne (v.1 18/4/21)
     """
-    pass
+    close_e_ant = []
+
+    for y in range (-5,5):
+        for x in range (-5,5):
+
 
 def compute_danger(anthill_structure, ant_structure):
     """Compute the current level of danger.
@@ -93,7 +97,7 @@ def generate_ants_group(ant_structure, team):
     """
     pass
 
-def get_distance_from_base_to_closest_mud(main_structure, anthill_structure, team):
+def get_distance_from_base_to_closest_clod(main_structure, anthill_structure, team):
     """Get the distance from the ennemies base to the closest mud.
     
     parameters
@@ -105,7 +109,8 @@ def get_distance_from_base_to_closest_mud(main_structure, anthill_structure, tea
     returns
     -------
     distance: the distance from ennemies base to the closest mud [x,y] (list)
-    closest_mud: coordinate of the closest mud (list)
+    closest_clod: coordinate of the closest mud (list)
+
     Version
     -------
     specification: Liam Letot (v.1 19/04/21)
@@ -120,10 +125,10 @@ def get_distance_from_base_to_closest_mud(main_structure, anthill_structure, tea
                 dist = math.dist(anthill_pos, clod)
                 if dist < distance:
                     distance = dist
-                    closest_mud = clod
-    return distance, closest_mud
+                    closest_clod = clod
+    return distance, closest_clod
 
-def compute_muds_steal_time(ant_structure, main_structure, ant_id):
+def compute_clods_steal_time(ant_structure, main_structure, ant_id):
     """Compute how long it will take to steal an ennemy's mud.
     parameter
     ---------
@@ -141,7 +146,7 @@ def compute_muds_steal_time(ant_structure, main_structure, ant_id):
     """
     pass
 
-def get_closest_mud(ant_structure, main_structure, ant_id):
+def get_closest_clod(ant_structure, main_structure, ant_id):
     """Get the position of the closest mud from an ally ant.
     
     Parameters
@@ -161,8 +166,8 @@ def get_closest_mud(ant_structure, main_structure, ant_id):
                 dist = math.dist(ant_pos, clod)
                 if dist < distance:
                     distance = dist
-                    closest_mud = clod
-    return closest_mud
+                    closest_clod = clod
+    return closest_clod
 
 
 def seperate_ally_and_ennemy_ants(ant_structure, player_id):
@@ -239,18 +244,20 @@ def get_distance_between_anthills(anthill_structure):
     implementation: Youlan Collard
     
     """
-    anthill_1_pos = (anthill_structure[0]['pos_y'], anthill_structure[0]['pos_x'])
-    anthill_2_pos = (anthill_structure[1]['pos_y'], anthill_structure[1]['pos_x'])
-    return int(math.dist(anthill_1_pos, anthill_2_pos))
+    pos = []
+    for anthill in anthill_structure:
+        pos.append((anthill['pos_y'], anthill['pos_x']))
+    return int(math.dist(pos[0], pos[1]))
 
-def define_ants_type(ally_ants, enemy_ants, main_structure):
-    """Define the type of each ally ants (attack, collect, defense).
+def define_ants_type(ally_ants, enemy_ants, main_structure, danger):
+    """Define the type of each ally ants (attack, collect, stealer, defense).
     
     Parameters
     ----------
     ally_ants: list of all allied ants (list) 
     enemy_ants: list of all enemy ants (list)
     main_structure: main structure of the game board (list)
+    danger: current danger value of the game (int)
 
     Returns
     -------
@@ -263,13 +270,14 @@ def define_ants_type(ally_ants, enemy_ants, main_structure):
     """
     pass
 
-def define_action_for_ant(ant, type):
+def define_action_for_ant(ant, type, danger):
     """Define the action a particular ant will do this turn.
 
     Parameters
     ----------
     ant: specified ant (dict)
     type: type of the specified ant (str)
+    danger: current danger value of the game
 
     Returns
     -------
