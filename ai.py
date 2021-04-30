@@ -242,7 +242,7 @@ def get_distance_between_anthills(anthill_structure):
     anthill_2_pos = (anthill_structure[1]['pos_y'], anthill_structure[1]['pos_x'])
     return int(math.dist(anthill_1_pos, anthill_2_pos))
 
-def define_ants_type(ally_ants, enemy_ants, main_structure):
+def define_ants_type(ally_ants, enemy_ants, main_structure, danger):
     """Define the type of each ally ants (attack, collect, defense).
     
     Parameters
@@ -250,6 +250,7 @@ def define_ants_type(ally_ants, enemy_ants, main_structure):
     ally_ants: list of all allied ants (list) 
     enemy_ants: list of all enemy ants (list)
     main_structure: main structure of the game board (list)
+    danger: current danger value of the game (int)
 
     Returns
     -------
@@ -262,13 +263,14 @@ def define_ants_type(ally_ants, enemy_ants, main_structure):
     """
     pass
 
-def define_action_for_ant(ant, type):
+def define_action_for_ant(ant, type, danger):
     """Define the action a particular ant will do this turn.
 
     Parameters
     ----------
     ant: specified ant (dict)
     type: type of the specified ant (str)
+    danger: current danger value of the game
 
     Returns
     -------
