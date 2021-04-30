@@ -291,15 +291,32 @@ def generate_order(order):
 
     Returns
     -------
-    valid_order: valid order (str) 
+    orders: valid order (str) 
 
     Version
     -------
     spécification: Martin Buchet (v.1 19/04/21)
+    implementation: Liam Letot (v.1 21/04/21)
     
     """
-    pass
+    ant_pos_y = order[0][0]
+    ant_pos_x = order[0][1]
+    order_type = order[1]
+    if order_type == ('attack' or 'move'):
+        target_pos_y = order[2][0]
+        target_pos_x = order[2][1]
 
+    orders = str(ant_pos_y + 1) + '-' + str(ant_pos_x +1)
+    if order_type == 'drop':
+        orders += ':drop '
+    elif order_type == 'lift':
+        orders += ':lift '
+    elif order_type == 'move':
+        orders += ':@' + str(target_pos_y + 1) + '-' + str(target_pos_x + 1) + ' '
+    elif order_type == 'attack':
+        orders += ':*' + str(target_pos_y + 1) + '-' + str(target_pos_x + 1) + ' '
+
+    return orders
 
 # main function
 def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
