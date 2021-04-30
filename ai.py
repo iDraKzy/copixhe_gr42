@@ -18,7 +18,11 @@ def check_ennemy_ants_near_allies(ant_structure):
 
     specification: Maxime Dufrasne (v.1 18/4/21)
     """
-    pass
+    close_e_ant = []
+
+    for y in range (-5,5):
+        for x in range (-5,5):
+
 
 def compute_danger(anthill_structure, ant_structure):
     """Compute the current level of danger.
