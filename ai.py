@@ -199,13 +199,14 @@ def seperate_ally_and_ennemy_ants(ant_structure, player_id):
     
     return enemies, allies
 
-def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
+def get_closest_8_clods_from_anthill(main_structure, anthill_structure, team):
     """Returns the remaining closest clods from the ally anthill needed to win
     
     Parameters
     ----------
     main_structure: main_structure of the game board (list)
     anthill_structure: structure containing the anthills (list)
+    team: the team we are in 1 or 2 (int)
 
     Returns
     -------
@@ -215,16 +216,21 @@ def get_closest_8_clods_from_anthill(main_structure, anthill_structure):
     -------
     specification: Liam Letot (v.1 19/04/21)
     """
-    
+
     closest_clods = []
 
-    for y in range(-7, 8):
-        for x in range(-7, 8):
+    if team == 1:
+        team = 0
+    else:
+        team = 1
+
+    anthill_pos = (anthill_structure[team]['pos_y'], anthill_structure[team]['pos_x'])
+
+    for y in range(-1, 2):
+        for x in range(-1, 2):
             if main_structure[y][x]['clod']:
                 closest_clods.append((y, x))
-
-
-
+        
     return closest_clods
 
 def get_distance_between_anthills(anthill_structure):
