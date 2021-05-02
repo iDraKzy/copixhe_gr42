@@ -45,9 +45,18 @@ def compute_danger(anthill_structure, ant_structure):
     specification: Maxime Dufrasne (v.1 18/4/21)
 
     """
-    pass
+    seperate_ally_and_ennemy_ants(ant_structure, player_id)
+
+    for 
 
 #On a une fonction pour définir le danger, mais faudrait une fonction pour gérer nos strats en fonction de cette valeur danger
+def e_average_dist_from_a_base(ant_structure, anthill_structure):
+    """
+    """
+
+def a_average_dist_from_a_base(ant_structure, anthill_structure):
+    """
+    """
 
 def compute_ally_defense_ants(anthill_structure, ant_structure):
     """Compute the number of ants in defense.
@@ -232,10 +241,11 @@ def get_closest_8_clods_from_anthill(main_structure, anthill_structure, team):
 
     anthill_pos = (anthill_structure[team]['pos_y'], anthill_structure[team]['pos_x'])
 
-    for y in range(-1, 2):
-        for x in range(-1, 2):
-            if main_structure[y][x]['clod']:
-                closest_clods.append((y, x))
+    while closest_clods < 8: 
+        for y in range(-1, 2):
+            for x in range(-1, 2):
+                if main_structure[y][x]['clod']:
+                    closest_clods.append((y, x))
         
     return closest_clods
 
