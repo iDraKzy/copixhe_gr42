@@ -5,23 +5,29 @@ import math
 
 
 # other functions
-def check_ennemy_ants_near_allies(ant_structure):
+def check_ennemy_ants_near_allies(ant_structure, main_structure):
     """Check if an ennemy ants is near a specified ally. Close means less than 5 cells away (return number)
     
     Parameter
     ----------
     ant_structure: structure containing all the ants (list)
+    main_structure: main structure of the game board (list)
 
     Return
     -------
     close_e_ant: Number of ennemy ants close for each ally ant (list)
 
     specification: Maxime Dufrasne (v.1 18/4/21)
+    implementation: Maxime Dufrasne (v.1 29/4/21)
     """
     close_e_ant = []
 
+    ant_pos = (ant_structure[ant_id]['pos_y'],ant_structure[ant_id]['pos_x'])
     for y in range (-5,5):
         for x in range (-5,5):
+            if main_structure[y][x]['ant'] != None:
+                close_e_ant.append((y,x))
+    return close_e_ant
 
 
 def compute_danger(anthill_structure, ant_structure):
