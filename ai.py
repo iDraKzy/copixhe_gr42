@@ -614,8 +614,6 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     steal_time = compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_structure, team)
 
-    fight_point = compute_fight_worth(ant_structure, allies)
-
     if len(defense_ants['other_team']) >= len(defense_ants['team']) and steal_time >= 10:
         for ants in defense_ants:
             updated_allied_ants[ant_id] = 'defense'
