@@ -30,7 +30,7 @@ def check_ennemy_ants_near_allies(ant_structure, main_structure):
     return close_e_ant
 
 
-def compute_danger(anthill_structure, ant_structure):
+def compute_danger(anthill_structure, ant_structure, team):
     """Compute the current level of danger.
     
     Parameters
@@ -47,7 +47,7 @@ def compute_danger(anthill_structure, ant_structure):
 
     """
     danger = 0
-    e_average_dist = e_average_dist_from_a_base(ant_structure, anthill_structure)
+    e_average_dist = e_average_dist_from_a_base(ant_structure, anthill_structure, team)
 
     if e_average_dist <= 5:
         danger += 10 
@@ -56,7 +56,7 @@ def compute_danger(anthill_structure, ant_structure):
     else:
         danger += 5
 
-    a_average_dist = a_average_dist_from_a_base(ant_structure, anthill_structure)
+    a_average_dist = a_average_dist_from_a_base(ant_structure, anthill_structure, team)
 
     if a_average_dist <= 5:
         danger -= 2.5
@@ -87,12 +87,9 @@ def e_average_dist_from_a_base(ant_structure, anthill_structure, team,):
     """
 
     #player_id == team ???
-    ants = seperate_ally_and_ennemy_ants(ant_structure, player_id)
+    ants = seperate_ally_and_ennemy_ants(ant_structure, team)
 
-    if team == 1:
-        team = 0
-    else:
-        team = 1
+    team -= 1
 
     enemies = ants[0] 
     #list of all the distances between ennemies and our base
@@ -127,12 +124,9 @@ def a_average_dist_from_a_base(ant_structure, anthill_structure, team):
     specification: Maxime Dufrasne (v.1 22/4/21 )
     implementation: Maxime Dufrasne (v.1 24/4/21)
     """
-    ants = seperate_ally_and_ennemy_ants(ant_structure, player_id)
+    ants = seperate_ally_and_ennemy_ants(ant_structure, team)
 
-    if team == 1:
-        team = 0
-    else:
-        team = 1
+    team -= 1
 
     a_dist_list = []
     total = 0
@@ -254,7 +248,11 @@ def compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_stru
     specification: Liam Letot (v.1 19/04/21)
     implementation: Martin Buchet (v.1 23/04/21)
     """
-    
+    distance = compute_distance(ant_structure, main_structure, ant_id, anthill_structure, team) 
+
+    steal_time = distance
+
+    return steal_time
 
 def compute_distance(ant_structure, main_structure, ant_id, anthill_structure, team):
     """compute distance between an ant and an anthill
@@ -285,7 +283,7 @@ def compute_distance(ant_structure, main_structure, ant_id, anthill_structure, t
     distance = max(abs(anthill_structure['team']['pos_x'] - ant_pos_x), abs(anthill_structure['team']['pos_y'] - ant_pos_y))
 
     return distance
-    
+
 def get_closest_clod(ant_structure, main_structure, ant_id):
     """Get the position of the closest mud from an ally ant.
     
@@ -310,13 +308,13 @@ def get_closest_clod(ant_structure, main_structure, ant_id):
     return closest_clod
 
 
-def seperate_ally_and_ennemy_ants(ant_structure, player_id):
+def seperate_ally_and_ennemy_ants(ant_structure, team):
     """Creates two list with the allies and ennemies ants.
 
     Parameters
     ----------
     ant_structure: list of all the ants (list) 
-    player_id: which team are we, 1 or 2 (int)
+    team: which team are we, 1 or 2 (int)
 
     Returns
     -------
@@ -332,7 +330,7 @@ def seperate_ally_and_ennemy_ants(ant_structure, player_id):
     enemies = []
 
     for ant in ant_structure:
-        if ant['team'] == player_id:
+        if ant['team'] == team:
             allies.append(ant)
         else:
             enemies.append(ant)
