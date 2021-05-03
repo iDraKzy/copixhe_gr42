@@ -820,7 +820,7 @@ def get_closest_ant_of_specified_team(ant_structure, ally_ant, team):
     Parameters
     ----------
     ant_structure: structure containing all the ants (list)
-    ally_ant: ally ant wishing to get the closest ennemy (dict)
+    ally_ant: ally ant wishing to get the closest ant (dict)
     team: team number you wish an ant for (int)
 
     Returns
