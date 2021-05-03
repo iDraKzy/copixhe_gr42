@@ -355,11 +355,11 @@ def get_distance_from_base_to_closest_clod(main_structure, anthill_structure, te
     """
     anthill_pos = (anthill_structure[team - 1]['pos_y'], anthill_structure[team - 1]['pos_x'])
     distance = 100
-    for y in main_structure:
-        for x in main_structure[y]:
+    for y in range(main_structure):
+        for x in range(main_structure[0]):
             if main_structure[y][x]['clod'] != None:
-                clod= (y,x)
-                dist = math.dist(anthill_pos, clod)
+                clod = (y,x)
+                dist = compute_distance(anthill_pos, clod)
                 if dist < distance:
                     distance = dist
                     closest_clod = clod
@@ -477,7 +477,7 @@ def define_ants_type(allies, enemies, main_structure, danger):
 
     Returns
     -------
-    updated_aliied_ants: list of all allied ants with their defined types (list) 
+    updated_allied_ants: list of all allied ants with their defined types (list) 
 
     Version
     -------
