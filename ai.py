@@ -449,6 +449,12 @@ def get_closest_clod(ant_structure, main_structure, ant_id):
     ant_structure: structure containing all the ants (list)
     main_structure: main structure of the game board (list)
 
+    Returns
+    -------
+    closest_clod: position of the closest clod (tupple)
+
+    Version
+    -------
     specification: Maxime Dufrasne (v.1 18/4/21)
     implementation: Liam Letot (v.1 20/04/21)
     """
@@ -570,13 +576,12 @@ def define_ants_type(allies, enemies, main_structure, danger):
     """
     pass
 
-def define_action_for_ant(ant, ant_type, danger):
+def define_action_for_ant(ants, danger):
     """Define the action a particular ant will do this turn.
 
     Parameters
     ----------
     ant: specified ant (dict)
-    type: type of the specified ant (str)
     danger: current danger value of the game
 
     Returns
@@ -589,92 +594,103 @@ def define_action_for_ant(ant, ant_type, danger):
     
     """
 
-    if ant_type == 'collect':
-        order_dict = define_collect_order(ant, danger)
-    elif ant_type == 'defense':
-        order_dict = define_defense_order(ant, danger)
-    elif ant_type == 'attack':
-        order_dict = define_attack_order(ant, danger)
-    elif ant_type == 'stealer':
-        order_dict = define_stealer_order(ant, danger)
+    collectors = []
+    attackers = []
+    defensers = []
+    stealers = []
 
-    return order_dict
+    for ant in ants:
+        ant_type = ants_type[ant['id']]
+        if ant_type == 'collect':
+            collectors.append(ant)
+        elif ant_type == 'attack':
+            attackers.append(ant)
+        elif ant_type == 'defensers':
+            defensers.append(ant)
+        elif ant_type == 'stealers':
+            stealers.append(ant)
+
+
+    collectors_order_list = define_collect_order(collectors, danger)
+    attackers_order_list = define_attack_order(attackers, danger)
+    defensers_order_list = define_defense_order(defensers, danger)
+    stealers_order_list = define_stealer_order(stealers, danger)
+
+    return collectors_order_list + attackers_order_list + defensers_order_list + stealers_order_list
     
-def define_collect_order(ant, danger):
+def define_collect_order(main_structure, ants):
     """Define the order to give to a collector ant
 
     Parameters
     ----------
-    ant: ant to which give the order (dict)
+    ants: ants to which give the order (list)
     danger: danger value (int)
 
     Returns
     -------
-    order_dict: dictionnary describing the order (dict)
+    order_list: dictionnary describing the order (list)
 
     Version
     -------
     specification: Youlan Collard
-    implementation: Youlan Collard
     
     """
-    pass
+    already_taken_clods = []
 
-def define_defense_order(ant, danger):
+    for ant in ants:
+
+
+def define_defense_order(ants):
     """Define the order to give to a defense ant
 
     Parameters
     ----------
-    ant: ant to which give the order (dict)
+    ants: ants to which give the order (list)
     danger: danger value (int)
 
     Returns
     -------
-    order_dict: dictionnary describing the order (dict)
+    order_list: dictionnary describing the order (list)
 
     Version
     -------
     specification: Youlan Collard
-    implementation: Youlan Collard
-    
     """
     pass
 
-def define_attack_order(ant, danger):
+def define_attack_order(ants):
     """Define the order to give to a defense ant
 
     Parameters
     ----------
-    ant: ant to which give the order (dict)
+    ants: ants to which give the order (list)
     danger: danger value (int)
 
     Returns
     -------
-    order_dict: dictionnary describing the order (dict)
+    order_list: dictionnary describing the order (list)
 
     Version
     -------
     specification: Youlan Collard
-    implementation: Youlan Collard
     """
     pass
 
-def define_stealer_order(ant, danger):
+def define_stealer_order(ants):
     """Define the order to give to a stealer ant
 
     Parameters
     ----------
-    ant: ant to which give the order (dict)
+    ants: ants to which give the order (list)
     danger: danger value (int)
 
     Returns
     -------
-    order_dict: dictionnary describing the order (dict)
+    order_list: dictionnary describing the order (list)
 
     Version
     -------
     specification: Youlan Collard
-    implementation: Youlan Collard
     
     """
     pass
