@@ -204,22 +204,32 @@ def a_average_dist_from_a_base(ant_structure, anthill_structure, team):
 
     return a_average_dist
 
-def compute_ally_defense_ants(anthill_structure, ant_structure):
-    """Compute the number of ants in defense.
+def compute_defense_ants(anthill_structure, ant_structure, team):
+    """Compute the number of ants in defense for each team.
     
     Parameters
     -----------
     anthill_structure: list of 2 elements containing the anthills information (list)
     ant_structure: structure containing all the ants (list)
+    team: team number of our ai (int)
 
     Return
     ------
-    defense_ants: Number of ants considered in defense (int)
+    defense_ants: Number of ants considered in defense (dict)
     
     specification: Maxime Dufrasne (v.1 18/4/21)
 
     """
-    pass
+    defense_ants = {}
+
+    allies, ennemies = seperate_ally_and_ennemy_ants(ant_structure, team)
+
+    for anthill in anthill_structure:
+        if anthill['team'] == team:
+            for ant in allies:
+
+        
+
 
 def compute_fight_worth(ant_structure, ally_ant):
     """Calculate the rentability of a particular fight.
@@ -309,22 +319,22 @@ def compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_stru
     implementation: Martin Buchet (v.1 23/04/21)
     """
 
-    distance = compute_distance(ant_structure, main_structure, ant_id, anthill_structure, team) 
+    ant = main.return_ant_by_id(ant_structure, ant_id)
+    if team == 1:
+        other_team_index = 1
+    else:
+        other_team_index = 0
 
-    steal_time = distance
+    ennemy_anthill = anthill_structure[other_team_index]
+    return compute_distance((ant['pos_y'], ant['pos_x']), (ennemy_anthill['pos_y'], ennemy_anthill['pos_x'])) 
 
-    return steal_time
-
-def compute_distance(ant_structure, main_structure, ant_id, anthill_structure, team):
+def compute_distance(origin, destination):
     """compute distance between an ant and an anthill
 
     Parameters
     ----------
-    ant_structure : structure containing all the ants (list)
-    main_structure: main structure of the game board (list)
-    ant_id: the id of the ant who want to steal
-    anthill_structure: list of 2 elements containing the anthills information (list) 
-    team: team : your team number (int)
+    origin: point of origin (tupple)
+    destination: destination (tupple)
 
     Return
     ------
@@ -332,18 +342,11 @@ def compute_distance(ant_structure, main_structure, ant_id, anthill_structure, t
 
     Version
     -------
-    specification: Martin Buchet (v.1 01/05/21)
-    Implementation: Martin Buchet (v.1 01/05/21)
+    specification: Martin Buchet, Youlan Collard (v.1 01/05/21)
+    implementation: Martin Buchet, Youlan Collard (v.1 01/05/21)
     """
-    #Not sure about that one (to check)
-    for ant in ant_structure:
-        if ant_structure[ant]['id'] == ant_id:
-            ant_pos_x = ant_structure[ant]['pos_x']
-            ant_pos_y = ant_structure[ant]['pos_y']
+    return max(abs(origin[0] - destination[0]), abs(origin[1] - destination[1]))
 
-    distance = max(abs(anthill_structure['team']['pos_x'] - ant_pos_x), abs(anthill_structure['team']['pos_y'] - ant_pos_y))
-
-    return distance
 
 def get_closest_clod(ant_structure, main_structure, ant_id):
     """Get the position of the closest mud from an ally ant.
