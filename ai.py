@@ -966,18 +966,18 @@ def go_in_direction_of_target(origin, target):
     x_axis_distance = origin[1] - target[1]
 
     if y_axis_distance < 0:
-        target_y = ant['pos_y'] + 1
+        target_y = origin[0] + 1
     elif y_axis_distance > 0:
-        target_y = ant['pos_y'] - 1
+        target_y = origin[0] - 1
     elif y_axis_distance == 0:
-        target_y = ant['pos_y']
+        target_y = origin[0]
 
     if x_axis_distance < 0:
-        traget_x = ant['pos_x'] + 1
+        traget_x = origin[1] + 1
     elif x_axis_distance > 0:
-        target_x = ant['pos_x'] - 1
+        target_x = origin[1] - 1
     elif x_axis_distance == 0:
-        target_x = ant['pos_x']
+        target_x = origin[1]
 
     return (target_y, target_x)
 
