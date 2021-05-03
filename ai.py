@@ -448,6 +448,7 @@ def get_closest_clod(ant_structure, main_structure, ant_id):
     ----------
     ant_structure: structure containing all the ants (list)
     main_structure: main structure of the game board (list)
+    ant_id: allied ant close to a mud (int)
 
     Returns
     -------
@@ -555,7 +556,7 @@ def compute_ennemies_ants_near_anthill(anthill_structure, team, ant_structure):
 
     return ennemy_number
 
-def define_ants_type(allies, enemies, main_structure, danger):
+def define_ants_type(allies, enemies, main_structure, danger, anthill_structure, ant_structure, team, ant_id):
     """Define the type of each ally ants (attack, collect, stealer, defense).
     
     Parameters
@@ -564,17 +565,33 @@ def define_ants_type(allies, enemies, main_structure, danger):
     enemies: list of all enemy ants (list)
     main_structure: main structure of the game board (list)
     danger: current danger value of the game (int)
+    anthill_structure: list of 2 elements containing the anthills information (list) 
+    ant_structure: structure containing all the ants (list) 
+    team: team number of our ai (int)
+    ant_id: id of the ant who wants to steal (int)
 
     Returns
     -------
-    updated_allied_ants: list of all allied ants with their defined types (list) 
+    updated_allied_ants: list of all allied ants with their defined types (dict) 
 
     Version
     -------
     specification: Martin Buchet (v.1 19/04/21)
+    implementation: Martin Buchet (v.1 27/04/21)
 
     """
-    pass
+    updated_allied_ants = []
+
+    defense_ants = compute_defense_ants(anthill_structure, ant_structure, team)
+
+    steal_time = compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_structure, team)
+
+    if len(defense_ants['other_team']) >= len(defense_ants['team']) and steal_time >= 10:
+        for ants in defense_ants
+            updated_allied_ants[ant_id] = defense
+    elif len(defense_ants['other_team']) < len(defense_ants['team']) and steal_time < 10:
+        for ants in defense_ants
+            updated_allied_ants[ant_id] = stealer
 
 def define_action_for_ant(ants, danger):
     """Define the action a particular ant will do this turn.
