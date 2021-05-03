@@ -794,7 +794,7 @@ def define_defense_order(ant_structure, anthill_structure, ants, team):
         order = {}
         order['origin'] = (ant['pos_y'], ant['pos_x'])
 
-        closest_ennemy_ant_pos, distance = get_closest_ennemy_ant(ant_structure, ant, team)
+        closest_ennemy_ant_pos, distance = get_closest_ennemy_ant(ant_structure, ant, team, 'ennemy')
         if distance <= 3:
             order['type'] = 'attack'
             order['target'] = closest_ennemy_ant_pos
