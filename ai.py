@@ -280,9 +280,10 @@ def compute_fight_worth(ant_structure, ally_ant):
     specification: Martin Buchet (v.1 19/04/21)
     
     """
-    pass
+    a
+    compute_average_level_ant(ant_list)
 
-def generate_ants_group(ant_structure, team):
+def generate_ants_e_group(ant_structure, team):
     """Genreate a list of ants close to each other. (ennemies)
 
     Parameters
@@ -333,6 +334,55 @@ def generate_ants_group(ant_structure, team):
     return groups_not_duplicated
 
 
+def generate_ants_a_group(ant_structure, team):
+    """Genreate a list of ants close to each other. (ally)
+
+    Parameters
+    ----------
+    ant_structure: the structure containing the ants (list)
+    team : your team number (int)
+
+    Return
+    ------
+    close_ant: a list which contain group of ally ants (list)
+
+    Version
+    -------
+    specification: Liam Letot (v.1 19/04/21)
+    implementation: Liam Letot (v.1 03/05/21b)
+    """
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, team)
+
+    groups = []
+
+    for ant in allies:
+        current_group = []
+        for ant_to_check in allies:
+            if ant['id'] != ant_to_check['id']:
+                ant_pos = (ant['pos_y'], ant['pos_x'])
+                ant_to_check_pos = (ant_to_check['pos_y'], ant_to_check['pos_x'])
+                if compute_distance(ant_pos, ant_to_check_pos) <= 5:
+                    current_group.append(ant['id'])
+
+        groups.append(current_group)
+
+    already_seen = []
+    groups_not_duplicated = []
+    for group in groups:
+        duplicates_in_this_group = False
+        index = 0
+        while not duplicates_in_this_group and len(group) < index:
+            ant_id = group[index]
+            if not ant_id in already_seen:
+                already_seen.append(ant)
+            else:
+                duplicates_in_this_group = True
+            index += 1
+
+        if not duplicates_in_this_group:
+            group.append(groups_not_duplicated)
+
+    return groups_not_duplicated
 
 def get_distance_from_base_to_closest_clod(main_structure, anthill_structure, team):
     """Get the distance from the ennemies base to the closest mud.
@@ -532,7 +582,7 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     if len(defense_ants['other_team']) >= len(defense_ants['team']) and steal_time 
 
-def define_action_for_ant(ant, type, danger):
+def define_action_for_ant(ant, ant_type, danger):
     """Define the action a particular ant will do this turn.
 
     Parameters
@@ -548,6 +598,95 @@ def define_action_for_ant(ant, type, danger):
     Version
     -------
     specification: Youlan Collard (v.1 19/04/21)
+    
+    """
+
+    if ant_type == 'collect':
+        order_dict = define_collect_order(ant, danger)
+    elif ant_type == 'defense':
+        order_dict = define_defense_order(ant, danger)
+    elif ant_type == 'attack':
+        order_dict = define_attack_order(ant, danger)
+    elif ant_type == 'stealer':
+        order_dict = define_stealer_order(ant, danger)
+
+    return order_dict
+    
+def define_collect_order(ant, danger):
+    """Define the order to give to a collector ant
+
+    Parameters
+    ----------
+    ant: ant to which give the order (dict)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_dict: dictionnary describing the order (dict)
+
+    Version
+    -------
+    specification: Youlan Collard
+    implementation: Youlan Collard
+    
+    """
+    pass
+
+def define_defense_order(ant, danger):
+    """Define the order to give to a defense ant
+
+    Parameters
+    ----------
+    ant: ant to which give the order (dict)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_dict: dictionnary describing the order (dict)
+
+    Version
+    -------
+    specification: Youlan Collard
+    implementation: Youlan Collard
+    
+    """
+    pass
+
+def define_attack_order(ant, danger):
+    """Define the order to give to a defense ant
+
+    Parameters
+    ----------
+    ant: ant to which give the order (dict)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_dict: dictionnary describing the order (dict)
+
+    Version
+    -------
+    specification: Youlan Collard
+    implementation: Youlan Collard
+    """
+    pass
+
+def define_stealer_order(ant, danger):
+    """Define the order to give to a stealer ant
+
+    Parameters
+    ----------
+    ant: ant to which give the order (dict)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_dict: dictionnary describing the order (dict)
+
+    Version
+    -------
+    specification: Youlan Collard
+    implementation: Youlan Collard
     
     """
     pass
@@ -569,21 +708,21 @@ def generate_order(order):
     implementation: Liam Letot (v.1 21/04/21)
     
     """
-    ant_pos_y = order[0][0]
-    ant_pos_x = order[0][1]
-    order_type = order[1]
-    if order_type == ('attack' or 'move'):
-        target_pos_y = order[2][0]
-        target_pos_x = order[2][1]
+    ant_pos_y = order['origin'][0]
+    ant_pos_x = order['origin'][1]
+
+    if order['type'] == ('attack' or 'move'):
+        target_pos_y = order['target'][0]
+        target_pos_x = order['target'][1]
 
     orders = str(ant_pos_y + 1) + '-' + str(ant_pos_x +1)
-    if order_type == 'drop':
+    if order['type'] == 'drop':
         orders += ':drop '
-    elif order_type == 'lift':
+    elif order['type'] == 'lift':
         orders += ':lift '
-    elif order_type == 'move':
+    elif order['type'] == 'move':
         orders += ':@' + str(target_pos_y + 1) + '-' + str(target_pos_x + 1) + ' '
-    elif order_type == 'attack':
+    elif order['type'] == 'attack':
         orders += ':*' + str(target_pos_y + 1) + '-' + str(target_pos_x + 1) + ' '
 
     return orders
@@ -647,11 +786,16 @@ def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
     specification: Youlan Collard (v.1 19/04/21)
     
     """
+    danger = compute_danger(anthill_structure, ant_structure, player_id)
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, player_id)
+
+    ants_type = define_ants_type(allies, ennemies, main_structure, danger)
 
     orders = ''
-    
-    ...
-    ...
-    ...
+
+    for ant in allies:
+        ant_type = ants_type[ant['id']]
+        order_dict = define_action_for_ant(ant, ant_type, danger)
+        orders += generate_order(order_dict)
     
     return orders
