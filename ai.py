@@ -632,7 +632,7 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     if len(defense_ants['other_team']) > len(allies)/2:
         for ant in updated_allied_ants:
-            if updated_allied_ants[ant] == 'attack'
+            if updated_allied_ants[ant] == 'attack':
                 updated_allied_ants[ant] = 'collect'
 
 
@@ -855,8 +855,8 @@ def define_stealer_order(ants, danger):
     
     """
 
-
-    pass
+    if ants['type'] == ('stealer'):
+        go_in_direction_of_target(ants_pos, target_pos_y, target_pos_x)
 
 def generate_order(order):
     """Generate a valid order in the form of a string.
