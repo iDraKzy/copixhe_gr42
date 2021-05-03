@@ -599,7 +599,8 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
             updated_allied_ants[ant_id] = 'stealer'
 
     if fight_point >= 20:
-        
+        updated_allied_ants[]
+
         
 
 def define_action_for_ant(ants, danger):
