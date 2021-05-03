@@ -29,7 +29,6 @@ def check_ennemy_ants_near_allies(ant_structure, main_structure):
                 close_e_ant.append((y,x))
     return close_e_ant
 
-
 def compute_danger(anthill_structure, ant_structure, team):
     """Compute the current level of danger.
     
@@ -46,6 +45,7 @@ def compute_danger(anthill_structure, ant_structure, team):
     implémentation: Martin Buchet (v.1 )
 
     """
+    #Need correct values
     danger = 0
     e_average_dist = e_average_dist_from_a_base(ant_structure, anthill_structure, team)
 
@@ -86,7 +86,6 @@ def e_average_dist_from_a_base(ant_structure, anthill_structure, team,):
     implementation: Martin Buchet (v.1  24/4/21)
     """
 
-    #player_id == team ???
     ants = seperate_ally_and_ennemy_ants(ant_structure, team)
 
     team -= 1
@@ -307,7 +306,6 @@ def get_closest_clod(ant_structure, main_structure, ant_id):
                     closest_clod = clod
     return closest_clod
 
-
 def seperate_ally_and_ennemy_ants(ant_structure, team):
     """Creates two list with the allies and ennemies ants.
 
@@ -336,7 +334,6 @@ def seperate_ally_and_ennemy_ants(ant_structure, team):
             enemies.append(ant)
     
     return enemies, allies
-
 
 def get_distance_between_anthills(anthill_structure):
     """Returns the distance between both anthills
