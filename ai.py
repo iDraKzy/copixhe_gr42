@@ -3,7 +3,7 @@
 import math
 import main
 
-
+ants_type = {}
 
 # other functions
 def check_ennemy_ants_near_allies(ant_structure, main_structure, team):
