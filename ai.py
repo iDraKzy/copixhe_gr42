@@ -64,6 +64,8 @@ def compute_danger(anthill_structure, ant_structure):
     else:
         danger += 7.5
 
+    return danger 
+
 def e_average_dist_from_a_base(ant_structure, anthill_structure):
     """Compute average distance of ennemies ants from allie base
 
