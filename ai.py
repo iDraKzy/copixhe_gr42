@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 import math
-import engine
+import main
 
 
 
@@ -31,7 +31,7 @@ def check_ennemy_ants_near_allies(ant_structure, main_structure, team):
             for x in range(-5, 6):
                 potential_ant = main_structure[ant_pos[0] + y][ant_pos[1] + x]
                 if potential_ant != None:
-                    ant_dict = engine.return_ant_by_id(ant_structure, potential_ant)
+                    ant_dict = main.return_ant_by_id(ant_structure, potential_ant)
                     if ant_dict['team'] != team:
                         close_e_ant[ant['id']].append(ant_dict['id'])
 
