@@ -262,7 +262,7 @@ def generate_defense_group(anthill, ant_list):
     return group
 
 
-def compute_fight_worth(ennemy_ants, ally_ants, ant_structure, ally_ant_id):
+def compute_fight_worth(ennemy_ants, ally_ants, ant_structure):
     """Calculate the rentability of a particular fight.
 
     Parameters
@@ -270,8 +270,6 @@ def compute_fight_worth(ennemy_ants, ally_ants, ant_structure, ally_ant_id):
     ennemy_ants: list of all ennemy ants (list)
     ally_ants: list of all ally ants (list)
     ant_structure: the structure containing the ants (list)
-
-    ally_ant_id: id of our ant who participates in this fight (int)
 
     Return
     ------
