@@ -580,12 +580,20 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     steal_time = compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_structure, team)
 
+    fight_point = compute_fight_worth(ant_structure, allies)
+
     if len(defense_ants['other_team']) >= len(defense_ants['team']) and steal_time >= 10:
-        for ants in defense_ants
-            updated_allied_ants[ant_id] = defense
+        for ants in defense_ants:
+            updated_allied_ants[ant_id] = 'defense'
+    elif danger >= 30:  
+        for ants in defense_ants:
+            updated_allied_ants[ant_id] = 'defense'
     elif len(defense_ants['other_team']) < len(defense_ants['team']) and steal_time < 10:
-        for ants in defense_ants
-            updated_allied_ants[ant_id] = stealer
+        for ants in defense_ants:
+            updated_allied_ants[ant_id] = 'stealer'
+
+    if fight_point >= 20:
+        
 
 def define_action_for_ant(ant, ant_type, danger):
     """Define the action a particular ant will do this turn.
