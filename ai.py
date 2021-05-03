@@ -242,6 +242,8 @@ def compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_stru
     ant_structure : structure containing all the ants (list)
     main_structure: main structure of the game board (list)
     ant_id: the id of the ant who want to steal
+    anthill_structure: list of 2 elements containing the anthills information (list) 
+    team: team : your team number (int)
 
     return
     ------
@@ -254,6 +256,36 @@ def compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_stru
     """
     
 
+def compute_distance(ant_structure, main_structure, ant_id, anthill_structure, team):
+    """compute distance between an ant and an anthill
+
+    Parameters
+    ----------
+    ant_structure : structure containing all the ants (list)
+    main_structure: main structure of the game board (list)
+    ant_id: the id of the ant who want to steal
+    anthill_structure: list of 2 elements containing the anthills information (list) 
+    team: team : your team number (int)
+
+    Return
+    ------
+    distance: distance in number of moves between the ant and the anthill (int)
+
+    Version
+    -------
+    specification: Martin Buchet (v.1 01/05/21)
+    Implementation: Martin Buchet (v.1 01/05/21)
+    """
+
+    for ant in ant_structure:
+        if ant_structure[ant]['id'] == ant_id:
+            ant_pos_x = ant_structure[ant]['pos_x']
+            ant_pos_y = ant_structure[ant]['pos_y']
+
+    distance = max(abs(anthill_structure['team']['pos_x'] - ant_pos_x), abs(anthill_structure['team']['pos_y'] - ant_pos_y))
+
+    return distance
+    
 def get_closest_clod(ant_structure, main_structure, ant_id):
     """Get the position of the closest mud from an ally ant.
     
