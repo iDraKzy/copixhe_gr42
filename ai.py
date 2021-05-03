@@ -814,14 +814,14 @@ def define_defense_order(ant_structure, anthill_structure, ants, team):
             
 
     
-def get_closest_ennemy_ant(ant_structure, ally_ant, team):
+def get_closest_ant_of_specified_team(ant_structure, ally_ant, team):
     """Get the closest ennemy ant from an ally ant
 
     Parameters
     ----------
     ant_structure: structure containing all the ants (list)
     ally_ant: ally ant wishing to get the closest ennemy (dict)
-    team: team number of our ai (int)
+    team: team number you wish an ant for (int)
 
     Returns
     -------
