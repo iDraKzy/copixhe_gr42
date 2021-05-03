@@ -902,6 +902,21 @@ def compute_distance(origin, destination):
     return max(abs(origin[0] - destination[0]), abs(origin[1] - destination[1]))
 
 def go_in_direction_of_target(origin, target):
+    """Return the position to go to move in direction of the target
+
+    Parameters
+    ----------
+    origin: usually the position of an ant who whish to move (tupple)
+    target: position of the target (tupple)
+
+    Returns
+    -------
+    move_target: target for the move of the ant (tupple)
+
+    Version
+    -------
+    
+    """
     y_axis_distance = origin[0] - target[0]
     x_axis_distance = origin[1] - target[1]
 
