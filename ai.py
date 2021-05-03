@@ -874,7 +874,7 @@ def define_attack_order(ants):
     """
     pass
 
-def define_stealer_order(ants, danger):
+def define_stealer_order(ants, danger, team):
     """Define the order to give to a stealer ant
 
     Parameters
@@ -889,15 +889,27 @@ def define_stealer_order(ants, danger):
     Version
     -------
     specification: Youlan Collard, Maxime Dufrasne (v.1 27/4/21)
+    implementation: Martin Buchet, Maxime Dufrasne (v.1 01/05/21)
     
     """
 
     order_list = []
 
-    if ants['type'] == (stealer):
-        get_distance_from_base_to_closest_clod(main_structure, anthill_structure, team)
-        go_in_direction_of_target(ants_pos, closest_clod)
-        for 
+    enemy_team = get_ennemy_team(team)
+
+    clod_pos = get_distance_from_base_to_closest_clod(main_structure, anthill_structure, enemy_team)
+   
+    for ant in ants:
+        target_pos = go_in_direction_of_target((ant['pos_y'], ant['pos_x']), clod_pos)
+        order = {
+            'origin' = (ant['pos_y'], ant['pos_x']),
+            'target' = target_pos,
+            'type' = 'stealer'
+        }
+        order_list.append(order)
+
+    
+
 
 
 def generate_order(order):
