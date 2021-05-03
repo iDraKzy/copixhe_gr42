@@ -28,8 +28,9 @@ def check_ennemy_ants_near_allies(ant_structure, main_structure, team):
         ant_pos = (ant['pos_y'], ant['pos_x'])
         for y in range(-5, 6):
             for x in range(-5, 6):
-                potential_ant_id = main_structure[ant_pos[0] + y][ant_pos[1] + x]
+                potential_ant_id = main_structure[ant_pos[0] + y][ant_pos[1] + x]['ant']
                 if potential_ant_id != None:
+                    print(potential_ant_id)
                     ant_dict = return_ant_by_id(ant_structure, potential_ant_id)
                     if ant_dict['team'] != team:
                         close_e_ant[ant['id']].append(potential_ant_id)
@@ -482,8 +483,8 @@ def get_closest_clod(ant, main_structure, pos_to_ignore=[]):
     """
     ant_pos = (ant['pos_y'], ant['pos_x'])
     distance = 100
-    for y in main_structure:
-        for x in main_structure[y]:
+    for y in range(len(main_structure)):
+        for x in range(len(main_structure[0])):
             if main_structure[y][x]['clod'] != None and not (y, x) in pos_to_ignore:
                 clod= (y,x)
                 dist = compute_distance(ant_pos, clod)
@@ -614,17 +615,17 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
     if len(allies) <= 2:
         for ant in allies:
             updated_allied_ants[ant['id']] = 'collect'
-    elif (len(defense_ants['other_team']) >= len(defense_ants['team'])) or danger >= 30:
-        for ant in defense_ants['team']:
+    elif (len(defense_ants[ennemy_team]) >= len(defense_ants['team'])) or danger >= 30:
+        for ant in defense_ants[team]:
             updated_allied_ants[ant['id']] = 'defense'
-    elif len(defense_ants['other_team']) < len(defense_ants['team']):
-        for ant in defense_ants['team']:
-            updated_allied_ants[ant['id']] = 'stealer'     
+    elif len(defense_ants[ennemy_team]) < len(defense_ants[team]):
+        for ant in defense_ants[team]:
+            updated_allied_ants[ant['id']] = 'stealer'
             
-    if len(defense_ants['other_team']) > len(allies)/2:
-        for ant in updated_allied_ants:
-            if updated_allied_ants[ant['id']] == 'attack':
-                updated_allied_ants[ant['id']] = 'collect'
+    if len(defense_ants[ennemy_team]) > len(allies)/2:
+        for ant_id in updated_allied_ants:
+            if updated_allied_ants[ant_id] == 'attack':
+                updated_allied_ants[ant_id] = 'collect'
 
 
     return updated_allied_ants
@@ -1050,7 +1051,7 @@ def go_in_direction_of_target(origin, target):
         target_y = origin[0]
 
     if x_axis_distance < 0:
-        traget_x = origin[1] + 1
+        target_x = origin[1] + 1
     elif x_axis_distance > 0:
         target_x = origin[1] - 1
     elif x_axis_distance == 0:
@@ -1118,6 +1119,7 @@ def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
     specification: Youlan Collard (v.1 19/04/21)
     
     """
+    global ants_type
     danger = compute_danger(anthill_structure, ant_structure, player_id)
     ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, player_id)
 
