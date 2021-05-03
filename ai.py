@@ -49,14 +49,36 @@ def compute_danger(anthill_structure, ant_structure):
 
     for 
 
-#On a une fonction pour définir le danger, mais faudrait une fonction pour gérer nos strats en fonction de cette valeur danger
 def e_average_dist_from_a_base(ant_structure, anthill_structure):
+    """Compute average distance of ennemies ants from allie base
+
+    Parameters
+    ----------
+    ant_structure: structure containing all the ants (list)
+    anthill_structure: list of 2 elements containing the anthills information (list)
+
+    Return
+    ------
+    e_average_dist: Ennemies ants average distance from allie base
+    implementation: Maxime Dufrasne (v.1 22/4/21)
     """
-    """
+pass
+
 
 def a_average_dist_from_a_base(ant_structure, anthill_structure):
+    """Compute average distance of allies ants from allie base
+
+    Parameters
+    ----------
+    ant_structure: structure containing all the ants (list)
+    anthill_structure: list of 2 elements containing the anthills information (list)
+
+    Return
+    ------
+    a_average_dist: Allies ants average distance from allie base
+    implementation: Maxime Dufrasne (v.1 22/4/21)
     """
-    """
+pass
 
 def compute_ally_defense_ants(anthill_structure, ant_structure):
     """Compute the number of ants in defense.
