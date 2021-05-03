@@ -465,7 +465,7 @@ def get_closest_clod(ant_structure, main_structure, ant_id):
         for x in main_structure[y]:
             if main_structure[y][x]['clod'] != None:
                 clod= (y,x)
-                dist = math.dist(ant_pos, clod)
+                dist = compute_distance(ant_pos, clod)
                 if dist < distance:
                     distance = dist
                     closest_clod = clod
@@ -655,6 +655,7 @@ def define_collect_order(main_structure, ants):
     already_taken_clods = []
 
     for ant in ants:
+
 
 
 def define_defense_order(ants):
