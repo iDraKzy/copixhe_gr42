@@ -842,8 +842,8 @@ def define_stealer_order(ants, danger):
     
     """
 
-
-    pass
+    if ants['type'] == ('stealer'):
+        go_in_direction_of_target(ants_pos, target)
 
 def generate_order(order):
     """Generate a valid order in the form of a string.
