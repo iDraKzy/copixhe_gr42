@@ -213,20 +213,56 @@ def compute_defense_ants(anthill_structure, ant_structure, team):
 
     Return
     ------
-    defense_ants: Number of ants considered in defense (dict)
+    defense_ants: List of ants considered in defense for each team (dict)
     
     specification: Maxime Dufrasne (v.1 18/4/21)
-
+    implementation: Youlan Collard (v.1)
     """
-    defense_ants = {}
 
     allies, ennemies = seperate_ally_and_ennemy_ants(ant_structure, team)
 
     for anthill in anthill_structure:
         if anthill['team'] == team:
-            for ant in allies:
+            ally_group = generate_defense_group(anthill, allies)
+        else:
+            ennemy_group = generate_defense_group(anthill, ennemies)
 
+    if team == 1:
+        other_team = 2
+    else:
+        other_team = 1
+    
+    return {team: ally_group, other_team: ennemy_group}
         
+
+def generate_defense_group(anthill, ant_list):
+    """Generate a list of ants close to the specified anthill given the anthill and the ants posessed by this anthill
+
+    Parameters
+    ----------
+    anthill: anthill to check (dict)
+    ant_list: ants list possessed by this anthill
+
+    Returns
+    -------
+    ant_group: group of ants considered in defense (list)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1)
+    implementation: Youlan Collard (v.1)
+    
+
+    """
+    group = []
+    anthill_pos = (anthill['pos_y'], anthill['pos_x'])
+
+    for ant in ant_list:
+        ant_pos = (ant['pos_y'], ant['pos_x'])
+        if compute_distance(anthill_pos, ant_pos) < 6:
+            group.append(ant)
+
+    return group
 
 
 def compute_fight_worth(ant_structure, ally_ant):
@@ -251,6 +287,7 @@ def compute_fight_worth(ant_structure, ally_ant):
 
 def generate_ants_group(ant_structure, team):
     """Genreate a list of ants close to each other. (ennemies)
+
     Parameters
     ----------
     ant_structure: the structure containing the ants (list)
@@ -263,8 +300,42 @@ def generate_ants_group(ant_structure, team):
     Version
     -------
     specification: Liam Letot (v.1 19/04/21)
+    implementation: Youlan Collard (v.1)
     """
-    pass
+    allies, ennemies = seperate_ally_and_ennemy_ants(ant_structure, team)
+
+    groups = []
+
+    for ant in ennemies:
+        current_group = []
+        for ant_to_check in ennemies:
+            if ant['id'] != ant_to_check['id']:
+                ant_pos = (ant['pos_y'], ant['pos_x'])
+                ant_to_check_pos = (ant_to_check['pos_y'], ant_to_check['pos_x'])
+                if compute_distance(ant_pos, ant_to_check_pos) <= 5:
+                    current_group.append(ant['id'])
+
+        groups.append(current_group)
+
+    already_seen = []
+    groups_not_duplicated = []
+    for group in groups:
+        duplicates_in_this_group = False
+        index = 0
+        while not duplicates_in_this_group and len(group) < index:
+            ant_id = group[index]
+            if not ant_id in already_seen:
+                already_seen.append(ant)
+            else:
+                duplicates_in_this_group = True
+            index += 1
+
+        if not duplicates_in_this_group:
+            group.append(groups_not_duplicated)
+
+    return groups_not_duplicated
+
+
 
 def get_distance_from_base_to_closest_clod(main_structure, anthill_structure, team):
     """Get the distance from the ennemies base to the closest mud.
