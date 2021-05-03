@@ -45,9 +45,24 @@ def compute_danger(anthill_structure, ant_structure):
     specification: Maxime Dufrasne (v.1 18/4/21)
 
     """
-    seperate_ally_and_ennemy_ants(ant_structure, player_id)
+    danger = 0
+    e_average_dist = e_average_dist_from_a_base(ant_structure, anthill_structure)
 
-    for 
+    if e_average_dist <= 5:
+        danger += 10 
+    elif e_average_dist > 5 and e_average_dist <= 10:
+        danger += 7.5
+    else:
+        danger += 5
+
+    a_average_dist = a_average_dist_from_a_base(ant_structure, anthill_structure)
+
+    if a_average_dist <= 5:
+        danger -= 2.5
+    elif a_average_dist > 5 and a_average_dist <= 10:
+        danger += 3.5
+    else:
+        danger += 7.5
 
 def e_average_dist_from_a_base(ant_structure, anthill_structure):
     """Compute average distance of ennemies ants from allie base
