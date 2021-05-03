@@ -121,6 +121,10 @@ def a_average_dist_from_a_base(ant_structure, anthill_structure, team):
     Return
     ------
     a_average_dist: Allies ants average distance from allie base
+
+    Version
+    -------
+    specification: Maxime Dufrasne (v.1 )
     implementation: Maxime Dufrasne (v.1 22/4/21)
     """
     ants = seperate_ally_and_ennemy_ants(ant_structure, player_id)
