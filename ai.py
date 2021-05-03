@@ -787,13 +787,14 @@ def define_defense_order(ants):
     """
     pass
 
-def get_closest_ennemy_ant(ant_structure, ally_ant):
+def get_closest_ennemy_ant(ant_structure, ally_ant, team):
     """Get the closest ennemy ant from an ally ant
 
     Parameters
     ----------
     ant_structure: structure containing all the ants (list)
     ally_ant: ally ant wishing to get the closest ennemy (dict)
+    team: team number of our ai (int)
 
     Returns
     -------
@@ -804,7 +805,19 @@ def get_closest_ennemy_ant(ant_structure, ally_ant):
     specification: Youlan Collard
     
     """
-    pass
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, team)
+    distance = 1000
+    ant_pos_to_return = None
+
+    ally_ant_pos = (ally_ant['pos_y'], ally_ant['pos_x'])
+    for ant in ennemies:
+        ennemy_pos = (ant['pos_y'], ant['pos_x'])
+        dist = compute_distance(ally_ant_pos, ennemy_pos)
+        if dist < distance:
+            distance = dist
+            ant_pos_to_return = ennemy_pos
+    
+    return distance, ant_pos_to_return
 
 def define_attack_order(ants):
     """Define the order to give to a defense ant
