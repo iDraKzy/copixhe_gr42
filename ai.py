@@ -231,7 +231,6 @@ def compute_defense_ants(anthill_structure, ant_structure, team):
     
     return {team: ally_group, other_team: ennemy_group}
         
-
 def generate_defense_group(anthill, ant_list):
     """Generate a list of ants close to the specified anthill given the anthill and the ants posessed by this anthill
 
@@ -260,7 +259,6 @@ def generate_defense_group(anthill, ant_list):
             group.append(ant)
 
     return group
-
 
 def compute_fight_worth(ennemy_ants, ally_ants, ant_structure):
     """Calculate the rentability of a particular fight.
@@ -306,9 +304,6 @@ def compute_fight_worth(ennemy_ants, ally_ants, ant_structure):
     ennemy_worth = ennemy_hp - (ennemy_lose / ennemy_value)
     worth = ally_worth - ennemy_worth
     return worth
-
-
-
 
 def generate_ants_e_group(ant_structure, team):
     """Genreate a list of ants close to each other. (ennemies)
@@ -359,7 +354,6 @@ def generate_ants_e_group(ant_structure, team):
             group.append(groups_not_duplicated)
 
     return groups_not_duplicated
-
 
 def generate_ants_a_group(ant_structure, team):
     """Genreate a list of ants close to each other. (ally)
@@ -638,8 +632,6 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     return updated_allied_ants
 
-        
-
 def define_action_for_ant(ants, danger):
     """Define the action a particular ant will do this turn.
 
@@ -767,8 +759,6 @@ def define_collect_order(main_structure, anthill_structure, ants, team):
     
     return order_list
 
-
-
 def define_defense_order(ant_structure, anthill_structure, ants, team):
     """Define the order to give to a defense ant
 
@@ -811,9 +801,7 @@ def define_defense_order(ant_structure, anthill_structure, ants, team):
         order_list.append(order)
     
     return order_list
-            
-
-    
+   
 def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
     """Get the closest ennemy ant from an ally ant
 
@@ -856,13 +844,14 @@ def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
     
     return distance, ant_pos_to_return
 
-def define_attack_order(ants):
-    """Define the order to give to a defense ant
+def define_attack_order(ants, danger, team):
+    """Define the order to give to a attack ant
 
     Parameters
     ----------
     ants: ants to which give the order (list)
     danger: danger value (int)
+    team: team number of our ai (int)
 
     Returns
     -------
@@ -870,9 +859,14 @@ def define_attack_order(ants):
 
     Version
     -------
-    specification: Youlan Collard
+    specification: Youlan Collard (v.1 25/4/21)
+    implementation: Maxime Dufrasne (v.1 27/4/21)
     """
-    pass
+    order_list = []
+
+    for ant in ants :
+       order = {}
+
 
 def define_stealer_order(main_structure, anthill_structure, ants, danger, team):
     """Define the order to give to a stealer ant
@@ -883,6 +877,7 @@ def define_stealer_order(main_structure, anthill_structure, ants, danger, team):
     anthill_structure: anthill structure containing the anthills (list)
     ants: ants to which give the order (list)
     danger: danger value (int)
+    team: team number of our ai (int)
 
     Returns
     -------
