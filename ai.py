@@ -863,6 +863,7 @@ def define_attack_order(ants, danger, team):
     ----------
     ants: ants to which give the order (list)
     danger: danger value (int)
+    team: team number of our ai (int)
 
     Returns
     -------
@@ -886,6 +887,7 @@ def define_stealer_order(ants, danger, team):
     ----------
     ants: ants to which give the order (list)
     danger: danger value (int)
+    team: team number of our ai (int)
 
     Returns
     -------
