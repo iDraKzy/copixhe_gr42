@@ -470,24 +470,32 @@ def compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_stru
     ennemy_anthill = anthill_structure[ennemy_team - 1]
     return compute_distance((ant['pos_y'], ant['pos_x']), (ennemy_anthill['pos_y'], ennemy_anthill['pos_x'])) 
 
-def get_closest_clod(ant_structure, main_structure, ant_id):
+def get_closest_clod(ant, main_structure, pos_to_ignore=[]):
     """Get the position of the closest mud from an ally ant.
     
     Parameters
     ----------
-    ant_structure: structure containing all the ants (list)
+    ant: ant to search from (dict)
     main_structure: main structure of the game board (list)
+    pos_to_ignore: pos to ignore (list)
 
+    Returns
+    -------
+    closest_clod: position of the closest clod (tupple)
+    distance: distance in cells from the ant (int)
+
+    Version
+    -------
     specification: Maxime Dufrasne (v.1 18/4/21)
     implementation: Liam Letot (v.1 20/04/21)
     """
-    ant_pos = (ant_structure[ant_id]['pos_y'],ant_structure[ant_id]['pos_x'])
-    distance =100
+    ant_pos = (ant['pos_y'], ant['pos_x'])
+    distance = 100
     for y in main_structure:
         for x in main_structure[y]:
-            if main_structure[y][x]['clod'] != None:
+            if main_structure[y][x]['clod'] != None and not (y, x) in pos_to_ignore:
                 clod= (y,x)
-                dist = math.dist(ant_pos, clod)
+                dist = compute_distance(ant_pos, clod)
                 if dist < distance:
                     distance = dist
                     closest_clod = clod
@@ -578,7 +586,7 @@ def compute_ennemies_ants_near_anthill(anthill_structure, team, ant_structure):
 
     return ennemy_number
 
-def define_ants_type(allies, enemies, main_structure, danger):
+def define_ants_type(allies, enemies, main_structure, danger, anthill_structure, ant_structure, team, ant_id):
     """Define the type of each ally ants (attack, collect, stealer, defense).
     
     Parameters
@@ -587,25 +595,57 @@ def define_ants_type(allies, enemies, main_structure, danger):
     enemies: list of all enemy ants (list)
     main_structure: main structure of the game board (list)
     danger: current danger value of the game (int)
+    anthill_structure: list of 2 elements containing the anthills information (list) 
+    ant_structure: structure containing all the ants (list) 
+    team: team number of our ai (int)
+    ant_id: id of the ant who wants to steal (int)
 
     Returns
     -------
-    updated_allied_ants: list of all allied ants with their defined types (list) 
+    updated_allied_ants: list of all allied ants with their defined types (dict) 
 
     Version
     -------
     specification: Martin Buchet (v.1 19/04/21)
+    implementation: Martin Buchet (v.1 27/04/21)
 
     """
-    pass
+    updated_allied_ants = []
 
-def define_action_for_ant(ant, type, danger):
+    defense_ants = compute_defense_ants(anthill_structure, ant_structure, team)
+
+    steal_time = compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_structure, team)
+
+    fight_point = compute_fight_worth(ant_structure, allies)
+
+    if len(defense_ants['other_team']) >= len(defense_ants['team']) and steal_time >= 10:
+        for ants in defense_ants:
+            updated_allied_ants[ant_id] = 'defense'
+    elif danger >= 30:  
+        for ants in defense_ants:
+            updated_allied_ants[ant_id] = 'defense'
+    elif len(defense_ants['other_team']) < len(defense_ants['team']) and steal_time < 10:
+        for ants in defense_ants:
+            updated_allied_ants[ant_id] = 'stealer'
+
+    for ant in allies:
+        if allies[ant]['level'] == 3:
+            updated_allied_ants[ant] = 'attack'
+
+    if len(defense_ants) > len(allies)/2
+        for ant in updated_allied_ants[ant] = 'collect'
+
+
+    return updated_allied_ants
+
+        
+
+def define_action_for_ant(ants, danger):
     """Define the action a particular ant will do this turn.
 
     Parameters
     ----------
     ant: specified ant (dict)
-    type: type of the specified ant (str)
     danger: current danger value of the game
 
     Returns
@@ -615,6 +655,171 @@ def define_action_for_ant(ant, type, danger):
     Version
     -------
     specification: Youlan Collard (v.1 19/04/21)
+    
+    """
+
+    collectors = []
+    attackers = []
+    defensers = []
+    stealers = []
+
+    for ant in ants:
+        ant_type = ants_type[ant['id']]
+        if ant_type == 'collect':
+            collectors.append(ant)
+        elif ant_type == 'attack':
+            attackers.append(ant)
+        elif ant_type == 'defensers':
+            defensers.append(ant)
+        elif ant_type == 'stealers':
+            stealers.append(ant)
+
+
+    collectors_order_list = define_collect_order(collectors, danger)
+    attackers_order_list = define_attack_order(attackers, danger)
+    defensers_order_list = define_defense_order(defensers, danger)
+    stealers_order_list = define_stealer_order(stealers, danger)
+
+    return collectors_order_list + attackers_order_list + defensers_order_list + stealers_order_list
+
+def get_closest_clod_space_from_ally_anthill(main_structure, ant, anthill):
+    """Get the closest empty space for a clod near anthill.
+
+    Parameters
+    ----------
+    main_structure: main structure of the game board (list)
+    ant: ant who needs to go to the space (dict)
+    anthill: ally anthill (dict)
+
+    Returns
+    -------
+    space_pos: position of the empty space (tupple)
+
+    Version
+    -------
+    specificaiton:
+    implementation:
+    
+    
+    """
+    distance = 1000
+    space_pos_saved = ()
+    anthill_pos = (anthill['pos_y'], anthill['pos_x'])
+    ant_pos = (ant['pos_y'], ant['pos_x'])
+
+    for y in range(-1, 2):
+        for x in range(-1, 2):
+            space_pos = (anthill_pos[0] + y, anthill_pos[1] + x)
+            if main_structure[space_pos[0]][space_pos[1]]['clod'] == None:
+                dist = compute_distance(ant_pos, space_pos)
+                if dist < distance:
+                    distance = dist
+                    space_pos_saved = space_pos
+    
+    return space_pos_saved
+    
+def define_collect_order(main_structure, anthill_structure, ants, team):
+    """Define the order to give to a collector ant
+
+    Parameters
+    ----------
+    main_structure: main structure of the game board (list)
+    anthill_structure: structure containing the anthills (list)
+    ants: ants to which give the order (list)
+    team: team number of our ai (int)
+
+    Returns
+    -------
+    order_list: dictionnary describing the order (list)
+
+    Version
+    -------
+    specification: Youlan Collard
+    
+    """
+    order_list = []
+    already_taken_clods = []
+
+    for ant in ants:
+        order = {'origin': (ant['pos_y'], ant['pos_x'])}
+        ant_pos = (ant['pos_y'], ant['pos_x'])
+        if not ant['carrying']:
+            clod_pos = get_closest_clod(ant, main_structure, already_taken_clods)
+            clod_pos.append(already_taken_clods)
+            if not (ant['pos_y'] == clod_pos[0] and ant['pos_x'] == clod_pos[1]):
+                target = go_in_direction_of_target(ant_pos, (clod_pos[0], clod_pos[1]))
+                order['target'] = target
+                order['type'] = 'move'
+            else:
+                order['target'] = None
+                order['type'] = 'lift'
+        else:
+            ally_anthill = anthill_structure[team - 1]
+            closer_empty_space = get_closest_clod_space_from_ally_anthill(ant, ally_anthill)
+            if not (ant['pos_y'] == closer_empty_space[0] and ant['pos_x'] == closer_empty_space[1]):
+                target = go_in_direction_of_target(ant_pos, closer_empty_space)
+                order['target'] = target
+                order['type'] = 'move'
+            else:
+                order['target'] = None
+                order['type'] = 'drop'
+        order_list.append(order)
+    
+    return order_list
+
+
+
+def define_defense_order(ants):
+    """Define the order to give to a defense ant
+
+    Parameters
+    ----------
+    ants: ants to which give the order (list)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_list: dictionnary describing the order (list)
+
+    Version
+    -------
+    specification: Youlan Collard
+    """
+    pass
+
+def define_attack_order(ants):
+    """Define the order to give to a defense ant
+
+    Parameters
+    ----------
+    ants: ants to which give the order (list)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_list: dictionnary describing the order (list)
+
+    Version
+    -------
+    specification: Youlan Collard
+    """
+    pass
+
+def define_stealer_order(ants):
+    """Define the order to give to a stealer ant
+
+    Parameters
+    ----------
+    ants: ants to which give the order (list)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_list: dictionnary describing the order (list)
+
+    Version
+    -------
+    specification: Youlan Collard
     
     """
     pass
@@ -675,6 +880,26 @@ def compute_distance(origin, destination):
     """
     return max(abs(origin[0] - destination[0]), abs(origin[1] - destination[1]))
 
+def go_in_direction_of_target(origin, target):
+    y_axis_distance = origin[0] - target[0]
+    x_axis_distance = origin[1] - target[1]
+
+    if y_axis_distance < 0:
+        target_y = ant['pos_y'] + 1
+    elif y_axis_distance > 0:
+        target_y = ant['pos_y'] - 1
+    elif y_axis_distance == 0:
+        target_y = ant['pos_y']
+
+    if x_axis_distance < 0:
+        traget_x = ant['pos_x'] + 1
+    elif x_axis_distance > 0:
+        target_x = ant['pos_x'] - 1
+    elif x_axis_distance == 0:
+        target_x = ant['pos_x']
+
+    return (target_y, target_x)
+
 def get_ennemy_team(team):
     """Return the number of the ennemy team
 
@@ -714,11 +939,16 @@ def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
     specification: Youlan Collard (v.1 19/04/21)
     
     """
+    danger = compute_danger(anthill_structure, ant_structure, player_id)
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, player_id)
+
+    ants_type = define_ants_type(allies, ennemies, main_structure, danger)
 
     orders = ''
-    
-    ...
-    ...
-    ...
+
+    for ant in allies:
+        ant_type = ants_type[ant['id']]
+        order_dict = define_action_for_ant(ant, ant_type, danger)
+        orders += generate_order(order_dict)
     
     return orders
