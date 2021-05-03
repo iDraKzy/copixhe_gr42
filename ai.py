@@ -499,7 +499,7 @@ def compute_ennemies_ants_near_anthill(anthill_structure, team, ant_structure):
 
     return ennemy_number
 
-def define_ants_type(ally_ants, enemy_ants, main_structure, danger):
+def define_ants_type(allies, enemies, main_structure, danger):
     """Define the type of each ally ants (attack, collect, stealer, defense).
     
     Parameters
