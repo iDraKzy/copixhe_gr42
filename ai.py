@@ -504,8 +504,8 @@ def define_ants_type(ally_ants, enemy_ants, main_structure, danger):
     
     Parameters
     ----------
-    ally_ants: list of all allied ants (list) 
-    enemy_ants: list of all enemy ants (list)
+    allies: list of all allied ants (list) 
+    enemies: list of all enemy ants (list)
     main_structure: main structure of the game board (list)
     danger: current danger value of the game (int)
 
