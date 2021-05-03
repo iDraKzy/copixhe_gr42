@@ -814,14 +814,15 @@ def define_defense_order(ant_structure, anthill_structure, ants, team):
             
 
     
-def get_closest_ant_of_specified_team(ant_structure, ally_ant, team):
+def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
     """Get the closest ennemy ant from an ally ant
 
     Parameters
     ----------
     ant_structure: structure containing all the ants (list)
-    ally_ant: ally ant wishing to get the closest ant (dict)
-    team: team number you wish an ant for (int)
+    ally_ant: ally ant wishing to get the closest ennemy (dict)
+    team: team number of our ai (int)
+    side: side you wish the closest ant to be [ennemy, ally] (str) 
 
     Returns
     -------
@@ -837,12 +838,21 @@ def get_closest_ant_of_specified_team(ant_structure, ally_ant, team):
     ant_pos_to_return = None
 
     ally_ant_pos = (ally_ant['pos_y'], ally_ant['pos_x'])
-    for ant in ennemies:
-        ennemy_pos = (ant['pos_y'], ant['pos_x'])
-        dist = compute_distance(ally_ant_pos, ennemy_pos)
-        if dist < distance:
-            distance = dist
-            ant_pos_to_return = ennemy_pos
+    if side == 'ennemy':
+
+        for ant in ennemies:
+            ennemy_pos = (ant['pos_y'], ant['pos_x'])
+            dist = compute_distance(ally_ant_pos, ennemy_pos)
+            if dist < distance:
+                distance = dist
+                ant_pos_to_return = ennemy_pos
+    else:
+        for ant in allies:
+            ally_pos = (ant['pos_y'], ant['pos_x'])
+            dist = compute_distance(ally_ant_pos, ally_pos)
+            if dist < distance:
+                distance = dist
+                ant_pos_to_return = ally_pos
     
     return distance, ant_pos_to_return
 
