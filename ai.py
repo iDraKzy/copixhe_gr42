@@ -773,13 +773,15 @@ def define_collect_order(main_structure, anthill_structure, ants, team):
 
 
 
-def define_defense_order(ants):
+def define_defense_order(ant_structure, anthill_structure, ants, team):
     """Define the order to give to a defense ant
 
     Parameters
     ----------
+    ant_structure: structure containing all the ants
+    anthill_structure: structure containing the anthill
     ants: ants to which give the order (list)
-    danger: danger value (int)
+    team: team number of our ai (int)
 
     Returns
     -------
@@ -789,8 +791,33 @@ def define_defense_order(ants):
     -------
     specification: Youlan Collard
     """
-    pass
+    order_list = []
+    ally_anthill = anthill_structure[team - 1]
+    ally_anthill_pos = (ally_anthill['pos_y'], ally_anthill['pos_x'])
+    for ant in ants:
+        order = {}
+        order['origin'] = (ant['pos_y'], ant['pos_x'])
 
+        closest_ennemy_ant_pos, distance = get_closest_ennemy_ant(ant_structure, ant, team)
+        if distance <= 3:
+            order['type'] = 'attack'
+            order['target'] = closest_ennemy_ant_pos
+        elif distance > 3 and distance < 5:
+            order['type'] = 'move'
+            order['target'] = go_in_direction_of_target(order['origin'], closest_ennemy_ant_pos)
+        elif compute_distance(order['origin'], ally_anthill_pos) > 3:
+            order['type'] = 'move'
+            order['target'] = go_in_direction_of_target(order['origin'], ally_anthill_pos)
+        else:
+            order['type'] = 'move'
+            order['target'] = go_in_direction_of_target(order['origin'], closest_ennemy_ant_pos)
+        
+        order_list.append(order)
+    
+    return order_list
+            
+
+    
 def get_closest_ennemy_ant(ant_structure, ally_ant, team):
     """Get the closest ennemy ant from an ally ant
 
