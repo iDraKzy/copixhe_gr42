@@ -78,15 +78,26 @@ def compute_danger(anthill_structure, ant_structure, team):
     ally_average_level = compute_average_level_ant(allies)
     ennemy_average_level = compute_average_level_ant(ennemies)
 
-    delta_average_level = ennemy_average_level - ally_average_level
+    difference_average_level = ennemy_average_level - ally_average_level
 
-    if delta_average_level > 1:
+    if difference_average_level > 1:
         danger += 15
-    elif delta_average_level > 0 and delta_average_level < 1:
+    elif difference_average_level > 0 and difference_average_level < 1:
         danger += 7.5
-    elif delta_average_level < 0 and delta_average_level > -1:
+    elif difference_average_level < 0 and difference_average_level > -1:
         danger -= 7.5
-    elif delta_average_level < -1:
+    elif difference_average_level < -1:
+        danger -= 15
+
+    difference_number_ants = len(ennemies) - len(allies)
+
+    if difference_number_ants > 3:
+        danger += 15
+    elif difference_number_ants > 0:
+        danger += 7.5
+    elif difference_number_ants < 0 and difference_number_ants > -3:
+        danger -= 7.5
+    elif difference_number_ants < -3:
         danger -= 15
 
     return danger 
