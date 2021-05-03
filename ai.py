@@ -856,8 +856,8 @@ def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
     
     return distance, ant_pos_to_return
 
-def define_attack_order(ants):
-    """Define the order to give to a defense ant
+def define_attack_order(ants, danger, team):
+    """Define the order to give to a attack ant
 
     Parameters
     ----------
@@ -870,9 +870,14 @@ def define_attack_order(ants):
 
     Version
     -------
-    specification: Youlan Collard
+    specification: Youlan Collard (v.1 25/4/21)
+    implementation: Maxime Dufrasne (v.1 27/4/21)
     """
-    pass
+    order_list = []
+
+    for ant in ants :
+       order = {}
+
 
 def define_stealer_order(ants, danger, team):
     """Define the order to give to a stealer ant
