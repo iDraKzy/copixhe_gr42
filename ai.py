@@ -856,13 +856,16 @@ def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
     
     return distance, ant_pos_to_return
 
-def define_attack_order(ants):
-    """Define the order to give to a defense ant
+def define_attack_order(main_structure,ant_structure, anthill_structure, ants, team):
+    """Define the order to give to an attack ant
 
     Parameters
     ----------
+    main_structure: main structure of the game board (list)
+    ant_structure: structure containing all ants (list)
+    anthill_structure: structure containing the anthills (list)
     ants: ants to which give the order (list)
-    danger: danger value (int)
+    team: team number of our ai (int)
 
     Returns
     -------
@@ -870,9 +873,40 @@ def define_attack_order(ants):
 
     Version
     -------
-    specification: Youlan Collard
+    specification: Liam Letot (v.1 19/04/21)
+    implementation: Liam Letot (v.1 27/04/21)
     """
-    pass
+    ally_group = generate_ants_a_group(ant_structure, team)
+    ennemy_group = check_ennemy_ants_near_allies(ant_structure, main_structure, team)
+    ennemy_ant, ally_ant = seperate_ally_and_ennemy_ants(ant_structure, team)
+    for ant in ants:
+        origin_pos = [ant['pos_y'], ant['pos_x']]
+        ennemy_life= 100
+        for group in ally_group:
+            for solo in group:
+                if solo['id']== ant['id']:
+                    ant_group = group
+        if compute_fight_worth(ennemy_group[ant['id']], ant_group, ant_structure) > 0:
+            order_type = 'attack'
+            for ant_bad in ennemy_group[ant['id']]:
+                if ant_bad['health'] < ennemy_life and ant_bad['health'] > 0:
+                    bad_id =ant_bad['id']
+            for ennemy in ennemy_ant:
+                if bad_id == ennemy['id']:
+                    ennemy['health'] -= ant['level']
+                    target_pos = [ennemy['pos_y'],ennemy['pos_x']]
+            order{'type' =
+
+            }
+        else:
+            order_type = 'move'
+            target_pos = get_closest_ant_of_specified_team(ant_structure, ant, team, 'ally')
+            
+                            
+            
+        
+        
+
 
 def define_stealer_order(ants, danger):
     """Define the order to give to a stealer ant
