@@ -794,7 +794,7 @@ def define_defense_order(ant_structure, anthill_structure, ants, team):
         order = {}
         order['origin'] = (ant['pos_y'], ant['pos_x'])
 
-        closest_ennemy_ant_pos, distance = get_closest_ennemy_ant(ant_structure, ant, team, 'ennemy')
+        closest_ennemy_ant_pos, distance = get_closest_ant_of_specified_team(ant_structure, ant, team, 'ennemy')
         if distance <= 3:
             order['type'] = 'attack'
             order['target'] = closest_ennemy_ant_pos
@@ -874,11 +874,13 @@ def define_attack_order(ants):
     """
     pass
 
-def define_stealer_order(ants, danger, team):
+def define_stealer_order(main_structure, anthill_structure, ants, danger, team):
     """Define the order to give to a stealer ant
 
     Parameters
     ----------
+    main_structure: main structure contaning the game board (list)
+    anthill_structure: anthill structure containing the anthills (list)
     ants: ants to which give the order (list)
     danger: danger value (int)
 
@@ -898,15 +900,47 @@ def define_stealer_order(ants, danger, team):
     enemy_team = get_ennemy_team(team)
 
     clod_pos = get_distance_from_base_to_closest_clod(main_structure, anthill_structure, enemy_team)
+    ennemy_anthill = anthill_structure[enemy_team - 1]
+    ennemy_anthill_pos = (ennemy_anthill['pos_y'], ennemy_anthill['pos_x'])
+    ally_anthill = anthill_structure[team - 1]
+    ally_anthill_pos = (ally_anthill['pos_y'], ally_anthill['pos_x'])
    
     for ant in ants:
-        target_pos = go_in_direction_of_target((ant['pos_y'], ant['pos_x']), clod_pos)
-        order = {
-            'origin' = (ant['pos_y'], ant['pos_x']),
-            'target' = target_pos,
-            'type' = 'stealer'
-        }
+        order = {}
+        order['origin'] = (ant['pos_y'], ant['pos_x'])
+        if not ant['carrying']:
+            if not (ant['pos_y'] == clod_pos[0] and ant['pos_x'] == clod_pos[1]):
+                order['target'] = go_in_direction_of_target(order['origin'], clod_pos)
+                order['type'] = 'move'
+            else:
+                order['target'] = None
+                order['type'] = 'lift'
+        else:
+            if compute_distance(order['origin'], ennemy_anthill_pos) == 1:
+                delta_y = ant['pos_y'] - ennemy_anthill_pos[0]
+                delta_x = ant['pos_x'] - ennemy_anthill_pos[1]
+                if delta_y > 0:
+                    target_y = ant['pos_y'] + 1
+                elif delta_y < 0:
+                    target_y = ant['pos_y'] - 1
+                elif delta_y == 0:
+                    target_y = ant['pos_y']
+                
+                if delta_x > 0:
+                    target_x = ant['pos_x'] + 1
+                elif delta_x < 0:
+                    target_x = ant['pos_y'] - 1
+                elif delta_x == 0:
+                    target_x = ant['pos_x']
+                
+                order['target'] = (target_y, target_x)
+                order['type'] = 'move'
+            else:
+                order['target'] = None
+                order['type'] = 'drop'
         order_list.append(order)
+
+    return order_list
 
     
 
