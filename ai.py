@@ -50,7 +50,7 @@ def compute_danger(anthill_structure, ant_structure, team):
     danger: A number who determine the danger level (int)
 
     specification: Maxime Dufrasne (v.1 18/4/21)
-    implémentation: Martin Buchet (v.1 )
+    implementation: Martin Buchet Maxime Dufrasne (v.1 28/4/21 )
 
     """
     #Need correct values
