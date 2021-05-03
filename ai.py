@@ -227,10 +227,7 @@ def compute_defense_ants(anthill_structure, ant_structure, team):
         else:
             ennemy_group = generate_defense_group(anthill, ennemies)
 
-    if team == 1:
-        other_team = 2
-    else:
-        other_team = 1
+    other_team = get_ennemy_team(team)
     
     return {team: ally_group, other_team: ennemy_group}
         
@@ -389,33 +386,10 @@ def compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_stru
     """
 
     ant = main.return_ant_by_id(ant_structure, ant_id)
-    if team == 1:
-        other_team_index = 1
-    else:
-        other_team_index = 0
+    ennemy_team = get_ennemy_team(team)
 
-    ennemy_anthill = anthill_structure[other_team_index]
+    ennemy_anthill = anthill_structure[ennemy_team - 1]
     return compute_distance((ant['pos_y'], ant['pos_x']), (ennemy_anthill['pos_y'], ennemy_anthill['pos_x'])) 
-
-def compute_distance(origin, destination):
-    """compute distance between an ant and an anthill
-
-    Parameters
-    ----------
-    origin: point of origin (tupple)
-    destination: destination (tupple)
-
-    Return
-    ------
-    distance: distance in number of moves between the ant and the anthill (int)
-
-    Version
-    -------
-    specification: Martin Buchet, Youlan Collard (v.1 01/05/21)
-    implementation: Martin Buchet, Youlan Collard (v.1 01/05/21)
-    """
-    return max(abs(origin[0] - destination[0]), abs(origin[1] - destination[1]))
-
 
 def get_closest_clod(ant_structure, main_structure, ant_id):
     """Get the position of the closest mud from an ally ant.
@@ -567,6 +541,45 @@ def generate_order(order):
         orders += ':*' + str(target_pos_y + 1) + '-' + str(target_pos_x + 1) + ' '
 
     return orders
+
+# Util function
+def compute_distance(origin, destination):
+    """compute distance between an ant and an anthill
+
+    Parameters
+    ----------
+    origin: point of origin (tupple)
+    destination: destination (tupple)
+
+    Return
+    ------
+    distance: distance in number of moves between the ant and the anthill (int)
+
+    Version
+    -------
+    specification: Martin Buchet, Youlan Collard (v.1 01/05/21)
+    implementation: Martin Buchet, Youlan Collard (v.1 01/05/21)
+    """
+    return max(abs(origin[0] - destination[0]), abs(origin[1] - destination[1]))
+
+def get_ennemy_team(team):
+    """Return the number of the ennemy team
+
+    Parameters
+    ----------
+    team: number of the team of our ai (int)
+
+    Returns
+    -------
+    ennemy_team_number: number of the ennemy team
+    
+    Version
+    -------
+    """
+    if team == 1:
+        return 2
+    else:
+        return 1
 
 # main function
 def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
