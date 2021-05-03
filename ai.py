@@ -262,26 +262,53 @@ def generate_defense_group(anthill, ant_list):
     return group
 
 
-def compute_fight_worth(ant_structure, ally_ant):
+def compute_fight_worth(ennemy_ants, ally_ants, ant_structure):
     """Calculate the rentability of a particular fight.
 
     Parameters
     ----------
     ennemy_ants: list of all ennemy ants (list)
     ally_ants: list of all ally ants (list)
-    ally_ant_id: id of our ant who participates in this fight (int)
+    ant_structure: the structure containing the ants (list)
 
     Return
     ------
-    fight_point: worth point of the combat (int) 
+    fight_point: worth point of the combat (float) 
 
     Version
     -------
     specification: Martin Buchet (v.1 19/04/21)
-    
+    implementation: Liam Letot (v.1 20/04/21)
     """
-    a
-    compute_average_level_ant(ant_list)
+    ennemy_clods = 0
+    ally_clods = 0
+    ennemy_hp = 0
+    ally_hp = 0
+    ennemy_average_level = compute_average_level_ant(ennemy_ants)
+    ally_average_level = compute_average_level_ant(ally_ants)
+    ennemy_number = len(ennemy_ants)
+    ally_number = len(ally_ants)
+    for ennemy in ennemy_ants:
+        ennemy_hp += ennemy['health']
+        if ennemy['carrying'] == True:
+            ennemy_clods += 1
+    for ally in ally_ants:
+        ally_hp += ally['hp']
+        if ally['carrying'] == True:
+            ally_clods += 1
+
+    ennemy_value = (ennemy_number / (ennemy_clods +1))
+    ally_value = (ally_number / (ally_clods +1))
+    ennemy_lose= (ally_number * ally_average_level)
+    ally_lose= (ennemy_number * ennemy_average_level)
+    
+    ally_worth = ally_hp - (ally_lose / ally_value)
+    ennemy_worth = ennemy_hp - (ennemy_lose / ennemy_value)
+    worth = ally_worth - ennemy_worth
+    return worth
+
+
+
 
 def generate_ants_e_group(ant_structure, team):
     """Genreate a list of ants close to each other. (ennemies)
@@ -349,7 +376,7 @@ def generate_ants_a_group(ant_structure, team):
     Version
     -------
     specification: Liam Letot (v.1 19/04/21)
-    implementation: Liam Letot (v.1 03/05/21b)
+    implementation: Liam Letot (v.1 03/05/21)
     """
     ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, team)
 
@@ -603,6 +630,11 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
         if allies[ant]['level'] == 3:
             updated_allied_ants[ant] = 'attack'
 
+    if len(defense_ants) > len(allies)/2
+        for ant in updated_allied_ants:
+            if updated_allied_ants[ant] == 'attack'
+                updated_allied_ants[ant] = 'collect'
+
 
     return updated_allied_ants
 
@@ -792,7 +824,7 @@ def define_attack_order(ants):
     """
     pass
 
-def define_stealer_order(ants):
+def define_stealer_order(ants, danger):
     """Define the order to give to a stealer ant
 
     Parameters
@@ -806,9 +838,11 @@ def define_stealer_order(ants):
 
     Version
     -------
-    specification: Youlan Collard
+    specification: Youlan Collard, Maxime Dufrasne (v.1 27/4/21)
     
     """
+
+
     pass
 
 def generate_order(order):
