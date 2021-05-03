@@ -477,7 +477,7 @@ def define_ants_type(ally_ants, enemy_ants, main_structure, danger):
 
     Returns
     -------
-    updated_aliied_ants: list of all allied ants with their defined types (list) 
+    updated_allied_ants: list of all allied ants with their defined types (list) 
 
     Version
     -------
