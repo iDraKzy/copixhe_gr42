@@ -624,11 +624,11 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
         for ant in allies:
             updated_allied_ants[ant] = 'collect'
     elif (len(defense_ants['other_team']) >= len(defense_ants['team']) and steal_time >= 10) or danger >= 30:
-        for ants in defense_ants['team']:
-            updated_allied_ants[ant_id] = 'defense'
+        for ant in defense_ants['team']:
+            updated_allied_ants[ant] = 'defense'
     elif len(defense_ants['other_team']) < len(defense_ants['team']) and steal_time < 10:
-        for ants in defense_ants['team']:
-            updated_allied_ants[ant_id] = 'stealer'     
+        for ant in defense_ants['team']:
+            updated_allied_ants[ant] = 'stealer'     
             if len(defense_ants['other_team']) > len(allies)/2:
                 for ant in updated_allied_ants:
                     if updated_allied_ants[ant] == 'attack':
