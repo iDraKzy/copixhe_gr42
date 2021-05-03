@@ -29,11 +29,11 @@ def check_ennemy_ants_near_allies(ant_structure, main_structure, team):
         ant_pos = (ant['pos_y'], ant['pos_x'])
         for y in range(-5, 6):
             for x in range(-5, 6):
-                potential_ant = main_structure[ant_pos[0] + y][ant_pos[1] + x]
-                if potential_ant != None:
-                    ant_dict = main.return_ant_by_id(ant_structure, potential_ant)
+                potential_ant_id = main_structure[ant_pos[0] + y][ant_pos[1] + x]
+                if potential_ant_id != None:
+                    ant_dict = main.return_ant_by_id(ant_structure, potential_ant_id)
                     if ant_dict['team'] != team:
-                        close_e_ant[ant['id']].append(ant_dict['id'])
+                        close_e_ant[ant['id']].append(potential_ant_id)
 
     return close_e_ant
 
