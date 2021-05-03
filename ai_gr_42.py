@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 
 import math
-import main
 
 ants_type = {}
 
@@ -31,7 +30,7 @@ def check_ennemy_ants_near_allies(ant_structure, main_structure, team):
             for x in range(-5, 6):
                 potential_ant_id = main_structure[ant_pos[0] + y][ant_pos[1] + x]
                 if potential_ant_id != None:
-                    ant_dict = main.return_ant_by_id(ant_structure, potential_ant_id)
+                    ant_dict = return_ant_by_id(ant_structure, potential_ant_id)
                     if ant_dict['team'] != team:
                         close_e_ant[ant['id']].append(potential_ant_id)
 
@@ -456,7 +455,7 @@ def compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_stru
     implementation: Martin Buchet (v.1 23/04/21)
     """
 
-    ant = main.return_ant_by_id(ant_structure, ant_id)
+    ant = return_ant_by_id(ant_structure, ant_id)
     ennemy_team = get_ennemy_team(team)
 
     ennemy_anthill = anthill_structure[ennemy_team - 1]
@@ -602,28 +601,30 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     """
 
-    updated_allied_ants = []
+    updated_allied_ants = {}
 
     defense_ants = compute_defense_ants(anthill_structure, ant_structure, team)
 
+    ennemy_team = get_ennemy_team(team)
+
     for ant in allies:
-        if allies[ant]['level'] == 3:
-            updated_allied_ants[ant] = 'attack'   
+        if ant['level'] == 3:
+            updated_allied_ants[ant['id']] = 'attack'   
 
     if len(allies) <= 2:
         for ant in allies:
-            updated_allied_ants[ant] = 'collect'
+            updated_allied_ants[ant['id']] = 'collect'
     elif (len(defense_ants['other_team']) >= len(defense_ants['team'])) or danger >= 30:
         for ant in defense_ants['team']:
-            updated_allied_ants[ant] = 'defense'
+            updated_allied_ants[ant['id']] = 'defense'
     elif len(defense_ants['other_team']) < len(defense_ants['team']):
         for ant in defense_ants['team']:
-            updated_allied_ants[ant] = 'stealer'     
+            updated_allied_ants[ant['id']] = 'stealer'     
             
     if len(defense_ants['other_team']) > len(allies)/2:
         for ant in updated_allied_ants:
-            if updated_allied_ants[ant] == 'attack':
-                updated_allied_ants[ant] = 'collect'
+            if updated_allied_ants[ant['id']] == 'attack':
+                updated_allied_ants[ant['id']] = 'collect'
 
 
     return updated_allied_ants
@@ -1056,6 +1057,27 @@ def go_in_direction_of_target(origin, target):
         target_x = origin[1]
 
     return (target_y, target_x)
+
+def return_ant_by_id(ant_structure, ant_id):
+    """Find an ant by its id inside the ant structure.
+
+    Parameters
+    ----------
+    ant_structure: the structure containing all the ants (list)
+    ant_id: id of the desired ant (int)
+
+    Returns
+    -------
+    ant: The desired ant (dict)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1 21/02/21)   
+    implementation: Youlan Collard (v.1 12/03/21) 
+    """
+    for ant in ant_structure:
+        if ant['id'] == ant_id:
+            return ant
 
 def get_ennemy_team(team):
     """Return the number of the ennemy team

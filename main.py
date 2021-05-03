@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-import blessed, math, os, time, random, ai
+import blessed, math, os, time, random, ai_gr_42
 term = blessed.Terminal()
 
 """Module providing remote play features for UNamur programmation project (INFOB132).
@@ -1593,14 +1593,14 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             orders_1 = input("team_1 input : ")
         elif type_1 == 'AI':
             team = 1
-            orders_1 = ai.get_AI_orders()
+            orders_1 = ai_gr_42.get_AI_orders(main_structure, ant_structure, anthill_structure, team)
         elif type_1 == 'remote':
             orders_1 = get_remote_orders(connection)
         if type_2 == 'human':
             orders_2 = input("team_2 input : ")
         elif type_2 == 'AI':
             team = 2
-            orders_2 = first_IA(main_structure, ant_structure, team)
+            orders_2 = ai_gr_42.get_AI_orders(main_structure, ant_structure, anthill_structure, team)
         elif type_2 == 'remote':
             notify_remote_orders(connection, orders_1)
             orders_2 = get_remote_orders(connection)
