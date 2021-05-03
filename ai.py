@@ -578,7 +578,7 @@ def compute_ennemies_ants_near_anthill(anthill_structure, team, ant_structure):
 
     return ennemy_number
 
-def define_ants_type(allies, enemies, main_structure, danger, anthill_structure, ant_structure, team, ant_id):
+def define_ants_type(allies, enemies, main_structure, danger, anthill_structure, ant_structure, team):
     """Define the type of each ally ants (attack, collect, stealer, defense).
     
     Parameters
@@ -590,7 +590,6 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
     anthill_structure: list of 2 elements containing the anthills information (list) 
     ant_structure: structure containing all the ants (list) 
     team: team number of our ai (int)
-    ant_id: id of the ant who wants to steal (int)
 
     Returns
     -------
@@ -632,13 +631,16 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     return updated_allied_ants
 
-def define_action_for_ant(ants, danger):
+def define_action_for_ant(main_structure, ant_structure, anthill_structure, ants, team):
     """Define the action a particular ant will do this turn.
 
     Parameters
     ----------
+    main_structure: main structure of the game board (list)
+    ant_structure: structure containing all ants (list)
+    anthill_structure: anthills (list)
     ant: specified ant (dict)
-    danger: current danger value of the game
+    team: team of our ai (int)
 
     Returns
     -------
@@ -667,10 +669,10 @@ def define_action_for_ant(ants, danger):
             stealers.append(ant)
 
 
-    collectors_order_list = define_collect_order(collectors, danger)
-    attackers_order_list = define_attack_order(attackers, danger)
-    defensers_order_list = define_defense_order(defensers, danger)
-    stealers_order_list = define_stealer_order(stealers, danger)
+    collectors_order_list = define_collect_order(main_structure, anthill_structure, collectors, team)
+    attackers_order_list = define_attack_order()
+    defensers_order_list = define_defense_order(ant_structure, anthill_structure, defensers, team)
+    stealers_order_list = define_stealer_order(main_structure, anthill_structure, stealers, team)
 
     return collectors_order_list + attackers_order_list + defensers_order_list + stealers_order_list
 
@@ -747,7 +749,7 @@ def define_collect_order(main_structure, anthill_structure, ants, team):
                 order['type'] = 'lift'
         else:
             ally_anthill = anthill_structure[team - 1]
-            closer_empty_space = get_closest_clod_space_from_ally_anthill(ant, ally_anthill)
+            closer_empty_space = get_closest_clod_space_from_ally_anthill(main_structure, ant, ally_anthill)
             if not (ant['pos_y'] == closer_empty_space[0] and ant['pos_x'] == closer_empty_space[1]):
                 target = go_in_direction_of_target(ant_pos, closer_empty_space)
                 order['target'] = target
@@ -901,7 +903,8 @@ def define_attack_order(main_structure,ant_structure, anthill_structure, ants, t
             
     return order_list
 
-def define_stealer_order(main_structure, anthill_structure, ants, danger, team):
+
+def define_stealer_order(main_structure, anthill_structure, ants, team):
     """Define the order to give to a stealer ant
 
     Parameters
@@ -909,7 +912,6 @@ def define_stealer_order(main_structure, anthill_structure, ants, danger, team):
     main_structure: main structure contaning the game board (list)
     anthill_structure: anthill structure containing the anthills (list)
     ants: ants to which give the order (list)
-    danger: danger value (int)
     team: team number of our ai (int)
 
     Returns
@@ -1103,13 +1105,12 @@ def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
     danger = compute_danger(anthill_structure, ant_structure, player_id)
     ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, player_id)
 
-    ants_type = define_ants_type(allies, ennemies, main_structure, danger)
+    ants_type = define_ants_type(allies, ennemies, main_structure, danger, anthill_structure, ant_structure)
 
     orders = ''
 
-    for ant in allies:
-        ant_type = ants_type[ant['id']]
-        order_dict = define_action_for_ant(ant, ant_type, danger)
-        orders += generate_order(order_dict)
+    order_dict = define_action_for_ant(main_structure, ant_structure, anthill_structure, allies, player_id)
+    for order in order_dict:
+        orders += generate_order(order)
     
     return orders
