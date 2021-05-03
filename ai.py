@@ -465,6 +465,40 @@ def get_distance_between_anthills(anthill_structure):
         pos.append((anthill['pos_y'], anthill['pos_x']))
     return int(math.dist(pos[0], pos[1]))
 
+def compute_ennemies_ants_near_anthill(anthill_structure, team, ant_structure):
+    """Compute the number of ennemies near anthills
+
+    Parameters
+    ----------
+    anthill_structure: structure containing both anthills (list)
+    team: team number of our ai (int)
+    ant_structure: structure containing all the ants (list)
+
+    Returns
+    -------
+    ennemy_number: number of ennemies close to anthills (int)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1)
+    implementation: Youlan Collard (v.1)
+    
+    """
+
+    ally_anthill = anthill_structure[team - 1]
+    ally_anthill_pos = (ally_anthill['pos_y'], ally_anthill['pos_x'])
+
+    allies, ennemies = seperate_ally_and_ennemy_ants(ant_structure, team)
+
+    ennemy_number = 0
+
+    for ant in ennemies:
+        ant_pos = (ant['pos_y'], ant['pos_x'])
+        if compute_distance(ally_anthill_pos, ant_pos) <= 8:
+            ennemy_number += 1
+
+    return ennemy_number
+
 def define_ants_type(ally_ants, enemy_ants, main_structure, danger):
     """Define the type of each ally ants (attack, collect, stealer, defense).
     
