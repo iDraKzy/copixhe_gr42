@@ -600,6 +600,7 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     if fight_point >= 20:
         
+        
 
 def define_action_for_ant(ants, danger):
     """Define the action a particular ant will do this turn.
