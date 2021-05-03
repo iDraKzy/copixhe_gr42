@@ -83,7 +83,7 @@ def e_average_dist_from_a_base(ant_structure, anthill_structure, team,):
     Version
     -------
     specification: Maxime Dufrasne (v.1 22/4/21)
-    implementation: Martin Buchet (v.1  )
+    implementation: Martin Buchet (v.1  24/4/21)
     """
 
     #player_id == team ???
@@ -124,8 +124,8 @@ def a_average_dist_from_a_base(ant_structure, anthill_structure, team):
 
     Version
     -------
-    specification: Maxime Dufrasne (v.1 )
-    implementation: Maxime Dufrasne (v.1 22/4/21)
+    specification: Maxime Dufrasne (v.1 22/4/21 )
+    implementation: Maxime Dufrasne (v.1 24/4/21)
     """
     ants = seperate_ally_and_ennemy_ants(ant_structure, player_id)
 
@@ -139,10 +139,9 @@ def a_average_dist_from_a_base(ant_structure, anthill_structure, team):
 
     allies = ants[1]
 
-    a_dist_list.append(dist) 
-
     for ants in allies:
         dist = max(abs(anthill_structure['team']['pos_x'] - ant_structure['pos_x']), abs(anthill_structure['team']['pos_y'] - ant_structure['pos_y']))
+        a_dist_list.append(dist)
 
     for each in range(0, len(a_dist_list)):
         total += a_dist_list[each] 
@@ -236,7 +235,7 @@ def get_distance_from_base_to_closest_clod(main_structure, anthill_structure, te
                     closest_clod = clod
     return distance, closest_clod
 
-def compute_clods_steal_time(ant_structure, main_structure, ant_id):
+def compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_structure, team):
     """Compute how long it will take to steal an ennemy's mud.
     parameter
     ---------
@@ -251,8 +250,9 @@ def compute_clods_steal_time(ant_structure, main_structure, ant_id):
     Version
     -------
     specification: Liam Letot (v.1 19/04/21)
+    implementation: Martin Buchet (v.1 23/04/21)
     """
-    pass
+    
 
 def get_closest_clod(ant_structure, main_structure, ant_id):
     """Get the position of the closest mud from an ally ant.
@@ -263,7 +263,7 @@ def get_closest_clod(ant_structure, main_structure, ant_id):
     main_structure: main structure of the game board (list)
 
     specification: Maxime Dufrasne (v.1 18/4/21)
-    implementation: Liam Leto (v.1 20/04/21)
+    implementation: Liam Letot (v.1 20/04/21)
     """
     ant_pos = (ant_structure[ant_id]['pos_y'],ant_structure[ant_id]['pos_x'])
     distance =100
@@ -332,9 +332,9 @@ def get_closest_8_clods_from_anthill(main_structure, anthill_structure, team):
     else:
         team = 1
 
-    anthill_pos = (anthill_structure[team]['pos_y'], anthill_structure[team]['pos_x'])
+    #anthill_pos = (anthill_structure[team]['pos_y'], anthill_structure[team]['pos_x'])
 
-    while closest_clods < 8: 
+    while len(closest_clods) < 8:
         for y in range(-1, 2):
             for x in range(-1, 2):
                 if main_structure[y][x]['clod']:
