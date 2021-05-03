@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-imporbt blessed, math, os, time, random, ai
+import blessed, math, os, time, random, ai
 term = blessed.Terminal()
 
 """Module providing remote play features for UNamur programmation project (INFOB132).
@@ -766,7 +766,6 @@ def validation_attack(team, main_structure, ant_structure, attacker_pos, target_
 
     # get ant_id from ant_pos then get the ant dict
     ant_id = main_structure[attacker_pos[0]][attacker_pos[1]]['ant']
-    ant_is_none = ant_id == None
     if ant_id == None:
         return False
 
@@ -878,7 +877,6 @@ def exec_order(order_list, main_structure, ant_structure, anthill_structure):
 
     for order in order_list:
         antid = main_structure[order['origin'][0]][order['origin'][1]]['ant']
-        ant = return_ant_by_id(ant_structure, antid)
 
         
         if order['type'] == 'move':
