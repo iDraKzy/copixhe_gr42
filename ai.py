@@ -73,7 +73,7 @@ def compute_danger(anthill_structure, ant_structure, team):
     else:
         danger += 7.5
 
-    allies, ennemies = seperate_ally_and_ennemy_ants(ant_structure, team)
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, team)
 
     ally_average_level = compute_average_level_ant(allies)
     ennemy_average_level = compute_average_level_ant(ennemies)
@@ -219,7 +219,7 @@ def compute_defense_ants(anthill_structure, ant_structure, team):
     implementation: Youlan Collard (v.1)
     """
 
-    allies, ennemies = seperate_ally_and_ennemy_ants(ant_structure, team)
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, team)
 
     for anthill in anthill_structure:
         if anthill['team'] == team:
@@ -299,7 +299,7 @@ def generate_ants_group(ant_structure, team):
     specification: Liam Letot (v.1 19/04/21)
     implementation: Youlan Collard (v.1)
     """
-    allies, ennemies = seperate_ally_and_ennemy_ants(ant_structure, team)
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, team)
 
     groups = []
 
@@ -424,8 +424,8 @@ def seperate_ally_and_ennemy_ants(ant_structure, team):
 
     Returns
     -------
-    ally_ants: list of all allied ants (list) 
     enemy_ants: list of all the enemy ants (list) 
+    ally_ants: list of all allied ants (list) 
 
     Version
     -------
@@ -488,7 +488,7 @@ def compute_ennemies_ants_near_anthill(anthill_structure, team, ant_structure):
     ally_anthill = anthill_structure[team - 1]
     ally_anthill_pos = (ally_anthill['pos_y'], ally_anthill['pos_x'])
 
-    allies, ennemies = seperate_ally_and_ennemy_ants(ant_structure, team)
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, team)
 
     ennemy_number = 0
 
