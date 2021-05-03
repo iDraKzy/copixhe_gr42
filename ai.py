@@ -601,13 +601,10 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
     implementation: Martin Buchet (v.1 27/04/21)
 
     """
-    ants_type
 
     updated_allied_ants = []
 
     defense_ants = compute_defense_ants(anthill_structure, ant_structure, team)
-
-    steal_time = compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_structure, team)
 
     for ant in allies:
         if allies[ant]['level'] == 3:
@@ -616,10 +613,10 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
     if len(allies) <= 2:
         for ant in allies:
             updated_allied_ants[ant] = 'collect'
-    elif (len(defense_ants['other_team']) >= len(defense_ants['team']) and steal_time >= 10) or danger >= 30:
+    elif (len(defense_ants['other_team']) >= len(defense_ants['team'])) or danger >= 30:
         for ant in defense_ants['team']:
             updated_allied_ants[ant] = 'defense'
-    elif len(defense_ants['other_team']) < len(defense_ants['team']) and steal_time < 10:
+    elif len(defense_ants['other_team']) < len(defense_ants['team']):
         for ant in defense_ants['team']:
             updated_allied_ants[ant] = 'stealer'     
             
@@ -670,7 +667,7 @@ def define_action_for_ant(main_structure, ant_structure, anthill_structure, ants
 
 
     collectors_order_list = define_collect_order(main_structure, anthill_structure, collectors, team)
-    attackers_order_list = define_attack_order()
+    attackers_order_list = define_attack_order(main_structure, ant_structure, anthill_structure, ants, team)
     defensers_order_list = define_defense_order(ant_structure, anthill_structure, defensers, team)
     stealers_order_list = define_stealer_order(main_structure, anthill_structure, stealers, team)
 
@@ -739,7 +736,7 @@ def define_collect_order(main_structure, anthill_structure, ants, team):
         ant_pos = (ant['pos_y'], ant['pos_x'])
         if not ant['carrying']:
             clod_pos = get_closest_clod(ant, main_structure, already_taken_clods)
-            clod_pos.append(already_taken_clods)
+            already_taken_clods.append(clod_pos)
             if not (ant['pos_y'] == clod_pos[0] and ant['pos_x'] == clod_pos[1]):
                 target = go_in_direction_of_target(ant_pos, (clod_pos[0], clod_pos[1]))
                 order['target'] = target
@@ -1102,7 +1099,7 @@ def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
     danger = compute_danger(anthill_structure, ant_structure, player_id)
     ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, player_id)
 
-    ants_type = define_ants_type(allies, ennemies, main_structure, danger, anthill_structure, ant_structure)
+    ants_type = define_ants_type(allies, ennemies, main_structure, danger, anthill_structure, ant_structure, player_id)
 
     orders = ''
 
