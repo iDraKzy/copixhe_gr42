@@ -805,7 +805,7 @@ def define_attack_order(ants):
     """
     pass
 
-def define_stealer_order(ants):
+def define_stealer_order(ants, danger):
     """Define the order to give to a stealer ant
 
     Parameters
@@ -819,9 +819,11 @@ def define_stealer_order(ants):
 
     Version
     -------
-    specification: Youlan Collard
+    specification: Youlan Collard, Maxime Dufrasne (v.1 27/4/21)
     
     """
+
+
     pass
 
 def generate_order(order):
