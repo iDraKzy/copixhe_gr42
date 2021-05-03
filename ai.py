@@ -570,7 +570,7 @@ def define_ants_type(allies, enemies, main_structure, danger):
     """
     pass
 
-def define_action_for_ant(ant, type, danger):
+def define_action_for_ant(ant, ant_type, danger):
     """Define the action a particular ant will do this turn.
 
     Parameters
@@ -586,6 +586,95 @@ def define_action_for_ant(ant, type, danger):
     Version
     -------
     specification: Youlan Collard (v.1 19/04/21)
+    
+    """
+
+    if ant_type == 'collect':
+        order_dict = define_collect_order(ant, danger)
+    elif ant_type == 'defense':
+        order_dict = define_defense_order(ant, danger)
+    elif ant_type == 'attack':
+        order_dict = define_attack_order(ant, danger)
+    elif ant_type == 'stealer':
+        order_dict = define_stealer_order(ant, danger)
+
+    return order_dict
+    
+def define_collect_order(ant, danger):
+    """Define the order to give to a collector ant
+
+    Parameters
+    ----------
+    ant: ant to which give the order (dict)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_dict: dictionnary describing the order (dict)
+
+    Version
+    -------
+    specification: Youlan Collard
+    implementation: Youlan Collard
+    
+    """
+    pass
+
+def define_defense_order(ant, danger):
+    """Define the order to give to a defense ant
+
+    Parameters
+    ----------
+    ant: ant to which give the order (dict)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_dict: dictionnary describing the order (dict)
+
+    Version
+    -------
+    specification: Youlan Collard
+    implementation: Youlan Collard
+    
+    """
+    pass
+
+def define_attack_order(ant, danger):
+    """Define the order to give to a defense ant
+
+    Parameters
+    ----------
+    ant: ant to which give the order (dict)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_dict: dictionnary describing the order (dict)
+
+    Version
+    -------
+    specification: Youlan Collard
+    implementation: Youlan Collard
+    """
+    pass
+
+def define_stealer_order(ant, danger):
+    """Define the order to give to a stealer ant
+
+    Parameters
+    ----------
+    ant: ant to which give the order (dict)
+    danger: danger value (int)
+
+    Returns
+    -------
+    order_dict: dictionnary describing the order (dict)
+
+    Version
+    -------
+    specification: Youlan Collard
+    implementation: Youlan Collard
     
     """
     pass
@@ -685,11 +774,16 @@ def get_AI_orders(main_structure, ant_structure, anthill_structure, player_id):
     specification: Youlan Collard (v.1 19/04/21)
     
     """
+    danger = compute_danger(anthill_structure, ant_structure, player_id)
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, player_id)
+
+    ants_type = define_ants_type(allies, ennemies, main_structure, danger)
 
     orders = ''
-    
-    ...
-    ...
-    ...
+
+    for ant in allies:
+        ant_type = ants_type[ant['id']]
+        order_dict = define_action_for_ant(ant, ant_type, danger)
+        orders += generate_order(order_dict)
     
     return orders
