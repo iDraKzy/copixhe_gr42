@@ -938,10 +938,6 @@ def define_stealer_order(main_structure, anthill_structure, ants, team):
 
     return order_list
 
-    
-
-
-
 def generate_order(order):
     """Generate a valid order in the form of a string.
 
