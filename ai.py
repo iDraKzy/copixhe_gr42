@@ -859,8 +859,13 @@ def define_stealer_order(ants, danger):
     
     """
 
-    if ants['type'] == ('stealer'):
-        go_in_direction_of_target(ants_pos, target_pos_y, target_pos_x)
+    order_list = []
+
+    if ants['type'] == (stealer):
+        get_distance_from_base_to_closest_clod(main_structure, anthill_structure, team)
+        go_in_direction_of_target(ants_pos, closest_clod)
+        for 
+
 
 def generate_order(order):
     """Generate a valid order in the form of a string.
