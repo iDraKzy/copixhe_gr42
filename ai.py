@@ -582,10 +582,10 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     if len(defense_ants['other_team']) >= len(defense_ants['team']) and steal_time >= 10:
         for ants in defense_ants
-            defense_ants[ant_id] = defense
+            updated_allied_ants[ant_id] = defense
     elif len(defense_ants['other_team']) < len(defense_ants['team']) and steal_time < 10:
         for ants in defense_ants
-            defense_ants[ant_id] = stealer
+            updated_allied_ants[ant_id] = stealer
 
 def define_action_for_ant(ant, ant_type, danger):
     """Define the action a particular ant will do this turn.
