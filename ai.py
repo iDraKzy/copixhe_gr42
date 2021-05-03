@@ -465,13 +465,13 @@ def get_distance_between_anthills(anthill_structure):
         pos.append((anthill['pos_y'], anthill['pos_x']))
     return int(math.dist(pos[0], pos[1]))
 
-def define_ants_type(ally_ants, enemy_ants, main_structure, danger):
+def define_ants_type(allies, enemies, main_structure, danger):
     """Define the type of each ally ants (attack, collect, stealer, defense).
     
     Parameters
     ----------
-    ally_ants: list of all allied ants (list) 
-    enemy_ants: list of all enemy ants (list)
+    allies: list of all allied ants (list) 
+    enemies: list of all enemy ants (list)
     main_structure: main structure of the game board (list)
     danger: current danger value of the game (int)
 
