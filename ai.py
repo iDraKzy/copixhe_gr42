@@ -43,6 +43,7 @@ def compute_danger(anthill_structure, ant_structure):
     danger: A number who determine the danger level (int)
 
     specification: Maxime Dufrasne (v.1 18/4/21)
+    implémentation: Martin Buchet (v.1 )
 
     """
     danger = 0
@@ -66,21 +67,42 @@ def compute_danger(anthill_structure, ant_structure):
 
     return danger 
 
-def e_average_dist_from_a_base(ant_structure, anthill_structure):
+def e_average_dist_from_a_base(ant_structure, anthill_structure, team):
     """Compute average distance of ennemies ants from allie base
 
     Parameters
     ----------
     ant_structure: structure containing all the ants (list)
     anthill_structure: list of 2 elements containing the anthills information (list)
+    team: the digit of the team we're in (int)
 
     Return
     ------
     e_average_dist: Ennemies ants average distance from allie base
     implementation: Maxime Dufrasne (v.1 22/4/21)
     """
-pass
+    ants = seperate_ally_and_ennemy_ants(ant_structure, player_id)
 
+    if team == 1:
+        team = 0
+    else:
+        team = 1
+
+    enemies = ants[0] 
+    #list of all the distances between ennemies and our base
+    dist_list = []
+    total = 0
+
+    for ants in enemies:
+        dist = max(abs(anthill_structure['team']['pos_x'] - ant_structure['pos_x']), abs(anthill_structure['team']['pos_y'] - ant_structure['pos_y']))
+        dist_list.append(dist)
+
+    for each in range(0, len(dist_list))::
+        total += dist_list[each]
+
+    e_average_dist = total / len(dist_list)
+
+    return e_average_dist
 
 def a_average_dist_from_a_base(ant_structure, anthill_structure):
     """Compute average distance of allies ants from allie base
