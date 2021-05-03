@@ -784,7 +784,7 @@ def define_defense_order(ant_structure, anthill_structure, ants, team):
         order = {}
         order['origin'] = (ant['pos_y'], ant['pos_x'])
 
-        closest_ennemy_ant_pos, distance = get_closest_ennemy_ant(ant_structure, ant, team)
+        closest_ennemy_ant_pos, distance = get_closest_ennemy_ant(ant_structure, ant, team, 'ennemy')
         if distance <= 3:
             order['type'] = 'attack'
             order['target'] = closest_ennemy_ant_pos
@@ -844,13 +844,14 @@ def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
     
     return distance, ant_pos_to_return
 
-def define_attack_order(ants):
-    """Define the order to give to a defense ant
+def define_attack_order(ants, danger, team):
+    """Define the order to give to a attack ant
 
     Parameters
     ----------
     ants: ants to which give the order (list)
     danger: danger value (int)
+    team: team number of our ai (int)
 
     Returns
     -------
@@ -858,9 +859,14 @@ def define_attack_order(ants):
 
     Version
     -------
-    specification: Youlan Collard
+    specification: Youlan Collard (v.1 25/4/21)
+    implementation: Maxime Dufrasne (v.1 27/4/21)
     """
-    pass
+    order_list = []
+
+    for ant in ants :
+       order = {}
+
 
 def define_stealer_order(ants, danger, team):
     """Define the order to give to a stealer ant
@@ -869,6 +875,7 @@ def define_stealer_order(ants, danger, team):
     ----------
     ants: ants to which give the order (list)
     danger: danger value (int)
+    team: team number of our ai (int)
 
     Returns
     -------
