@@ -873,7 +873,7 @@ def define_attack_order(main_structure,ant_structure, anthill_structure, ants, t
         ennemy_life= 100
         for group in ally_group:
             for solo in group:
-                if solo['id']== ant['id']:
+                if solo == ant['id']:
                     ant_group = group
         if compute_fight_worth(ennemy_group[ant['id']], ant_group, ant_structure) > 0:
             order_type = 'attack'
