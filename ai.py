@@ -73,7 +73,49 @@ def compute_danger(anthill_structure, ant_structure, team):
     else:
         danger += 7.5
 
+    allies, ennemies = seperate_ally_and_ennemy_ants(ant_structure, team)
+
+    ally_average_level = compute_average_level_ant(allies)
+    ennemy_average_level = compute_average_level_ant(ennemies)
+
+    delta_average_level = ennemy_average_level - ally_average_level
+
+    if delta_average_level > 1:
+        danger += 15
+    elif delta_average_level > 0 and delta_average_level < 1:
+        danger += 7.5
+    elif delta_average_level < 0 and delta_average_level > -1:
+        danger -= 7.5
+    elif delta_average_level < -1:
+        danger -= 15
+
     return danger 
+
+def compute_average_level_ant(ant_list):
+    """Compute the average level of a list of ant.
+
+    Parameters
+    ----------
+    ant_list: the list to compute (list)
+
+    Returns
+    -------
+    average_level: The average level of the list (float)
+
+    Version
+    -------
+    specification: Youlan Collard (v.1)
+    implementation: Youlan Collard (v.1)
+    
+    """
+    average_level = 0
+
+    for ant in ant_list:
+        average_level += ant['level']
+
+    average_level = average_level / len(ant_list)
+
+    return average_level
 
 def e_average_dist_from_a_base(ant_structure, anthill_structure, team,):
     """Compute average distance of ennemies ants from allie base
