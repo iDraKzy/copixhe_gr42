@@ -632,7 +632,7 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     if len(defense_ants['other_team']) > len(allies)/2:
         for ant in updated_allied_ants:
-            if updated_allied_ants[ant] == 'attack'
+            if updated_allied_ants[ant] == 'attack':
                 updated_allied_ants[ant] = 'collect'
 
 
