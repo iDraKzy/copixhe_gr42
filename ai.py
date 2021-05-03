@@ -231,7 +231,6 @@ def compute_defense_ants(anthill_structure, ant_structure, team):
     
     return {team: ally_group, other_team: ennemy_group}
         
-
 def generate_defense_group(anthill, ant_list):
     """Generate a list of ants close to the specified anthill given the anthill and the ants posessed by this anthill
 
@@ -260,7 +259,6 @@ def generate_defense_group(anthill, ant_list):
             group.append(ant)
 
     return group
-
 
 def compute_fight_worth(ennemy_ants, ally_ants, ant_structure):
     """Calculate the rentability of a particular fight.
@@ -306,9 +304,6 @@ def compute_fight_worth(ennemy_ants, ally_ants, ant_structure):
     ennemy_worth = ennemy_hp - (ennemy_lose / ennemy_value)
     worth = ally_worth - ennemy_worth
     return worth
-
-
-
 
 def generate_ants_e_group(ant_structure, team):
     """Genreate a list of ants close to each other. (ennemies)
@@ -359,7 +354,6 @@ def generate_ants_e_group(ant_structure, team):
             group.append(groups_not_duplicated)
 
     return groups_not_duplicated
-
 
 def generate_ants_a_group(ant_structure, team):
     """Genreate a list of ants close to each other. (ally)
@@ -638,8 +632,6 @@ def define_ants_type(allies, enemies, main_structure, danger, anthill_structure,
 
     return updated_allied_ants
 
-        
-
 def define_action_for_ant(ants, danger):
     """Define the action a particular ant will do this turn.
 
@@ -767,8 +759,6 @@ def define_collect_order(main_structure, anthill_structure, ants, team):
     
     return order_list
 
-
-
 def define_defense_order(ant_structure, anthill_structure, ants, team):
     """Define the order to give to a defense ant
 
@@ -794,7 +784,7 @@ def define_defense_order(ant_structure, anthill_structure, ants, team):
         order = {}
         order['origin'] = (ant['pos_y'], ant['pos_x'])
 
-        closest_ennemy_ant_pos, distance = get_closest_ennemy_ant(ant_structure, ant, team)
+        closest_ennemy_ant_pos, distance = get_closest_ant_of_specified_team(ant_structure, ant, team, 'ennemy')
         if distance <= 3:
             order['type'] = 'attack'
             order['target'] = closest_ennemy_ant_pos
@@ -811,9 +801,7 @@ def define_defense_order(ant_structure, anthill_structure, ants, team):
         order_list.append(order)
     
     return order_list
-            
-
-    
+   
 def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
     """Get the closest ennemy ant from an ally ant
 
@@ -855,6 +843,7 @@ def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
                 ant_pos_to_return = ally_pos
     
     return distance, ant_pos_to_return
+
 
 def define_attack_order(main_structure,ant_structure, anthill_structure, ants, team):
     """Define the order to give to an attack ant
@@ -908,13 +897,19 @@ def define_attack_order(main_structure,ant_structure, anthill_structure, ants, t
         
 
 
-def define_stealer_order(ants, danger):
+    for ant in ants :
+       order = {}
+
+def define_stealer_order(main_structure, anthill_structure, ants, danger, team):
     """Define the order to give to a stealer ant
 
     Parameters
     ----------
+    main_structure: main structure contaning the game board (list)
+    anthill_structure: anthill structure containing the anthills (list)
     ants: ants to which give the order (list)
     danger: danger value (int)
+    team: team number of our ai (int)
 
     Returns
     -------
@@ -923,16 +918,56 @@ def define_stealer_order(ants, danger):
     Version
     -------
     specification: Youlan Collard, Maxime Dufrasne (v.1 27/4/21)
+    implementation: Martin Buchet, Maxime Dufrasne (v.1 01/05/21)
     
     """
 
     order_list = []
 
-    if ants['type'] == (stealer):
-        get_distance_from_base_to_closest_clod(main_structure, anthill_structure, team)
-        go_in_direction_of_target(ants_pos, closest_clod)
-        for 
+    enemy_team = get_ennemy_team(team)
 
+    clod_pos = get_distance_from_base_to_closest_clod(main_structure, anthill_structure, enemy_team)
+    ennemy_anthill = anthill_structure[enemy_team - 1]
+    ennemy_anthill_pos = (ennemy_anthill['pos_y'], ennemy_anthill['pos_x'])
+    ally_anthill = anthill_structure[team - 1]
+    ally_anthill_pos = (ally_anthill['pos_y'], ally_anthill['pos_x'])
+   
+    for ant in ants:
+        order = {}
+        order['origin'] = (ant['pos_y'], ant['pos_x'])
+        if not ant['carrying']:
+            if not (ant['pos_y'] == clod_pos[0] and ant['pos_x'] == clod_pos[1]):
+                order['target'] = go_in_direction_of_target(order['origin'], clod_pos)
+                order['type'] = 'move'
+            else:
+                order['target'] = None
+                order['type'] = 'lift'
+        else:
+            if compute_distance(order['origin'], ennemy_anthill_pos) == 1:
+                delta_y = ant['pos_y'] - ennemy_anthill_pos[0]
+                delta_x = ant['pos_x'] - ennemy_anthill_pos[1]
+                if delta_y > 0:
+                    target_y = ant['pos_y'] + 1
+                elif delta_y < 0:
+                    target_y = ant['pos_y'] - 1
+                elif delta_y == 0:
+                    target_y = ant['pos_y']
+                
+                if delta_x > 0:
+                    target_x = ant['pos_x'] + 1
+                elif delta_x < 0:
+                    target_x = ant['pos_y'] - 1
+                elif delta_x == 0:
+                    target_x = ant['pos_x']
+                
+                order['target'] = (target_y, target_x)
+                order['type'] = 'move'
+            else:
+                order['target'] = None
+                order['type'] = 'drop'
+        order_list.append(order)
+
+    return order_list
 
 def generate_order(order):
     """Generate a valid order in the form of a string.
