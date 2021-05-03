@@ -275,7 +275,7 @@ def compute_fight_worth(ennemy_ants, ally_ants, ant_structure, ally_ant_id):
 
     Return
     ------
-    fight_point: worth point of the combat (int) 
+    fight_point: worth point of the combat (float) 
 
     Version
     -------
