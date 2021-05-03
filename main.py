@@ -876,8 +876,6 @@ def exec_order(order_list, main_structure, ant_structure, anthill_structure):
     all_dead_ants = []
 
     for order in order_list:
-        antid = main_structure[order['origin'][0]][order['origin'][1]]['ant']
-
         
         if order['type'] == 'move':
             move(main_structure, ant_structure, order['team'], order['origin'], order['target'])
