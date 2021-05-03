@@ -867,7 +867,6 @@ def define_attack_order(ants, danger, team):
     for ant in ants :
        order = {}
 
-
 def define_stealer_order(main_structure, anthill_structure, ants, danger, team):
     """Define the order to give to a stealer ant
 
@@ -936,10 +935,6 @@ def define_stealer_order(main_structure, anthill_structure, ants, danger, team):
         order_list.append(order)
 
     return order_list
-
-    
-
-
 
 def generate_order(order):
     """Generate a valid order in the form of a string.
