@@ -637,9 +637,9 @@ def define_action_for_ant(ants, danger):
             collectors.append(ant)
         elif ant_type == 'attack':
             attackers.append(ant)
-        elif ant_type == 'defensers':
+        elif ant_type == 'defenser':
             defensers.append(ant)
-        elif ant_type == 'stealers':
+        elif ant_type == 'stealer':
             stealers.append(ant)
 
 
@@ -752,6 +752,25 @@ def define_defense_order(ants):
     Version
     -------
     specification: Youlan Collard
+    """
+    pass
+
+def get_closest_ennemy_ant(ant_structure, ally_ant):
+    """Get the closest ennemy ant from an ally ant
+
+    Parameters
+    ----------
+    ant_structure: structure containing all the ants (list)
+    ally_ant: ally ant wishing to get the closest ennemy (dict)
+
+    Returns
+    -------
+    ant_pos: position of the ennemy ant (tupple)
+
+    Version
+    -------
+    specification: Youlan Collard
+    
     """
     pass
 
