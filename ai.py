@@ -1,32 +1,39 @@
 #-*- coding: utf-8 -*-
 
-import math
+import math, main
 
 
 
 # other functions
-def check_ennemy_ants_near_allies(ant_structure, main_structure):
+def check_ennemy_ants_near_allies(ant_structure, main_structure, team):
     """Check if an ennemy ants is near a specified ally. Close means less than 5 cells away (return number)
     
     Parameter
     ----------
     ant_structure: structure containing all the ants (list)
     main_structure: main structure of the game board (list)
+    team: ally team number (int)
 
     Return
     -------
-    close_e_ant: Number of ennemy ants close for each ally ant (list)
+    close_e_ant: List of ant id close to each ally ant (dict)
 
     specification: Maxime Dufrasne (v.1 18/4/21)
-    implementation: Maxime Dufrasne (v.1 29/4/21)
+    implementation: Maxime Dufrasne, Youlan Collard (v.1 29/4/21)
     """
-    close_e_ant = []
+    close_e_ant = {}
 
-    ant_pos = (ant_structure[ant_id]['pos_y'],ant_structure[ant_id]['pos_x'])
-    for y in range (-5,5):
-        for x in range (-5,5):
-            if main_structure[y][x]['ant'] != None:
-                close_e_ant.append((y,x))
+    for ant in ant_structure:
+        close_e_ant[ant['id']] = []
+        ant_pos = (ant['pos_y'], ant['pos_x'])
+        for y in range(-5, 6):
+            for x in range(-5, 6):
+                potential_ant = main_structure[ant_pos[0] + y][ant_pos[1] + x]
+                if potential_ant != None:
+                    ant_dict = main.return_ant_by_id(ant_structure, potential_ant)
+                    if ant_dict['team'] != team:
+                        close_e_ant[ant['id']].append(ant_dict['id'])
+
     return close_e_ant
 
 def compute_danger(anthill_structure, ant_structure, team):
