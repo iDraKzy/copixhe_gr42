@@ -557,21 +557,21 @@ def generate_order(order):
     implementation: Liam Letot (v.1 21/04/21)
     
     """
-    ant_pos_y = order[0][0]
-    ant_pos_x = order[0][1]
-    order_type = order[1]
-    if order_type == ('attack' or 'move'):
-        target_pos_y = order[2][0]
-        target_pos_x = order[2][1]
+    ant_pos_y = order['origin'][0]
+    ant_pos_x = order['origin'][1]
+
+    if order['type'] == ('attack' or 'move'):
+        target_pos_y = order['target'][0]
+        target_pos_x = order['target'][1]
 
     orders = str(ant_pos_y + 1) + '-' + str(ant_pos_x +1)
-    if order_type == 'drop':
+    if order['type'] == 'drop':
         orders += ':drop '
-    elif order_type == 'lift':
+    elif order['type'] == 'lift':
         orders += ':lift '
-    elif order_type == 'move':
+    elif order['type'] == 'move':
         orders += ':@' + str(target_pos_y + 1) + '-' + str(target_pos_x + 1) + ' '
-    elif order_type == 'attack':
+    elif order['type'] == 'attack':
         orders += ':*' + str(target_pos_y + 1) + '-' + str(target_pos_x + 1) + ' '
 
     return orders
