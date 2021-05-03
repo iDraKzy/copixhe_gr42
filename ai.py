@@ -128,7 +128,7 @@ def compute_average_level_ant(ant_list):
 
     return average_level
 
-def e_average_dist_from_a_base(ant_structure, anthill_structure, team,):
+def e_average_dist_from_a_base(ant_structure, anthill_structure, team):
     """Compute average distance of ennemies ants from allie base
 
     Parameters
@@ -149,15 +149,14 @@ def e_average_dist_from_a_base(ant_structure, anthill_structure, team,):
 
     ants = seperate_ally_and_ennemy_ants(ant_structure, team)
 
-    team -= 1
-
     enemies = ants[0] 
     #list of all the distances between ennemies and our base
     e_dist_list = []
     total = 0
 
-    for ants in enemies:
-        dist = max(abs(anthill_structure['team']['pos_x'] - ant_structure['pos_x']), abs(anthill_structure['team']['pos_y'] - ant_structure['pos_y']))
+    for ant in enemies:
+        ally_anthill = anthill_structure[team - 1]
+        dist = compute_distance((ally_anthill['pos_y'], ally_anthill['pos_x']), (ant['pos_y'], ant['pos_x']))
         e_dist_list.append(dist)
 
     for each in range(0, len(e_dist_list)):
@@ -186,15 +185,14 @@ def a_average_dist_from_a_base(ant_structure, anthill_structure, team):
     """
     ants = seperate_ally_and_ennemy_ants(ant_structure, team)
 
-    team -= 1
-
     a_dist_list = []
     total = 0
 
     allies = ants[1]
 
-    for ants in allies:
-        dist = max(abs(anthill_structure['team']['pos_x'] - ant_structure['pos_x']), abs(anthill_structure['team']['pos_y'] - ant_structure['pos_y']))
+    for ant in allies:
+        ally_anthill = anthill_structure[team - 1]
+        dist = compute_distance((ally_anthill['pos_y'], ally_anthill['pos_x']), (ant['pos_y'], ant['pos_x']))
         a_dist_list.append(dist)
 
     for each in range(0, len(a_dist_list)):
