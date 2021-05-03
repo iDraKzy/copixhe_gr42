@@ -280,9 +280,10 @@ def compute_fight_worth(ant_structure, ally_ant):
     specification: Martin Buchet (v.1 19/04/21)
     
     """
-    pass
+    a
+    compute_average_level_ant(ant_list)
 
-def generate_ants_group(ant_structure, team):
+def generate_ants_e_group(ant_structure, team):
     """Genreate a list of ants close to each other. (ennemies)
 
     Parameters
@@ -333,6 +334,55 @@ def generate_ants_group(ant_structure, team):
     return groups_not_duplicated
 
 
+def generate_ants_a_group(ant_structure, team):
+    """Genreate a list of ants close to each other. (ally)
+
+    Parameters
+    ----------
+    ant_structure: the structure containing the ants (list)
+    team : your team number (int)
+
+    Return
+    ------
+    close_ant: a list which contain group of ally ants (list)
+
+    Version
+    -------
+    specification: Liam Letot (v.1 19/04/21)
+    implementation: Liam Letot (v.1 03/05/21b)
+    """
+    ennemies, allies = seperate_ally_and_ennemy_ants(ant_structure, team)
+
+    groups = []
+
+    for ant in allies:
+        current_group = []
+        for ant_to_check in allies:
+            if ant['id'] != ant_to_check['id']:
+                ant_pos = (ant['pos_y'], ant['pos_x'])
+                ant_to_check_pos = (ant_to_check['pos_y'], ant_to_check['pos_x'])
+                if compute_distance(ant_pos, ant_to_check_pos) <= 5:
+                    current_group.append(ant['id'])
+
+        groups.append(current_group)
+
+    already_seen = []
+    groups_not_duplicated = []
+    for group in groups:
+        duplicates_in_this_group = False
+        index = 0
+        while not duplicates_in_this_group and len(group) < index:
+            ant_id = group[index]
+            if not ant_id in already_seen:
+                already_seen.append(ant)
+            else:
+                duplicates_in_this_group = True
+            index += 1
+
+        if not duplicates_in_this_group:
+            group.append(groups_not_duplicated)
+
+    return groups_not_duplicated
 
 def get_distance_from_base_to_closest_clod(main_structure, anthill_structure, team):
     """Get the distance from the ennemies base to the closest mud.
