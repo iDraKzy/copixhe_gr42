@@ -887,14 +887,14 @@ def define_attack_order(main_structure,ant_structure, anthill_structure, ants, t
                 if bad_id == ennemy['id']:
                     ennemy['health'] -= ant['level']
                     target_pos = [ennemy['pos_y'],ennemy['pos_x']]
-            order{}
+            order = {}
             order['type']= 'attack'
             order['origin']= origin_pos
             order['target']= target_pos
         else:
             order_type = 'move'
             target_pos = get_closest_ant_of_specified_team(ant_structure, ant, team, 'ally')
-            order{}
+            order = {}
             order['type'] = 'move'
             order['origin']= origin_pos
             order['target']= target_pos
