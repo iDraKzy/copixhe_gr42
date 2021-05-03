@@ -1593,7 +1593,7 @@ def play_game(CPX_file, group_1, type_1, group_2, type_2):
             orders_1 = input("team_1 input : ")
         elif type_1 == 'AI':
             team = 1
-            orders_1 = first_IA(main_structure, ant_structure, team)
+            orders_1 = ai.get_AI_orders()
         elif type_1 == 'remote':
             orders_1 = get_remote_orders(connection)
         if type_2 == 'human':
