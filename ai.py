@@ -868,6 +868,7 @@ def define_attack_order(main_structure,ant_structure, anthill_structure, ants, t
     ally_group = generate_ants_a_group(ant_structure, team)
     ennemy_group = check_ennemy_ants_near_allies(ant_structure, main_structure, team)
     ennemy_ant, ally_ant = seperate_ally_and_ennemy_ants(ant_structure, team)
+    order_list()
     for ant in ants:
         origin_pos = [ant['pos_y'], ant['pos_x']]
         ennemy_life= 100
@@ -884,21 +885,21 @@ def define_attack_order(main_structure,ant_structure, anthill_structure, ants, t
                 if bad_id == ennemy['id']:
                     ennemy['health'] -= ant['level']
                     target_pos = [ennemy['pos_y'],ennemy['pos_x']]
-            order{'type' =
-
-            }
+            order{}
+            order['type']= 'attack'
+            order['origin']= origin_pos
+            order['target']= target_pos
         else:
             order_type = 'move'
             target_pos = get_closest_ant_of_specified_team(ant_structure, ant, team, 'ally')
-            
-                            
-            
-        
-        
+            order{}
+            order['type'] = 'move'
+            order['origin']= origin_pos
+            order['target']= target_pos
 
-
-    for ant in ants :
-       order = {}
+        order_list.append(order)
+            
+    return order_list
 
 def define_stealer_order(main_structure, anthill_structure, ants, danger, team):
     """Define the order to give to a stealer ant
