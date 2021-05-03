@@ -247,6 +247,7 @@ def compute_clods_steal_time(ant_structure, main_structure, ant_id, anthill_stru
     specification: Liam Letot (v.1 19/04/21)
     implementation: Martin Buchet (v.1 23/04/21)
     """
+
     distance = compute_distance(ant_structure, main_structure, ant_id, anthill_structure, team) 
 
     steal_time = distance
@@ -273,7 +274,7 @@ def compute_distance(ant_structure, main_structure, ant_id, anthill_structure, t
     specification: Martin Buchet (v.1 01/05/21)
     Implementation: Martin Buchet (v.1 01/05/21)
     """
-
+    #Not sure about that one (to check)
     for ant in ant_structure:
         if ant_structure[ant]['id'] == ant_id:
             ant_pos_x = ant_structure[ant]['pos_x']
