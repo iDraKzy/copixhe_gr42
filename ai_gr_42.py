@@ -30,7 +30,6 @@ def check_ennemy_ants_near_allies(ant_structure, main_structure, team):
             for x in range(-5, 6):
                 potential_ant_id = main_structure[ant_pos[0] + y][ant_pos[1] + x]['ant']
                 if potential_ant_id != None:
-                    print(potential_ant_id)
                     ant_dict = return_ant_by_id(ant_structure, potential_ant_id)
                     if ant_dict['team'] != team:
                         close_e_ant[ant['id']].append(potential_ant_id)
@@ -122,6 +121,7 @@ def compute_average_level_ant(ant_list):
     average_level = 0
 
     for ant in ant_list:
+        print(ant)
         average_level += ant['level']
 
     average_level = average_level / len(ant_list)
@@ -402,7 +402,6 @@ def generate_ants_a_group(ant_structure, team):
 
         if not duplicates_in_this_group:
             group.append(groups_not_duplicated)
-
     return groups_not_duplicated
 
 def get_distance_from_base_to_closest_clod(main_structure, anthill_structure, team):
@@ -870,6 +869,7 @@ def define_attack_order(main_structure,ant_structure, anthill_structure, ants, t
     ennemy_group = check_ennemy_ants_near_allies(ant_structure, main_structure, team)
     ennemy_ant, ally_ant = seperate_ally_and_ennemy_ants(ant_structure, team)
     order_list = []
+    ant_group = []
     for ant in ants:
         origin_pos = [ant['pos_y'], ant['pos_x']]
         ennemy_life= 100
