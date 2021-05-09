@@ -18,7 +18,7 @@ def check_ennemy_ants_near_allies(ant_structure, main_structure, team):
     -------
     close_e_ant: List of ant id close to each ally ant (dict)
 
-    specification: Maxime Dufrasne (v.1 18/4/21)
+    specification: Maxime Dufrasne (v.Lia 18/4/21)
     implementation: Maxime Dufrasne, Youlan Collard (v.1 29/4/21)
     """
     close_e_ant = {}
@@ -32,7 +32,7 @@ def check_ennemy_ants_near_allies(ant_structure, main_structure, team):
                 if potential_ant_id != None:
                     ant_dict = return_ant_by_id(ant_structure, potential_ant_id)
                     if ant_dict['team'] != team:
-                        close_e_ant[ant['id']].append(potential_ant_id)
+                        close_e_ant[ant['id']].append(ant_dict)
 
     return close_e_ant
 
@@ -115,16 +115,15 @@ def compute_average_level_ant(ant_list):
     Version
     -------
     specification: Youlan Collard (v.1)
-    implementation: Youlan Collard (v.1)
+    implementation: Youlan Collard (v.1) Liam Letot (v.2 07/05/21)
     
     """
     average_level = 0
-
-    for ant in ant_list:
-        print(ant)
-        average_level += ant['level']
-
-    average_level = average_level / len(ant_list)
+    if len(ant_list) != 0:
+        for ant in ant_list:
+            average_level += ant['level']
+    
+        average_level = average_level / len(ant_list)
 
     return average_level
 
@@ -295,11 +294,11 @@ def compute_fight_worth(ennemy_ants, ally_ants, ant_structure):
         if ally['carrying'] == True:
             ally_clods += 1
 
-    ennemy_value = (ennemy_number / (ennemy_clods +1))
-    ally_value = (ally_number / (ally_clods +1))
+    ennemy_value = (ennemy_number / (ennemy_clods +1)) + 1
+    ally_value = (ally_number / (ally_clods +1)) + 1
     ennemy_lose= (ally_number * ally_average_level)
     ally_lose= (ennemy_number * ennemy_average_level)
-    
+
     ally_worth = ally_hp - (ally_lose / ally_value)
     ennemy_worth = ennemy_hp - (ennemy_lose / ennemy_value)
     worth = ally_worth - ennemy_worth
@@ -425,8 +424,8 @@ def get_distance_from_base_to_closest_clod(main_structure, anthill_structure, te
     """
     anthill_pos = (anthill_structure[team - 1]['pos_y'], anthill_structure[team - 1]['pos_x'])
     distance = 100
-    for y in range(main_structure):
-        for x in range(main_structure[0]):
+    for y in range(len(main_structure)):
+        for x in range(len(main_structure[y])):
             if main_structure[y][x]['clod'] != None:
                 clod = (y,x)
                 dist = compute_distance(anthill_pos, clod)
@@ -933,7 +932,7 @@ def define_stealer_order(main_structure, anthill_structure, ants, team):
    
     for ant in ants:
         order = {}
-        order['origin'] = (ant['pos_y'], ant['pos_x'])
+        order['origin'] = [ant['pos_y'], ant['pos_x']]
         if not ant['carrying']:
             if not (ant['pos_y'] == clod_pos[0] and ant['pos_x'] == clod_pos[1]):
                 order['target'] = go_in_direction_of_target(order['origin'], clod_pos)
@@ -959,7 +958,7 @@ def define_stealer_order(main_structure, anthill_structure, ants, team):
                 elif delta_x == 0:
                     target_x = ant['pos_x']
                 
-                order['target'] = (target_y, target_x)
+                order['target'] =[ target_y, target_x]
                 order['type'] = 'move'
             else:
                 order['target'] = None
@@ -988,10 +987,11 @@ def generate_order(order):
     ant_pos_y = order['origin'][0]
     ant_pos_x = order['origin'][1]
 
-    if order['type'] == ('attack' or 'move'):
-        target_pos_y = order['target'][0]
-        target_pos_x = order['target'][1]
 
+    target_pos_y = order['target'][0]
+    target_pos_x = order['target'][1]
+    print(target_pos_x)
+    print(target_pos_y)
     orders = str(ant_pos_y + 1) + '-' + str(ant_pos_x +1)
     if order['type'] == 'drop':
         orders += ':drop '
@@ -1056,8 +1056,8 @@ def go_in_direction_of_target(origin, target):
         target_x = origin[1] - 1
     elif x_axis_distance == 0:
         target_x = origin[1]
-
-    return (target_y, target_x)
+    target = [target_y, target_x]
+    return target
 
 def return_ant_by_id(ant_structure, ant_id):
     """Find an ant by its id inside the ant structure.
