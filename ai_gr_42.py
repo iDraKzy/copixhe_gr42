@@ -802,7 +802,7 @@ def define_defense_order(ant_structure, anthill_structure, ants, team):
     return order_list
    
 def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
-    """Get the closest ennemy ant from an ally ant
+    """Get the closest ennemy ant from an ant
 
     Parameters
     ----------
@@ -828,7 +828,7 @@ def get_closest_ant_of_specified_team(ant_structure, ally_ant, team, side):
     if side == 'ennemy':
 
         for ant in ennemies:
-            ennemy_pos = (ant['pos_y'], ant['pos_x'])
+            ennemy_pos = [ant['pos_y'], ant['pos_x']]
             dist = compute_distance(ally_ant_pos, ennemy_pos)
             if dist < distance:
                 distance = dist
@@ -888,7 +888,11 @@ def define_attack_order(main_structure,ant_structure, anthill_structure, ants, t
             
         else:
             order_type = 'move'
-            target_pos = get_closest_ant_of_specified_team(ant_structure, ant, team, 'ally')
+            dist, target_pos = get_closest_ant_of_specified_team(ant_structure, ant, team, 'ally')
+            if dist == 0:
+                dist, target_pos =get_closest_ant_of_specified_team(ant_structure, ant, team, 'ennemy')
+
+                
         order = {}
         order['type']= order_type
         order['origin']= origin_pos
@@ -987,9 +991,9 @@ def generate_order(order):
     ant_pos_y = order['origin'][0]
     ant_pos_x = order['origin'][1]
 
-
-    target_pos_y = order['target'][0]
-    target_pos_x = order['target'][1]
+    if order['type']== ('move' or 'attack'):
+        target_pos_y = order['target'][0]
+        target_pos_x = order['target'][1]
     orders = str(ant_pos_y + 1) + '-' + str(ant_pos_x +1)
     if order['type'] == 'drop':
         orders += ':drop '
