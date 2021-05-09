@@ -990,8 +990,6 @@ def generate_order(order):
 
     target_pos_y = order['target'][0]
     target_pos_x = order['target'][1]
-    print(target_pos_x)
-    print(target_pos_y)
     orders = str(ant_pos_y + 1) + '-' + str(ant_pos_x +1)
     if order['type'] == 'drop':
         orders += ':drop '
